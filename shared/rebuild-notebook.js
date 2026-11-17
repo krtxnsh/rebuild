@@ -151,7 +151,7 @@
 
   /* ---- HTML helpers ---------------------------------------------------- */
   var LOCK_SVG = '<svg class="rnb-lockic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 10V8a6 6 0 0 1 12 0v2h1a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1h1zm2 0h8V8a4 4 0 0 0-8 0v2zm4 4a1.6 1.6 0 0 0-.8 3v2.2h1.6V17a1.6 1.6 0 0 0-.8-3z"/></svg>';
-  var BOOK_SVG = '<svg class="rnb-bookic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v16H6.5A2.5 2.5 0 0 0 4 20.5V4.5zM6.5 16H18V4H6.5a.5.5 0 0 0-.5.5V16z"/></svg>';
+  var BOOK_SVG = '<svg class="rnb-bookic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5C10.3 5.2 8 4.7 5.5 5.1A1 1 0 0 0 4.7 6v11.3a1 1 0 0 0 1.2 1c2-.4 4.1 0 5.6 1.2a1 1 0 0 0 1 0c1.5-1.2 3.6-1.6 5.6-1.2a1 1 0 0 0 1.2-1V6a1 1 0 0 0-.8-1C16 4.7 13.7 5.2 12 6.5zM11 17.6c-1.4-.8-3-1.1-4.5-1V6.9c1.7-.2 3.3.3 4.5 1.3v9.4zm6.5-1c-1.5-.1-3.1.2-4.5 1V8.2c1.2-1 2.8-1.5 4.5-1.3v9.7z"/></svg>';
 
   function esc(s) {
     return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -164,7 +164,7 @@
 
   function unlock(id) {
     if (!PART_INDEX[id]) {
-      if (window.console && console.warn) console.warn('[RebuildNotebook] unknown part id:', id);
+      if (typeof console !== 'undefined' && console.warn) console.warn('[RebuildNotebook] unknown part id:', id);
       return false;
     }
     if (isUnlocked(id)) return false;
