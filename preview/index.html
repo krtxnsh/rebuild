@@ -544,7 +544,7 @@ function makeEngineer(s = {}) {
   };
 }
 let engineer = null, engPath = null, engState = 'none', engSeg = 0, engT = 0, engTimer = 0, engArrived = false;
-const ENG_SPEED = 2.3, camPos = new THREE.Vector3(), camLook = new THREE.Vector3(); let camInit = false;
+const ENG_SPEED = 2.3, camPos = new THREE.Vector3(), camLook = new THREE.Vector3(); let camInit = false, overviewT = 0;
 function startEngineer() {
   if (engineer) return;
   engineer = makeEngineer(); scene.add(engineer.root);
@@ -553,16 +553,29 @@ function startEngineer() {
   let yPrev = 1.0; engPath = WP.map(([x, z]) => { const y = groundY(x, z, yPrev); yPrev = y; return new THREE.Vector3(x, y, z); });
   engineer.root.position.copy(engPath[0]);
   const d0 = engPath[1].clone().sub(engPath[0]); engineer.root.rotation.y = Math.atan2(d0.x, d0.z);
-  engState = 'intro'; engTimer = 0; engSeg = 0; engT = 0; ctr.enabled = false;
+  engState = 'overview'; engTimer = 0; engSeg = 0; engT = 0; ctr.enabled = false;
+  const hint = document.createElement('div'); hint.id = 'rioHint';
+  hint.textContent = 'Tap the village to follow the engineer';
+  hint.style.cssText = 'position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:rgba(20,24,28,.82);color:#f2e9d6;padding:8px 16px;border-radius:999px;font:13px system-ui;z-index:9;pointer-events:none;box-shadow:0 4px 16px rgba(0,0,0,.3)';
+  document.body.appendChild(hint);
+  let downP = null;
+  renderer.domElement.addEventListener('pointerdown', e => { downP = [e.clientX, e.clientY]; });
+  renderer.domElement.addEventListener('pointerup', e => {
+    if (engState === 'overview' && downP && Math.abs(e.clientX - downP[0]) + Math.abs(e.clientY - downP[1]) < 8) {
+      engState = 'intro'; engTimer = 0; hint.style.display = 'none';
+    }
+    downP = null;
+  });
 }
 function stepEngineer(dt) {
-  if (!engineer) return; engineer.update(dt); const p = engineer.root.position;
+  if (!engineer) return; dt = Math.min(dt, 0.05); engineer.update(dt); const p = engineer.root.position;   // clamp frame spikes so a throttled tab can't teleport him
   if (engState === 'intro') { engineer.setMode('idle'); engTimer += dt; if (engTimer > 2.8) engState = 'walk'; }
   else if (engState === 'walk') { engineer.setMode('walk'); let move = ENG_SPEED * dt;
     while (move > 0 && engSeg < engPath.length - 1) { const a = engPath[engSeg], b = engPath[engSeg + 1], segLen = a.distanceTo(b) || 1e-3, remain = segLen * (1 - engT);
       if (move < remain) { engT += move / segLen; move = 0; } else { move -= remain; engSeg++; engT = 0; } }
     if (engSeg >= engPath.length - 1) { p.copy(engPath[engPath.length - 1]); engState = 'arrive'; engTimer = 0; }
     else { const a = engPath[engSeg], b = engPath[engSeg + 1]; p.copy(a).lerp(b, engT);
+      p.y = groundY(p.x, p.z, p.y);   // ride the terrain + arc bridge deck instead of cutting a straight line under it
       const dir = b.clone().sub(a).setY(0); if (dir.lengthSq() > 1e-5) { dir.normalize(); engineer.root.rotation.y = Math.atan2(dir.x, dir.z); } } }
   else if (engState === 'arrive') { engineer.setMode('point'); engTimer += dt;
     if (!engArrived) { engArrived = true; try { window.dispatchEvent(new CustomEvent('engineer:atWater', { detail: { x: p.x, y: p.y, z: p.z } })); } catch (e) {} }
@@ -570,8 +583,14 @@ function stepEngineer(dt) {
   engCamera(dt);
 }
 function engCamera(dt) {
+  const p = engineer.root.position;
+  if (engState === 'overview') {   // village opening: present the whole village with a slow orbit until the user taps
+    overviewT += dt; const ang = 0.5 + overviewT * 0.09;
+    camPos.set(Math.cos(ang) * 36, 17, -4 + Math.sin(ang) * 36); camLook.set(0, 2.5, -4);
+    camInit = true; cam.position.copy(camPos); cam.lookAt(camLook); return;
+  }
   if (engState === 'arrive' && ctr.enabled) return;   // control handed back to the user
-  const p = engineer.root.position; let dp, dl;
+  let dp, dl;
   if (engState === 'intro') { dp = new THREE.Vector3(p.x + 5.5, p.y + 4.0, p.z + 2.2); dl = new THREE.Vector3(-1.5, 2.2, -4.5); }
   else if (engState === 'walk' && p.x > -4.2) { dp = new THREE.Vector3(1.0, 7.4, 9.8); dl = new THREE.Vector3(0.6, 2.6, -2.6); }   // side view: engineer crosses the arc bridge right -> left
   else if (engState === 'walk') { dp = new THREE.Vector3(p.x + 5.4, p.y + 4.2, p.z + 4.4); dl = new THREE.Vector3(-8.0, 1.8, -9.8); }   // trail him toward the water plant
