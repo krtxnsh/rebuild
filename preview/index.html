@@ -1,18 +1,29 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Village Runtime Check</title>
+<title>REBUILD · Village</title>
 <style>
 :root{--bg:#1d2126;--panel:rgba(20,24,28,.88);--fg:#eef0f2;--mute:#9aa4ad;--acc:#f2b84b}
-html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font:13px/1.35 system-ui,Segoe UI,sans-serif;overflow:hidden}
-#ui{position:fixed;top:10px;left:10px;width:300px;max-height:calc(100% - 20px);overflow:auto;background:var(--panel);border-radius:10px;padding:10px 12px;box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font:13px/1.35 system-ui,Segoe UI,sans-serif;overflow:hidden;animation:villageIn 1.1s ease both}
+@keyframes villageIn{from{opacity:0;transform:scale(1.015)}to{opacity:1;transform:none}}
+#ui{display:none;position:fixed;top:10px;left:10px;width:300px;max-height:calc(100% - 20px);overflow:auto;background:var(--panel);border-radius:10px;padding:10px 12px;box-sizing:border-box}.debug #ui{display:block}
 #ui h1{font-size:14px;margin:0 0 6px}#ui button{margin:2px 2px;padding:5px 8px;border:0;border-radius:6px;background:#2f3943;color:var(--fg);cursor:pointer}
 #ui button.on{background:var(--acc);color:#222}#stats{white-space:pre;font:11px/1.3 ui-monospace,Consolas,monospace;color:var(--mute);margin-top:6px}
 canvas{display:block}
+#rioArrow{position:fixed;left:50%;top:50%;z-index:12;transform:translate(-50%,-100%);border:0;background:none;color:#4a2b00;padding:0;cursor:pointer;filter:drop-shadow(0 7px 10px rgba(77,45,0,.38));transition:opacity .35s ease,filter .2s ease}
+#rioArrow:hover{filter:drop-shadow(0 8px 15px rgba(255,190,20,.72)) brightness(1.06)}
+#rioArrow.out{opacity:0;pointer-events:none}
+#chapterFade{position:fixed;inset:0;z-index:30;pointer-events:none;opacity:0;background:radial-gradient(circle at 50% 42%,#fffdf1 0%,#f1f8ff 56%,#d9ebfa 100%);transition:opacity .68s cubic-bezier(.45,0,.2,1)}
+#chapterFade.on{opacity:1}
+.rio-arrow-inner{display:flex;flex-direction:column;align-items:center;gap:3px;animation:rioFloat 1.25s ease-in-out infinite}
+.rio-arrow-inner b{font:800 13px/1.1 "Segoe UI",system-ui,sans-serif;color:#533100;background:linear-gradient(180deg,#fff2a3,#ffc928);border:2px solid #9a5b00;border-radius:999px;padding:6px 11px;white-space:nowrap;box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 0 0 4px rgba(255,200,40,.2),0 0 22px rgba(255,196,22,.72)}
+.rio-arrow-inner svg{width:38px;height:38px;fill:#ffc928;stroke:#7b4800;stroke-width:1.4;stroke-linejoin:round;filter:drop-shadow(0 0 8px rgba(255,197,30,.95))}
+@keyframes rioFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@media (prefers-reduced-motion:reduce){.rio-arrow-inner{animation:none}}
 </style>
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
 </head><body>
-<div id="ui"><h1>Village runtime smoke check</h1>
-<div id="btns"></div><div id="stats">loading...</div></div><pre id="res" hidden></pre>
+<div id="ui"><h1>REBUILD · Village</h1>
+<div id="btns"></div><div id="stats">loading...</div></div><pre id="res" hidden></pre><div id="chapterFade" aria-hidden="true"></div>
 <script type="module">
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
@@ -21,9 +32,18 @@ import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 const R = window.__results = { errors: [], load: null, checks: {} };
 window.addEventListener('error', e => R.errors.push(String(e.message)));
 const qs = new URLSearchParams(location.search);
+if (qs.has('debug')) document.body.classList.add('debug');
+const chapterFromUrl = qs.get('chapter');
+const CHAPTER = ['water', 'power', 'ration'].includes(chapterFromUrl) ? chapterFromUrl : 'water';
+const CHAPTER_DATA = {
+  water: { module: 'water-purification.html', label: 'Walk to Water House', event: 'engineer:atWater' },
+  power: { module: 'power-palampur.html', label: 'Walk to Power House', event: 'engineer:atPower' },
+  ration: { module: 'rationing-palampur.html', label: 'Walk to Ration Shop', event: 'engineer:atRation' }
+};
 const FILE = qs.get('file') || '../exports/web/village_complete.glb';   // Draco web build; ?file=../exports/village_complete.glb for the uncompressed export
 const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
-renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+const DPR_CAP = matchMedia('(pointer:coarse)').matches ? 1.4 : 1.75;
+renderer.setPixelRatio(Math.min(devicePixelRatio, DPR_CAP));
 renderer.setSize(innerWidth, innerHeight);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
@@ -127,7 +147,7 @@ new GLTFLoader().setDRACOLoader(draco).load(FILE, g => {
       return [k, { manifest: e.assembled_translation, loaded: q.toArray().map(v => +v.toFixed(3)), ok: q.distanceTo(new THREE.Vector3(...e.assembled_translation)) < 1e-3 }]; }));
     R.checks.expansion = { houses: Object.values(byName).filter(o => o.userData && o.userData.house_id).length, manifestHouses: (man.expansion || {}).houses ? man.expansion.houses.length : 0,
       farm: !!byName['FARM_ROOT'], clouds: !!clouds, foamMaterials: foamMats.length, waterHasMapAndNormal: waterMats.some(m => !!(m.map && m.normalMap)) };
-    R.manifest = man; buildRoute(man);
+    R.manifest = man; buildRoute(man); startEngineer();
     if (qs.get('autocheck')) autocheck();
     if (qs.get('motionprobe')) setTimeout(() => motionProbe(man), 50);
   });
@@ -486,6 +506,180 @@ function motionProbe(man) {
   document.body.append(panel);
   out.done = true; dump();
 }
+// ---------------------------------------------------------------- engineer "Rio" walk-in
+function makeEngineer(s = {}) {
+  const t = (G, k = {}) => new THREE.MeshStandardMaterial({ color: G, roughness: .8, ...k });
+  const e = t(s.skin || '#e8b48a'), n = t(s.hair || '#2a1c14'), i = t(s.jacket || '#7a4a2a'),
+    r = t(s.jacketD || '#5e3820'), o = t(s.shirt || '#e9dcc2'), a = t(s.pants || '#4e4232'),
+    l = t('#3a2618'), c = t('#2f2a26'), u = t('#9a7a4a', { metalness: .6, roughness: .35 }),
+    h = t('#8fd0e8', { roughness: .1, metalness: .3, emissive: '#2a5a6a', emissiveIntensity: .3 }),
+    d = t('#ffffff'), f = t('#1a1410'), p = t('#8a5a32'), x = t('#4a2f1c');
+  const g = new THREE.Group(), m = new THREE.Group(); g.add(m);
+  const A = (G, k, ht = 0, nt = 0, rt = 0, mt = m) => { const H = new THREE.Mesh(G, k); H.position.set(ht, nt, rt); H.castShadow = true; mt.add(H); return H; };
+  const v = [];
+  for (const G of [-1, 1]) { const k = new THREE.Group(); k.position.set(.17 * G, .78, 0); m.add(k);
+    A(new THREE.CapsuleGeometry(.13, .42, 6, 12), a, 0, -.3, 0, k);
+    A(new THREE.BoxGeometry(.26, .2, .38), l, 0, -.66, .05, k); v.push(k); }
+  const M = new THREE.Group(); M.position.y = .8; m.add(M);
+  A(new THREE.CapsuleGeometry(.33, .42, 8, 16), i, 0, .36, 0, M).scale.set(1, 1, .82);
+  A(new THREE.BoxGeometry(.24, .5, .1), o, 0, .42, .27, M);
+  A(new THREE.BoxGeometry(.72, .1, .56), x, 0, .12, 0, M);
+  A(new THREE.BoxGeometry(.16, .12, .06), u, 0, .12, .29, M);
+  A(new THREE.BoxGeometry(.2, .22, .1), r, -.2, .26, .26, M);
+  A(new THREE.BoxGeometry(.56, .62, .3), p, 0, .42, -.36, M);
+  A(new THREE.BoxGeometry(.5, .18, .06), x, 0, .62, -.53, M);
+  A(new THREE.CylinderGeometry(.1, .1, .5, 12), t('#c9b28a'), 0, .78, -.36, M).rotation.z = Math.PI / 2;
+  for (const G of [-1, 1]) A(new THREE.BoxGeometry(.07, .62, .06), x, .18 * G, .45, .27, M);
+  const Ra = [];
+  for (const G of [-1, 1]) { const k = new THREE.Group(); k.position.set(.42 * G, .68, 0); M.add(k);
+    A(new THREE.CapsuleGeometry(.11, .4, 6, 12), i, 0, -.28, 0, k);
+    A(new THREE.SphereGeometry(.12, 14, 12), c, 0, -.6, 0, k); k.rotation.z = .12 * G; Ra.push(k); }
+  const T = new THREE.Group(); T.position.y = 1.55; m.add(T);
+  A(new THREE.SphereGeometry(.44, 32, 24), e, 0, .3, 0, T).scale.set(1, .98, .95);
+  for (const G of [-1, 1]) A(new THREE.SphereGeometry(.1, 14, 12), e, .43 * G, .26, 0, T);
+  A(new THREE.SphereGeometry(.46, 28, 20, 0, Math.PI * 2, 0, Math.PI * .55), n, 0, .33, -.02, T).scale.set(1.02, 1, 1.02);
+  const S = [[0, .72, .1, .2], [.2, .68, .18, .17], [-.22, .66, .15, .17], [.1, .62, .32, .15], [-.12, .62, .33, .15], [.3, .55, .05, .16], [-.32, .55, 0, .16], [0, .6, -.3, .2]];
+  for (const [G, k, ht, nt] of S) A(new THREE.ConeGeometry(nt, nt * 2.2, 8), n, G, k, ht, T).rotation.set(ht * 1.6 - .3, 0, -G * 2);
+  const w = [];
+  for (const G of [-1, 1]) { const k = A(new THREE.SphereGeometry(.07, 14, 12), f, .15 * G, .27, .39, T); k.scale.set(.85, 1.15, .6);
+    A(new THREE.SphereGeometry(.022, 8, 6), d, .15 * G + .02, .3, .43, T); w.push(k);
+    A(new THREE.BoxGeometry(.13, .03, .03), n, .15 * G, .39, .4, T).rotation.z = -.15 * G; }
+  const E = A(new THREE.TorusGeometry(.06, .015, 8, 14, Math.PI), t('#6b2a20'), 0, .13, .41, T); E.rotation.z = Math.PI;
+  for (const G of [-1, 1]) A(new THREE.SphereGeometry(.05, 10, 8), t('#f09a8a'), .27 * G, .17, .35, T).scale.set(1, .6, .4);
+  A(new THREE.TorusGeometry(.45, .04, 8, 32), x, 0, .47, 0, T).rotation.x = Math.PI / 2 - .25;
+  for (const G of [-1, 1]) { A(new THREE.CylinderGeometry(.13, .13, .12, 18), u, .15 * G, .53, .38, T).rotation.x = Math.PI / 2 - .45;
+    A(new THREE.CircleGeometry(.1, 18), h, .15 * G, .56, .44, T).rotation.x = -.45; }
+  g.traverse(G => { if (G.isMesh) { G.castShadow = true; G.receiveShadow = true; } });
+  g.scale.setScalar(.86);
+  let U = 'idle', L = 0, q = 0, bl = 2;
+  return { root: g, head: T, setMode(G) { U = G; }, talk(G = 2) { q = G; },
+    update(G) { L += G; bl -= G; const k = bl < .12 ? .15 : 1; if (bl < 0) bl = 2 + Math.random() * 3;
+      w.forEach(z => z.scale.y = 1.15 * k);
+      if (q > 0) { q -= G; E.scale.set(1, 1 + Math.abs(Math.sin(L * 14)) * 1.6, 1); T.rotation.x = Math.sin(L * 6) * .05; } else E.scale.set(1, 1, 1);
+      if (U === 'walk') { const z = Math.sin(L * 9); v[0].rotation.x = z * .6; v[1].rotation.x = -z * .6; Ra[0].rotation.x = -z * .5; Ra[1].rotation.x = z * .5; m.position.y = Math.abs(Math.cos(L * 9)) * .07; M.rotation.y = z * .06; }
+      else if (U === 'cheer') { const z = Math.sin(L * 8); Ra[0].rotation.set(0, 0, -2.6 + z * .2); Ra[1].rotation.set(0, 0, 2.6 - z * .2); m.position.y = Math.abs(Math.sin(L * 6)) * .25; v[0].rotation.x = v[1].rotation.x = 0; }
+      else if (U === 'point') { Ra[1].rotation.set(-1.4, 0, .3); Ra[0].rotation.set(0, 0, -.12); m.position.y = Math.sin(L * 2) * .02; v[0].rotation.x = v[1].rotation.x = 0; M.rotation.y = 0; }
+      else { v[0].rotation.x = v[1].rotation.x = 0; Ra[0].rotation.set(Math.sin(L * 1.5) * .05, 0, -.12); Ra[1].rotation.set(-Math.sin(L * 1.5) * .05, 0, .12); m.position.y = Math.sin(L * 2) * .02; M.rotation.y = 0; T.rotation.y = Math.sin(L * .7) * .15; } }
+  };
+}
+let engineer = null, engPath = null, engState = 'none', engSeg = 0, engT = 0, engTimer = 0, engArrived = false, rioCue = null, chapterLaunching = false;
+const rioScreen = new THREE.Vector3();
+const ENG_SPEED = 1.9, camPos = new THREE.Vector3(), camLook = new THREE.Vector3(); let camInit = false, overviewT = 0;
+function startEngineer() {
+  if (engineer) return;
+  engineer = makeEngineer(); scene.add(engineer.root);
+  // Use the authored paths in the scene manifest, so Rio follows the roads into each real entrance.
+  const man = R.manifest, V = a => new THREE.Vector3(...a);
+  const nav = man.navigation, P = name => nav.paths.find(path => path.name === name).points.map(V);
+  const spawn = id => V(man.spawn_points.find(point => point.semantic_id === id).world_position);
+  const entrance = id => V(man.entrances.find(point => point.semantic_id === id).world_position);
+  const bridgeWest = V(nav.bridges.BRIDGE_Main.west_end), bridgeEast = V(nav.bridges.BRIDGE_Main.east_end);
+  const powerRoad = P('PATH_Bridge_Elec'), waterRoad = P('PATH_Water_Bridge'), rationRoad = P('PATH_Ration_Bridge');
+  const join = (...sections) => {
+    const points = [];
+    sections.flat().forEach(point => { if (!points.length || points[points.length - 1].distanceTo(point) > .025) points.push(point.clone()); });
+    return points;
+  };
+  const rawPath = CHAPTER === 'power'
+    ? join([entrance('WATER_Entrance'), spawn('SPAWN_WATER_Outside')], waterRoad, [bridgeWest, bridgeEast], powerRoad, [entrance('ELEC_Entrance')])
+    : CHAPTER === 'ration'
+      ? join([entrance('ELEC_Entrance'), spawn('SPAWN_ELEC_Outside')], powerRoad.slice().reverse(), [bridgeWest], rationRoad.slice().reverse(), [entrance('RATION_Entrance')])
+      : join([entrance('ELEC_Entrance'), spawn('SPAWN_ELEC_Outside')], powerRoad.slice().reverse(), [bridgeWest], waterRoad.slice().reverse(), [entrance('WATER_Entrance')]);
+  const bridgeAxis = bridgeEast.clone().sub(bridgeWest).setY(0).normalize();
+  const bridgeCenter = bridgeWest.clone().lerp(bridgeEast,.5);
+  const bridgeHalf = bridgeEast.distanceTo(bridgeWest) * .5;
+  const bridgeBase = (bridgeEast.y + bridgeWest.y) * .5 - .12;
+  const bridgeDeckY = p => {
+    const localX = THREE.MathUtils.clamp(p.clone().sub(bridgeCenter).dot(bridgeAxis), -bridgeHalf, bridgeHalf);
+    return bridgeBase + .12 + 1.3 * (1 - Math.pow(localX / bridgeHalf, 2));
+  };
+  engPath = [];
+  for (let i = 0; i < rawPath.length - 1; i++) {
+    const a = rawPath[i], b = rawPath[i + 1];
+    const bridge = (a.distanceTo(bridgeEast) < .03 && b.distanceTo(bridgeWest) < .03) || (a.distanceTo(bridgeWest) < .03 && b.distanceTo(bridgeEast) < .03);
+    const steps = bridge ? 40 : Math.max(2, Math.ceil(a.distanceTo(b) * 5));
+    for (let j = 0; j < steps; j++) {
+      const t = j / steps, p = a.clone().lerp(b,t);
+      if (bridge) p.y = bridgeDeckY(p);
+      engPath.push(p);
+    }
+  }
+  engPath.push(rawPath[rawPath.length - 1].clone());
+  engineer.root.position.copy(engPath[0]);
+  const d0 = engPath[1].clone().sub(engPath[0]); engineer.root.rotation.y = Math.atan2(d0.x, d0.z);
+  engState = 'overview'; engTimer = 0; engSeg = 0; engT = 0; ctr.enabled = false;
+  rioCue = document.createElement('button'); rioCue.id = 'rioArrow'; rioCue.type = 'button'; rioCue.setAttribute('aria-label', CHAPTER_DATA[CHAPTER].label);
+  rioCue.innerHTML = '<span class="rio-arrow-inner"><b>' + CHAPTER_DATA[CHAPTER].label + '</b><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22 4.5 13.5h4.2V3h6.6v10.5h4.2z"/></svg></span>';
+  document.body.appendChild(rioCue);
+  const followRio = () => {
+    if (engState !== 'overview') return;
+    engState = 'intro'; engTimer = 0;
+    if (rioCue) { rioCue.classList.add('out'); const old = rioCue; setTimeout(() => old.remove(), 380); rioCue = null; }
+  };
+  rioCue.addEventListener('pointerdown',e => e.stopPropagation());
+  rioCue.addEventListener('click',e => { e.stopPropagation(); followRio(); });
+  let downP = null;
+  renderer.domElement.addEventListener('pointerdown', e => { downP = [e.clientX, e.clientY]; });
+  renderer.domElement.addEventListener('pointerup', e => {
+    if (engState === 'overview' && downP && Math.abs(e.clientX - downP[0]) + Math.abs(e.clientY - downP[1]) < 8) {
+      const px=(rioScreen.x*.5+.5)*innerWidth, py=(-rioScreen.y*.5+.5)*innerHeight;
+      if(Math.hypot(e.clientX-px,e.clientY-py)<110) followRio();
+    }
+    downP = null;
+  });
+}
+function updateRioCue(){
+  if(!rioCue||!engineer||engState!=='overview') return;
+  rioScreen.copy(engineer.root.position); rioScreen.y+=3.25; rioScreen.project(cam);
+  if(rioScreen.z<-1||rioScreen.z>1){ rioCue.style.display='none'; return; }
+  rioCue.style.display='block'; rioCue.style.left=((rioScreen.x*.5+.5)*innerWidth)+'px'; rioCue.style.top=((-rioScreen.y*.5+.5)*innerHeight)+'px';
+}
+function launchChapter() {
+  if (chapterLaunching) return;
+  chapterLaunching = true;
+  document.getElementById('chapterFade').classList.add('on');
+  setTimeout(() => { location.href = '../modules/' + CHAPTER_DATA[CHAPTER].module + '?journey=' + CHAPTER; }, 680);
+}
+function stepEngineer(dt) {
+  if (!engineer) return; dt = Math.min(dt, 0.05); engineer.update(dt); const p = engineer.root.position;   // clamp frame spikes so a throttled tab can't teleport him
+  if (engState === 'intro') { engineer.setMode('idle'); engTimer += dt; if (engTimer > 2.8) engState = 'walk'; }
+  else if (engState === 'walk') { engineer.setMode('walk'); let move = ENG_SPEED * dt;
+    while (move > 0 && engSeg < engPath.length - 1) { const a = engPath[engSeg], b = engPath[engSeg + 1], segLen = a.distanceTo(b) || 1e-3, remain = segLen * (1 - engT);
+      if (move < remain) { engT += move / segLen; move = 0; } else { move -= remain; engSeg++; engT = 0; } }
+    if (engSeg >= engPath.length - 1) { p.copy(engPath[engPath.length - 1]); engState = 'arrive'; engTimer = 0; }
+    else { const a = engPath[engSeg], b = engPath[engSeg + 1]; p.copy(a).lerp(b, engT);
+      const look = engPath[Math.min(engPath.length - 1, engSeg + 3)].clone().sub(p).setY(0);
+      if (look.lengthSq() > 1e-5) {
+        look.normalize();
+        const target = Math.atan2(look.x, look.z);
+        const delta = Math.atan2(Math.sin(target - engineer.root.rotation.y), Math.cos(target - engineer.root.rotation.y));
+        engineer.root.rotation.y += delta * (1 - Math.exp(-10 * dt));
+      } } }
+  else if (engState === 'arrive') { engineer.setMode('point'); engTimer += dt;
+    if (!engArrived) { engArrived = true; try { window.dispatchEvent(new CustomEvent(CHAPTER_DATA[CHAPTER].event, { detail: { x: p.x, y: p.y, z: p.z } })); } catch (e) {} }
+    if (engTimer > 1.6) launchChapter(); }
+  engCamera(dt); updateRioCue();
+}
+function engCamera(dt) {
+  const p = engineer.root.position;
+  if (engState === 'overview') {   // village opening: present the whole village with a slow orbit until the user taps
+    overviewT += dt; const ang = 0.5 + overviewT * 0.09;
+    camPos.set(Math.cos(ang) * 36, 17, -4 + Math.sin(ang) * 36); camLook.set(0, 2.5, -4);
+    camInit = true; cam.position.copy(camPos); cam.lookAt(camLook); return;
+  }
+  let dp, dl;
+  if (engState === 'intro') { dp = new THREE.Vector3(p.x + 5.5, p.y + 4.0, p.z + 2.2); dl = new THREE.Vector3(-1.5, 2.2, -4.5); }
+  else if (engState === 'walk') {
+    const forward = new THREE.Vector3(Math.sin(engineer.root.rotation.y), 0, Math.cos(engineer.root.rotation.y));
+    dp = p.clone().addScaledVector(forward, -5.4).add(new THREE.Vector3(0, 3.35, 0));
+    dl = p.clone().addScaledVector(forward, 2.1).add(new THREE.Vector3(0, 1.25, 0));
+  } else if (CHAPTER === 'power') { dp = new THREE.Vector3(12.7402, 6.65, 5.2765); dl = new THREE.Vector3(12.0457, 3.05, -8.0279); }
+  else if (CHAPTER === 'ration') { dp = new THREE.Vector3(-3.1947, 6.4, 11.5506); dl = new THREE.Vector3(-13.0773, 1.9, 5.1917); }
+  else { dp = new THREE.Vector3(-17.0511, 7.8, -1.5496); dl = new THREE.Vector3(-9.4019, 2.8, -13.2278); }
+  if (!camInit) { camPos.copy(dp); camLook.copy(dl); camInit = true; }
+  const aa = 1 - Math.pow(0.0022, dt); camPos.lerp(dp, aa); camLook.lerp(dl, aa);
+  cam.position.copy(camPos); cam.lookAt(camLook);
+}
 // ---------------------------------------------------------------- loop
 let last = performance.now(), acc = 0, cnt = 0;
 renderer.setAnimationLoop(() => {
@@ -494,6 +688,7 @@ renderer.setAnimationLoop(() => {
   if (spin && wheel) wheel.rotateX(d * Math.PI * 2 * 6 / 60);
   // v2 water + sky motion (runtime-only effects; static look matches the Blender material)
   stepEffects(d, now);
+  if (engineer) stepEngineer(d);
   skyDome.position.copy(cam.position);
   if (flowShader && _wt) { _wt.offset.y += d * 0.25; if (_wtFall) _wtFall.offset.y -= d * 0.6; }   // same directions as stepEffects; still water not scrolled
   perfStep(now, dt);

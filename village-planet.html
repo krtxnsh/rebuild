@@ -1,4 +1,4 @@
-<title>Village Planet</title>
+<title>REBUILD · Clean Water</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
   /* Layout: full-bleed WebGL canvas of a rotating storybook village planet; click to zoom in. Quiet overlay wordmark, hint, and a Back control. Single committed warm-storybook look matched to the Educational Village renders. */
@@ -14,7 +14,7 @@
     font-family:"Fredoka","Segoe UI",system-ui,sans-serif; color:var(--ink);
     overflow:hidden;
   }
-  #stage{position:fixed; inset:0; display:block; touch-action:none; cursor:grab}
+  #stage{position:fixed; inset:0; display:block; touch-action:none; cursor:grab;filter:saturate(1.28) contrast(1.08) brightness(1.05)}
   #stage.drag{cursor:grabbing}
   #stage.zoom{cursor:default}
   .wordmark{
@@ -58,7 +58,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&display=swap">
 
 <canvas id="stage"></canvas>
-<div class="wordmark" id="wordmark"><b>Rebuild</b><span>Save the Village</span></div>
+<div class="wordmark" id="wordmark"><b>REBUILD</b><span>Clean Water · Save the Village</span></div>
 <div class="hint" id="hint">Drag to spin &nbsp;•&nbsp; Click the planet to zoom in</div>
 <button class="back" id="back" aria-label="Back to orbit">&#8592; Back to orbit</button>
 <div class="fallback" id="fallback"><div><b>3D not available</b><br>This page needs WebGL. Try a different browser or device.</div></div>
@@ -76,9 +76,9 @@
     terracotta:0xc85f33, terracotta2:0xab4d27, terracotta3:0xd6724a,
     brick:0xa94b36, brickDark:0x883a2a, slate:0x53606e, slate2:0x3f4a56,
     stone:0xb4b1a2, stoneDark:0x898676,
-    grass:0x77ad49, grassDark:0x538c36, grassLight:0x93c763, grassDeep:0x3c6f2b,
-    dirt:0xc6a06a, dirtDark:0xa07c48, sand:0xd6c089, path:0xcdab76,
-    water:0x4f93c0, waterDeep:0x2e6e92, foam:0xdfeef5,
+    grass:0x66a83e, grassDark:0x3f7d2c, grassLight:0x9bd05b, grassDeep:0x2f6424,
+    dirt:0xc9955a, dirtDark:0x945f32, sand:0xe0c375, path:0xd9a363,
+    water:0x3b8fd0, waterDeep:0x1f5f91, foam:0xf3fbff,
     copper:0xb5724a, brass:0xc9a24a, iron:0x2c2c30, ironLight:0x6a6a72,
     leafGreen:0x6aa848, leafYellow:0xcfa83e, leafOrange:0xcf8338, pine:0x2f5d34, pine2:0x3c6d3e,
     glow:0xffb85c, trim:0xd9a24a, cloth:0xece3d0, red:0xc24a33, blueCloth:0x9fc2d6, crop:0x7bb03e
@@ -101,12 +101,12 @@
   (function(){
     var cv=document.createElement('canvas'); cv.width=8; cv.height=256;
     var g=cv.getContext('2d'); var grad=g.createLinearGradient(0,0,0,256);
-    grad.addColorStop(0,'#6fa6c8'); grad.addColorStop(0.5,'#a9c8d1');
-    grad.addColorStop(0.8,'#d7d6c0'); grad.addColorStop(1,'#e7dcc5');
+    grad.addColorStop(0,'#3e82b2'); grad.addColorStop(0.5,'#8ec6d4');
+    grad.addColorStop(0.8,'#e5d7b7'); grad.addColorStop(1,'#f1d09a');
     g.fillStyle=grad; g.fillRect(0,0,8,256);
     var tex=new THREE.CanvasTexture(cv); tex.encoding=THREE.sRGBEncoding; scene.background=tex;
   })();
-  scene.fog = new THREE.Fog(0xe6e4d2, 92, 170);
+  scene.fog = new THREE.Fog(0xe2dfc9, 120, 220);
 
   var camera = new THREE.PerspectiveCamera(42, window.innerWidth/window.innerHeight, 0.1, 400);
   var lookTarget = new THREE.Vector3(0,0,0);
@@ -114,14 +114,14 @@
   camera.position.copy(HOME_POS); camera.lookAt(lookTarget);
 
   // ---------- lights ----------
-  scene.add(new THREE.HemisphereLight(0xbcd4e4, 0x4e8a3c, 0.5));
-  scene.add(new THREE.AmbientLight(0xffffff, 0.1));
-  var sun = new THREE.DirectionalLight(0xfff1cc, 1.1);
+  scene.add(new THREE.HemisphereLight(0xc8e9ff, 0x2f7c32, 0.78));
+  scene.add(new THREE.AmbientLight(0xffffff, 0.2));
+  var sun = new THREE.DirectionalLight(0xffdda0, 1.5);
   sun.position.set(24, 30, 16); sun.castShadow = true;
   sun.shadow.mapSize.set(2048,2048);
   var sc = sun.shadow.camera; sc.near=1; sc.far=90; sc.left=-16; sc.right=16; sc.top=16; sc.bottom=-16;
   sun.shadow.bias=-0.0004; sun.shadow.normalBias=0.03; scene.add(sun);
-  var fill = new THREE.DirectionalLight(0xbcd2ff, 0.2); fill.position.set(-20,-6,-14); scene.add(fill);
+  var fill = new THREE.DirectionalLight(0x74c6ff, 0.38); fill.position.set(-20,-6,-14); scene.add(fill);
 
   // ---------- globals ----------
   var R = 10;
@@ -406,7 +406,7 @@
 
   // ---------- planet mesh (warm faceted biomes + river) ----------
   (function buildPlanet(){
-    var geo=new THREE.IcosahedronGeometry(R,5).toNonIndexed();
+    var geo=new THREE.IcosahedronGeometry(R,5);
     var pos=geo.attributes.position, n=pos.count;
     var colors=new Float32Array(n*3);
     var gA=new THREE.Color(C.grassDark), gB=new THREE.Color(C.grassLight), gDeep=new THREE.Color(C.grassDeep);
