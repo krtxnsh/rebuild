@@ -132,6 +132,7 @@ new GLTFLoader().setDRACOLoader(draco).load(FILE, g => {
     if (qs.get('motionprobe')) setTimeout(() => motionProbe(man), 50);
   });
   setupUI();
+  startEngineer();
 }, undefined, err => R.errors.push('load: ' + err));
 // ---------------------------------------------------------------- smoke-check controls
 function btn(label, fn) { const b = document.createElement('button'); b.textContent = label; b.onclick = () => { const on = fn(); if (on !== undefined) b.classList.toggle('on', on); }; document.getElementById('btns').appendChild(b); return b; }
@@ -486,6 +487,99 @@ function motionProbe(man) {
   document.body.append(panel);
   out.done = true; dump();
 }
+// ---------------------------------------------------------------- engineer "Rio" walk-in
+function makeEngineer(s = {}) {
+  const t = (G, k = {}) => new THREE.MeshStandardMaterial({ color: G, roughness: .8, ...k });
+  const e = t(s.skin || '#e8b48a'), n = t(s.hair || '#2a1c14'), i = t(s.jacket || '#7a4a2a'),
+    r = t(s.jacketD || '#5e3820'), o = t(s.shirt || '#e9dcc2'), a = t(s.pants || '#4e4232'),
+    l = t('#3a2618'), c = t('#2f2a26'), u = t('#9a7a4a', { metalness: .6, roughness: .35 }),
+    h = t('#8fd0e8', { roughness: .1, metalness: .3, emissive: '#2a5a6a', emissiveIntensity: .3 }),
+    d = t('#ffffff'), f = t('#1a1410'), p = t('#8a5a32'), x = t('#4a2f1c');
+  const g = new THREE.Group(), m = new THREE.Group(); g.add(m);
+  const A = (G, k, ht = 0, nt = 0, rt = 0, mt = m) => { const H = new THREE.Mesh(G, k); H.position.set(ht, nt, rt); H.castShadow = true; mt.add(H); return H; };
+  const v = [];
+  for (const G of [-1, 1]) { const k = new THREE.Group(); k.position.set(.17 * G, .78, 0); m.add(k);
+    A(new THREE.CapsuleGeometry(.13, .42, 6, 12), a, 0, -.3, 0, k);
+    A(new THREE.BoxGeometry(.26, .2, .38), l, 0, -.66, .05, k); v.push(k); }
+  const M = new THREE.Group(); M.position.y = .8; m.add(M);
+  A(new THREE.CapsuleGeometry(.33, .42, 8, 16), i, 0, .36, 0, M).scale.set(1, 1, .82);
+  A(new THREE.BoxGeometry(.24, .5, .1), o, 0, .42, .27, M);
+  A(new THREE.BoxGeometry(.72, .1, .56), x, 0, .12, 0, M);
+  A(new THREE.BoxGeometry(.16, .12, .06), u, 0, .12, .29, M);
+  A(new THREE.BoxGeometry(.2, .22, .1), r, -.2, .26, .26, M);
+  A(new THREE.BoxGeometry(.56, .62, .3), p, 0, .42, -.36, M);
+  A(new THREE.BoxGeometry(.5, .18, .06), x, 0, .62, -.53, M);
+  A(new THREE.CylinderGeometry(.1, .1, .5, 12), t('#c9b28a'), 0, .78, -.36, M).rotation.z = Math.PI / 2;
+  for (const G of [-1, 1]) A(new THREE.BoxGeometry(.07, .62, .06), x, .18 * G, .45, .27, M);
+  const Ra = [];
+  for (const G of [-1, 1]) { const k = new THREE.Group(); k.position.set(.42 * G, .68, 0); M.add(k);
+    A(new THREE.CapsuleGeometry(.11, .4, 6, 12), i, 0, -.28, 0, k);
+    A(new THREE.SphereGeometry(.12, 14, 12), c, 0, -.6, 0, k); k.rotation.z = .12 * G; Ra.push(k); }
+  const T = new THREE.Group(); T.position.y = 1.55; m.add(T);
+  A(new THREE.SphereGeometry(.44, 32, 24), e, 0, .3, 0, T).scale.set(1, .98, .95);
+  for (const G of [-1, 1]) A(new THREE.SphereGeometry(.1, 14, 12), e, .43 * G, .26, 0, T);
+  A(new THREE.SphereGeometry(.46, 28, 20, 0, Math.PI * 2, 0, Math.PI * .55), n, 0, .33, -.02, T).scale.set(1.02, 1, 1.02);
+  const S = [[0, .72, .1, .2], [.2, .68, .18, .17], [-.22, .66, .15, .17], [.1, .62, .32, .15], [-.12, .62, .33, .15], [.3, .55, .05, .16], [-.32, .55, 0, .16], [0, .6, -.3, .2]];
+  for (const [G, k, ht, nt] of S) A(new THREE.ConeGeometry(nt, nt * 2.2, 8), n, G, k, ht, T).rotation.set(ht * 1.6 - .3, 0, -G * 2);
+  const w = [];
+  for (const G of [-1, 1]) { const k = A(new THREE.SphereGeometry(.07, 14, 12), f, .15 * G, .27, .39, T); k.scale.set(.85, 1.15, .6);
+    A(new THREE.SphereGeometry(.022, 8, 6), d, .15 * G + .02, .3, .43, T); w.push(k);
+    A(new THREE.BoxGeometry(.13, .03, .03), n, .15 * G, .39, .4, T).rotation.z = -.15 * G; }
+  const E = A(new THREE.TorusGeometry(.06, .015, 8, 14, Math.PI), t('#6b2a20'), 0, .13, .41, T); E.rotation.z = Math.PI;
+  for (const G of [-1, 1]) A(new THREE.SphereGeometry(.05, 10, 8), t('#f09a8a'), .27 * G, .17, .35, T).scale.set(1, .6, .4);
+  A(new THREE.TorusGeometry(.45, .04, 8, 32), x, 0, .47, 0, T).rotation.x = Math.PI / 2 - .25;
+  for (const G of [-1, 1]) { A(new THREE.CylinderGeometry(.13, .13, .12, 18), u, .15 * G, .53, .38, T).rotation.x = Math.PI / 2 - .45;
+    A(new THREE.CircleGeometry(.1, 18), h, .15 * G, .56, .44, T).rotation.x = -.45; }
+  g.traverse(G => { if (G.isMesh) { G.castShadow = true; G.receiveShadow = true; } });
+  g.scale.setScalar(.86);
+  let U = 'idle', L = 0, q = 0, bl = 2;
+  return { root: g, head: T, setMode(G) { U = G; }, talk(G = 2) { q = G; },
+    update(G) { L += G; bl -= G; const k = bl < .12 ? .15 : 1; if (bl < 0) bl = 2 + Math.random() * 3;
+      w.forEach(z => z.scale.y = 1.15 * k);
+      if (q > 0) { q -= G; E.scale.set(1, 1 + Math.abs(Math.sin(L * 14)) * 1.6, 1); T.rotation.x = Math.sin(L * 6) * .05; } else E.scale.set(1, 1, 1);
+      if (U === 'walk') { const z = Math.sin(L * 9); v[0].rotation.x = z * .6; v[1].rotation.x = -z * .6; Ra[0].rotation.x = -z * .5; Ra[1].rotation.x = z * .5; m.position.y = Math.abs(Math.cos(L * 9)) * .07; M.rotation.y = z * .06; }
+      else if (U === 'cheer') { const z = Math.sin(L * 8); Ra[0].rotation.set(0, 0, -2.6 + z * .2); Ra[1].rotation.set(0, 0, 2.6 - z * .2); m.position.y = Math.abs(Math.sin(L * 6)) * .25; v[0].rotation.x = v[1].rotation.x = 0; }
+      else if (U === 'point') { Ra[1].rotation.set(-1.4, 0, .3); Ra[0].rotation.set(0, 0, -.12); m.position.y = Math.sin(L * 2) * .02; v[0].rotation.x = v[1].rotation.x = 0; M.rotation.y = 0; }
+      else { v[0].rotation.x = v[1].rotation.x = 0; Ra[0].rotation.set(Math.sin(L * 1.5) * .05, 0, -.12); Ra[1].rotation.set(-Math.sin(L * 1.5) * .05, 0, .12); m.position.y = Math.sin(L * 2) * .02; M.rotation.y = 0; T.rotation.y = Math.sin(L * .7) * .15; } }
+  };
+}
+let engineer = null, engPath = null, engState = 'none', engSeg = 0, engT = 0, engTimer = 0, engArrived = false;
+const ENG_SPEED = 2.3, camPos = new THREE.Vector3(), camLook = new THREE.Vector3(); let camInit = false;
+function startEngineer() {
+  if (engineer) return;
+  engineer = makeEngineer(); scene.add(engineer.root);
+  // east spawn -> bridge east end -> (arc) bridge west end -> west bank path -> water-plant entrance
+  const WP = [[9.2763, -4.5957], [7.8, -2.9], [6.626, -1.9952], [-4.9296, -3.0096], [-6.4, -3.4], [-6.6517, -3.9187], [-6.9204, -4.6326], [-7.1789, -5.3803], [-7.4, -6.0], [-7.6983, -6.7078], [-7.9466, -7.4156], [-8.0928, -7.9823], [-8.2432, -8.6416], [-8.3953, -9.3379], [-8.5466, -10.0156], [-8.3129, -10.1494]];
+  let yPrev = 1.0; engPath = WP.map(([x, z]) => { const y = groundY(x, z, yPrev); yPrev = y; return new THREE.Vector3(x, y, z); });
+  engineer.root.position.copy(engPath[0]);
+  const d0 = engPath[1].clone().sub(engPath[0]); engineer.root.rotation.y = Math.atan2(d0.x, d0.z);
+  engState = 'intro'; engTimer = 0; engSeg = 0; engT = 0; ctr.enabled = false;
+}
+function stepEngineer(dt) {
+  if (!engineer) return; engineer.update(dt); const p = engineer.root.position;
+  if (engState === 'intro') { engineer.setMode('idle'); engTimer += dt; if (engTimer > 2.8) engState = 'walk'; }
+  else if (engState === 'walk') { engineer.setMode('walk'); let move = ENG_SPEED * dt;
+    while (move > 0 && engSeg < engPath.length - 1) { const a = engPath[engSeg], b = engPath[engSeg + 1], segLen = a.distanceTo(b) || 1e-3, remain = segLen * (1 - engT);
+      if (move < remain) { engT += move / segLen; move = 0; } else { move -= remain; engSeg++; engT = 0; } }
+    if (engSeg >= engPath.length - 1) { p.copy(engPath[engPath.length - 1]); engState = 'arrive'; engTimer = 0; }
+    else { const a = engPath[engSeg], b = engPath[engSeg + 1]; p.copy(a).lerp(b, engT);
+      const dir = b.clone().sub(a).setY(0); if (dir.lengthSq() > 1e-5) { dir.normalize(); engineer.root.rotation.y = Math.atan2(dir.x, dir.z); } } }
+  else if (engState === 'arrive') { engineer.setMode('point'); engTimer += dt;
+    if (!engArrived) { engArrived = true; try { window.dispatchEvent(new CustomEvent('engineer:atWater', { detail: { x: p.x, y: p.y, z: p.z } })); } catch (e) {} }
+    if (engTimer > 2.2 && !ctr.enabled) { ctr.enabled = true; ctr.target.set(-8.3, 1.6, -10.1); ctr.update(); } }
+  engCamera(dt);
+}
+function engCamera(dt) {
+  if (engState === 'arrive' && ctr.enabled) return;   // control handed back to the user
+  const p = engineer.root.position; let dp, dl;
+  if (engState === 'intro') { dp = new THREE.Vector3(p.x + 5.5, p.y + 4.0, p.z + 2.2); dl = new THREE.Vector3(-1.5, 2.2, -4.5); }
+  else if (engState === 'walk' && p.x > -4.2) { dp = new THREE.Vector3(1.0, 7.4, 9.8); dl = new THREE.Vector3(0.6, 2.6, -2.6); }   // side view: engineer crosses the arc bridge right -> left
+  else if (engState === 'walk') { dp = new THREE.Vector3(p.x + 5.4, p.y + 4.2, p.z + 4.4); dl = new THREE.Vector3(-8.0, 1.8, -9.8); }   // trail him toward the water plant
+  else { dp = new THREE.Vector3(-2.4, 4.4, -5.4); dl = new THREE.Vector3(-8.3, 1.7, -10.1); }   // settle on the water plant
+  if (!camInit) { camPos.copy(dp); camLook.copy(dl); camInit = true; }
+  const aa = 1 - Math.pow(0.0022, dt); camPos.lerp(dp, aa); camLook.lerp(dl, aa);
+  cam.position.copy(camPos); cam.lookAt(camLook);
+}
 // ---------------------------------------------------------------- loop
 let last = performance.now(), acc = 0, cnt = 0;
 renderer.setAnimationLoop(() => {
@@ -494,6 +588,7 @@ renderer.setAnimationLoop(() => {
   if (spin && wheel) wheel.rotateX(d * Math.PI * 2 * 6 / 60);
   // v2 water + sky motion (runtime-only effects; static look matches the Blender material)
   stepEffects(d, now);
+  if (engineer) stepEngineer(d);
   skyDome.position.copy(cam.position);
   if (flowShader && _wt) { _wt.offset.y += d * 0.25; if (_wtFall) _wtFall.offset.y -= d * 0.6; }   // same directions as stepEffects; still water not scrolled
   perfStep(now, dt);
