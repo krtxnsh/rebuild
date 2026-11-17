@@ -6,7 +6,7 @@
 [![Three.js](https://img.shields.io/badge/3D%20Engine-Three.js%20WebGL-blue.svg)](https://threejs.org/)
 [![Blender](https://img.shields.io/badge/Procedural%20Art-Blender%205.3%20bpy-E87D0D.svg)](https://www.blender.org/)
 [![Draco Compressed](https://img.shields.io/badge/Assets-Draco%20glTF-green.svg)](exports/web/)
-[![Tests](https://img.shields.io/badge/Tests-Node%20--test%20(11%20passing)-brightgreen.svg)](tests/)
+[![Tests](https://img.shields.io/badge/Tests-Node%20--test%20(17%20passing)-brightgreen.svg)](tests/)
 
 > *"A storm wrecked the village of Palampur, draining it of colour and cutting it off for 5 days. Use science to bring it back."*
 
