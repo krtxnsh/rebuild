@@ -13,7 +13,7 @@ with Blender 5.3 `bpy`, driven through the Blender MCP.
 | `renders/` | hero, top-down, ground-level, per-building exteriors, interiors, blockout iterations |
 | `preview/` | three.js validation page (`index.html`) |
 | `reports/` | `reference_analysis.md` (with conflict log), `visual_comparison.md`, `export_validation.md`, `performance_report.md`, `runtime_results.json`, `export_raw.json` |
-| `references/` | Unedited copies of the 7 supplied images |
+| `references/` | Unedited copies of the 7 supplied images. Kept on your PC only: `.gitignore` leaves them out of the repository |
 
 ## Rebuild
 In Blender's Python console (or via MCP), with `scripts/` on `sys.path`:
