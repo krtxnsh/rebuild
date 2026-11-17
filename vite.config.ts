@@ -6,6 +6,8 @@ import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
   return {
+    // GitHub Pages serves this project from /rebuild/ while local Vite runs at /.
+    base: process.env.GITHUB_ACTIONS === 'true' ? '/rebuild/' : '/',
     plugins: [
       react(),
       tailwindcss(),
