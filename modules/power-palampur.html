@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../shared/rebuild-shell.css">
+<script src="../shared/rebuild-notebook.js"></script>
 <script defer src="../shared/rebuild-shell.js"></script>
 <style>
 :root{--ink:#2b2118;--cream:#fff8ea;--cream2:#f6e6c4;--wood:#7a4e2d;--wood2:#5a3720;--green:#4fa52f;--green2:#2f6e1c;--blue:#2a7fc0;--blue2:#185a8c;--red:#c8502f;--gold:#f2c14e;
@@ -377,8 +378,8 @@ function buildUI(audio){
  // toasts / notebook
  const toasts=A('div','toasts');root.appendChild(toasts);
  e.notebook=[];
- e.toast=(t,b)=>{e.notebook.push({t,b});audio.play('page');const el=A('div','toast panel',`<span class="ticon">${IC('book')}</span><div><small>Notebook page unlocked</small><b>${t}</b><p>${b}</p></div>`);toasts.appendChild(el);setTimeout(()=>el.classList.add('out'),4400);setTimeout(()=>el.remove(),5000);};
- e.showNotebook=()=>{const pages=e.notebook.length?e.notebook.map(p=>`<div class="page"><b>${p.t}</b><p>${p.b}</p></div>`).join(''):'<p>No pages yet. Solve puzzles to discover science!</p>';return e.modal(`<h2>${IC('book')} Engineer's Notebook</h2><div class="pages">${pages}</div>`,[{label:'Close'}]);};
+ e.toast=(t,b,id)=>{const NB=window.RebuildNotebook;if(NB){try{NB.unlock(id);}catch(_){}}e.notebook.push({t,b});audio.play('page');const cnt=NB?`<span class="tcount" style="display:block;margin-top:.2em;font-size:.7em;font-weight:900;color:#b07a14">${NB.count()} / ${NB.total()} parts</span>`:'';const el=A('div','toast panel',`<span class="ticon">${IC('book')}</span><div><small>Notebook part unlocked</small><b>${t}</b><p>${b}</p>${cnt}</div>`);toasts.appendChild(el);setTimeout(()=>el.classList.add('out'),4400);setTimeout(()=>el.remove(),5000);};
+ e.showNotebook=()=>{const NB=window.RebuildNotebook;if(NB)return e.modal(NB.html('power'),[{label:'Close'}]);const parts=e.notebook.length?e.notebook.map(p=>`<div class="page"><b>${p.t}</b><p>${p.b}</p></div>`).join(''):'<p>No parts yet. Solve puzzles to discover science!</p>';return e.modal(`<h2>${IC('book')} Engineer's Notebook</h2><div class="pages">${parts}</div>`,[{label:'Close'}]);};
 
  // modal -> resolves button index
  e.modal=(html,btns)=>new Promise(res=>{const m=A('div','modal',`<div class="card panel">${html}<div class="row"></div></div>`);const row=m.querySelector('.row');btns.forEach((b,i)=>{const bb=A('button',`btn ${b.color||(i?'blue':'')}`,`${b.icon?IC(b.icon):''}<span>${b.label}</span>`);bb.addEventListener('click',()=>{audio.play('tap');m.classList.add('out');setTimeout(()=>m.remove(),250);res(i);});row.appendChild(bb);});m.addEventListener('pointerdown',ev=>ev.stopPropagation());root.appendChild(m);});
@@ -1012,15 +1013,15 @@ function startGame(ie,audio,village,Cn){
   if(idx===0){
    const p=await ie.predict('Rio asks: how many wires does the bulb need to light?',['Just one wire is enough','It needs two — a full loop','No wires, only a battery']);
    await runCircuitBuilder(ie,audio);
-   ie.toast('A complete circuit','Electricity needs a complete, closed path to flow. One wire is not enough — you need a full loop.');
+   ie.toast('A complete circuit','Electricity needs a complete, closed path to flow. One wire is not enough — you need a full loop.','power.circuit');
   }else if(idx===1){
    const p=await ie.predict('Is the current used up by the bulb?',['More current goes in than comes out','The same amount in and out','Less goes in than comes out']);
    await runCurrentFlow(ie,audio);
-   ie.toast('Current is not used up','The current entering the bulb equals the current leaving it. The bulb turns electrical energy into light — it does not consume the current.');
+   ie.toast('Current is not used up','The current entering the bulb equals the current leaving it. The bulb turns electrical energy into light — it does not consume the current.','power.current');
   }else{
    const p=await ie.predict('Will any solid object light the bulb?',['Yes — every solid object will','No — only some materials will','Only soft objects will']);
    await runConductorSort(ie,audio);
-   ie.toast('Conductors & insulators','Conductors (metals) let current pass and light the bulb. Insulators like wood, plastic and rubber do not.');
+   ie.toast('Conductors & insulators','Conductors (metals) let current pass and light the bulb. Insulators like wood, plastic and rubber do not.','power.conductors');
   }
 
   S.done[idx]=true;S.busy=false;
@@ -1069,6 +1070,7 @@ function startGame(ie,audio,village,Cn){
   const stars=score>=4?3:score>=2?2:1;
   const starHtml=[0,1,2].map(i=>`<svg class="ic ${i<stars?'':'off'}" viewBox="0 0 24 24">${ICONS.star}</svg>`).join('');
   const r=await ie.modal(`<h2>${IC('bolt')} Village Check-up complete!</h2><div class="stars">${starHtml}</div><p>You scored ${score} / 4. You brought light back to Palampur!</p>
+   ${(()=>{const NB=window.RebuildNotebook;return NB?`<p class="rnb-summary">Notebook: ${NB.count('power')} / ${NB.total('power')} parts unlocked in this module · ${NB.count()} / ${NB.total()} overall</p>`:'';})()}
    <div class="pages">
     <div class="page"><b>Complete circuit</b><p>Electricity needs a closed loop.</p></div>
     <div class="page"><b>Current flows</b><p>The bulb uses energy, not current.</p></div>
