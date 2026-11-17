@@ -1,0 +1,2013 @@
+{
+ "schema_version": "2.0.0",
+ "coordinate_system": "glTF 2.0: +Y up, right-handed, -Z forward. Authoring in Blender Z-up; conversion (x, y, z)_blender -> (x, z, -y)_gltf.",
+ "interactables": [
+  {
+   "semantic_id": "WATER_Door",
+   "node": "WATER_Door_Back",
+   "building": "WATER",
+   "world_position": [
+    -7.835,
+    0.9,
+    -15.7303
+   ],
+   "local_position": [
+    2.1,
+    0.3,
+    -2.26
+   ],
+   "extras": {
+    "instance_id": "WATER_Door_Back",
+    "interactable": true,
+    "animation": "door",
+    "pivot_axis": "Z",
+    "closed_yaw_deg": 180.0,
+    "open_yaw_deg": 80.0,
+    "initial": "closed"
+   },
+   "pivot_axis_local_gltf": [
+    0,
+    1,
+    0
+   ],
+   "world_rotation_quat": [
+    -0.0,
+    -0.99756,
+    0.0,
+    0.06976
+   ]
+  },
+  {
+   "semantic_id": "ELEC_PowerPole",
+   "node": "ELEC_PowerPole_01",
+   "building": "ELEC",
+   "world_position": [
+    6.9584,
+    0.45,
+    -8.7823
+   ],
+   "local_position": [
+    -4.3,
+    0.0,
+    2.3
+   ],
+   "extras": {
+    "interactable": true,
+    "instance_id": "ELEC_PowerPole_01"
+   },
+   "world_rotation_quat": [
+    0.01496,
+    0.66341,
+    -0.01327,
+    0.74799
+   ]
+  },
+  {
+   "semantic_id": "ELEC_MainSwitch",
+   "node": "ELEC_MainSwitch",
+   "building": "ELEC",
+   "world_position": [
+    13.6337,
+    2.05,
+    -9.7727
+   ],
+   "local_position": [
+    0.6,
+    1.6,
+    -2.34
+   ],
+   "extras": {
+    "interactable": true,
+    "animation": "rotate",
+    "pivot_axis": "X",
+    "off_deg": -20,
+    "on_deg": 0
+   },
+   "pivot_axis_local_gltf": [
+    1,
+    0,
+    0
+   ],
+   "world_rotation_quat": [
+    -0.16561,
+    -0.29614,
+    -0.05222,
+    0.93923
+   ]
+  },
+  {
+   "semantic_id": "ELEC_Door",
+   "node": "ELEC_Door_L",
+   "building": "ELEC",
+   "world_position": [
+    9.3978,
+    0.8,
+    -6.5127
+   ],
+   "local_position": [
+    -1.0,
+    0.35,
+    2.76
+   ],
+   "extras": {
+    "instance_id": "ELEC_Door_L",
+    "interactable": true,
+    "animation": "door",
+    "pivot_axis": "Z",
+    "closed_yaw_deg": 0.0,
+    "open_yaw_deg": -100.0,
+    "initial": "open"
+   },
+   "pivot_axis_local_gltf": [
+    0,
+    1,
+    0
+   ],
+   "world_rotation_quat": [
+    -0.0,
+    -0.92388,
+    0.0,
+    0.38268
+   ]
+  },
+  {
+   "semantic_id": "RATION_LentilBag",
+   "node": "RATION_LentilBag",
+   "building": "RATION",
+   "world_position": [
+    -9.7878,
+    0.2,
+    6.0702
+   ],
+   "local_position": [
+    3.25,
+    0.0,
+    2.6
+   ],
+   "extras": {
+    "interactable": true,
+    "contents": "lentil",
+    "label": "LENTILS"
+   },
+   "world_rotation_quat": [
+    0.0,
+    0.03089,
+    -0.0,
+    0.99952
+   ]
+  },
+  {
+   "semantic_id": "RATION_RiceBag",
+   "node": "RATION_RiceBag",
+   "building": "RATION",
+   "world_position": [
+    -10.3575,
+    0.2,
+    6.3782
+   ],
+   "local_position": [
+    2.62,
+    0.0,
+    2.75
+   ],
+   "extras": {
+    "interactable": true,
+    "contents": "rice",
+    "label": "RICE"
+   },
+   "world_rotation_quat": [
+    0.0,
+    -0.04409,
+    -0.0,
+    0.99903
+   ]
+  },
+  {
+   "semantic_id": "WATER_Well",
+   "node": "WATER_Well",
+   "building": "WATER",
+   "world_position": [
+    -4.4996,
+    0.6,
+    -11.0388
+   ],
+   "local_position": [
+    4.75,
+    0.0,
+    2.85
+   ],
+   "extras": {
+    "interactable": true
+   },
+   "world_rotation_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ]
+  },
+  {
+   "semantic_id": "WATER_Door",
+   "node": "WATER_Door_L",
+   "building": "WATER",
+   "world_position": [
+    -9.2855,
+    0.9,
+    -10.962
+   ],
+   "local_position": [
+    -0.0,
+    0.3,
+    2.26
+   ],
+   "extras": {
+    "instance_id": "WATER_Door_L",
+    "interactable": true,
+    "animation": "door",
+    "pivot_axis": "Z",
+    "closed_yaw_deg": 0.0,
+    "open_yaw_deg": -100.0,
+    "initial": "closed"
+   },
+   "pivot_axis_local_gltf": [
+    0,
+    1,
+    0
+   ],
+   "world_rotation_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ]
+  },
+  {
+   "semantic_id": "ELEC_Bulb",
+   "node": "ELEC_Bulb_08",
+   "building": "ELEC",
+   "world_position": [
+    11.2838,
+    3.08,
+    -7.4628
+   ],
+   "local_position": [
+    -0.0,
+    2.63,
+    0.9
+   ],
+   "extras": {
+    "interactable": true,
+    "instance_id": "ELEC_Bulb_08",
+    "toggle": "emissive",
+    "group": "interior"
+   },
+   "world_rotation_quat": [
+    0.0,
+    -0.30071,
+    -0.0,
+    0.95372
+   ]
+  },
+  {
+   "semantic_id": "ELEC_Bulb",
+   "node": "ELEC_Bulb_03",
+   "building": "ELEC",
+   "world_position": [
+    9.0103,
+    3.391,
+    -6.308
+   ],
+   "local_position": [
+    -1.2,
+    2.941,
+    3.15
+   ],
+   "extras": {
+    "interactable": true,
+    "instance_id": "ELEC_Bulb_03",
+    "toggle": "emissive",
+    "group": "facade"
+   },
+   "world_rotation_quat": [
+    0.0,
+    -0.30071,
+    -0.0,
+    0.95372
+   ]
+  },
+  {
+   "semantic_id": "RATION_ProduceCrate",
+   "node": "RATION_ProduceCrate_01",
+   "building": "RATION",
+   "world_position": [
+    -15.4126,
+    0.2,
+    7.6809
+   ],
+   "local_position": [
+    -2.6,
+    0.0,
+    2.7
+   ],
+   "extras": {
+    "interactable": true,
+    "instance_id": "RATION_ProduceCrate_01",
+    "contents": "cabbage"
+   },
+   "world_rotation_quat": [
+    0.0,
+    0.17991,
+    -0.0,
+    0.98368
+   ]
+  },
+  {
+   "semantic_id": "ELEC_Bulb",
+   "node": "ELEC_Bulb_07",
+   "building": "ELEC",
+   "world_position": [
+    11.8363,
+    3.5182,
+    -4.3291
+   ],
+   "local_position": [
+    2.25,
+    3.0682,
+    3.15
+   ],
+   "extras": {
+    "interactable": true,
+    "instance_id": "ELEC_Bulb_07",
+    "toggle": "emissive",
+    "group": "facade"
+   },
+   "world_rotation_quat": [
+    0.0,
+    -0.30071,
+    -0.0,
+    0.95372
+   ]
+  },
+  {
+   "semantic_id": "ELEC_Bulb",
+   "node": "ELEC_Bulb_02",
+   "building": "ELEC",
+   "world_position": [
+    8.6007,
+    3.4421,
+    -6.5948
+   ],
+   "local_position": [
+    -1.7,
+    2.9921,
+    3.15
+   ],
+   "extras": {
+    "interactable": true,
+    "instance_id": "ELEC_Bulb_02",
+    "toggle": "emissive",
+    "group": "facade"
+   },
+   "world_rotation_quat": [
+    0.0,
+    -0.30071,
+    -0.0,
+    0.95372
+   ]
+  },
+  {
+   "semantic_id": "ELEC_Door",
+   "node": "ELEC_Door_R",
+   "building": "ELEC",
+   "world_position": [
+    11.0361,
+    0.8,
+    -5.3656
+   ],
+   "local_position": [
+    1.0,
+    0.35,
+    2.76
+   ],
+   "extras": {
+    "instance_id": "ELEC_Door_R",
+    "interactable": true,
+    "animation": "door",
+    "pivot_axis": "Z",
+    "closed_yaw_deg": 0.0,
+    "open_yaw_deg": 100.0,
+    "initial": "open"
+   },
+   "pivot_axis_local_gltf": [
+    0,
+    1,
+    0
+   ],
+   "world_rotation_quat": [
+    0.0,
+    0.5373,
+    -0.0,
+    0.84339
+   ]
+  },
+  {
+   "semantic_id": "RATION_ProduceCrate",
+   "node": "RATION_ProduceCrate_02",
+   "building": "RATION",
+   "world_position": [
+    -14.6553,
+    0.2,
+    7.9957
+   ],
+   "local_position": [
+    -1.95,
+    0.0,
+    3.2
+   ],
+   "extras": {
+    "interactable": true,
+    "instance_id": "RATION_ProduceCrate_02",
+    "contents": "carrot"
+   },
+   "world_rotation_quat": [
+    0.0,
+    0.0059,
+    -0.0,
+    0.99998
+   ]
+  },
+  {
+   "semantic_id": "RATION_WeighingScale",
+   "node": "RATION_WeighingScale",
+   "building": "RATION",
+   "world_position": [
+    -14.4459,
+    1.4,
+    6.4591
+   ],
+   "local_position": [
+    -1.35,
+    1.2,
+    1.77
+   ],
+   "extras": {
+    "interactable": true
+   },
+   "world_rotation_quat": [
+    0.0,
+    0.13053,
+    -0.0,
+    0.99144
+   ]
+  },
+  {
+   "semantic_id": "ELEC_Door",
+   "node": "ELEC_Door_Back",
+   "building": "ELEC",
+   "world_position": [
+    14.6937,
+    0.8,
+    -9.5431
+   ],
+   "local_position": [
+    1.6,
+    0.35,
+    -2.76
+   ],
+   "extras": {
+    "instance_id": "ELEC_Door_Back",
+    "interactable": true,
+    "animation": "door",
+    "pivot_axis": "Z",
+    "closed_yaw_deg": 180.0,
+    "open_yaw_deg": 80.0,
+    "initial": "closed"
+   },
+   "pivot_axis_local_gltf": [
+    0,
+    1,
+    0
+   ],
+   "world_rotation_quat": [
+    0.0,
+    0.95372,
+    -0.0,
+    0.30071
+   ]
+  },
+  {
+   "semantic_id": "WATER_TestStation",
+   "node": "WATER_TestStation",
+   "building": "WATER",
+   "world_position": [
+    -7.0617,
+    0.9,
+    -13.1023
+   ],
+   "local_position": [
+    2.5,
+    0.3,
+    0.45
+   ],
+   "extras": {
+    "interactable": true,
+    "note": "sample jars: before/after comparison (educational content TBD)"
+   },
+   "world_rotation_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ]
+  },
+  {
+   "semantic_id": "ELEC_PowerPole",
+   "node": "ELEC_PowerPole_03",
+   "building": "ELEC",
+   "world_position": [
+    15.4695,
+    0.45,
+    -3.6773
+   ],
+   "local_position": [
+    5.6,
+    0.0,
+    1.6
+   ],
+   "extras": {
+    "interactable": true,
+    "instance_id": "ELEC_PowerPole_03"
+   },
+   "world_rotation_quat": [
+    0.00585,
+    -0.94234,
+    0.01649,
+    0.3342
+   ]
+  },
+  {
+   "semantic_id": "RATION_ProduceCrate",
+   "node": "RATION_ProduceCrate_03",
+   "building": "RATION",
+   "world_position": [
+    -16.031,
+    0.2,
+    7.6913
+   ],
+   "local_position": [
+    -3.2,
+    0.0,
+    2.55
+   ],
+   "extras": {
+    "interactable": true,
+    "instance_id": "RATION_ProduceCrate_03",
+    "contents": "tomato"
+   },
+   "world_rotation_quat": [
+    0.0,
+    0.27722,
+    -0.0,
+    0.96081
+   ]
+  },
+  {
+   "semantic_id": "WATER_Sedimentation",
+   "node": "WATER_Sedimentation",
+   "building": "WATER",
+   "world_position": [
+    -14.5026,
+    0.6,
+    -12.1575
+   ],
+   "local_position": [
+    -5.0,
+    0.0,
+    0.35
+   ],
+   "extras": {
+    "interactable": true,
+    "stage": "sedimentation",
+    "stage_order": 2,
+    "educational_label": "reserved_for_review"
+   },
+   "world_rotation_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ]
+  },
+  {
+   "semantic_id": "RATION_Sign",
+   "node": "RATION_Sign",
+   "building": "RATION",
+   "world_position": [
+    -12.6209,
+    0.2,
+    7.0882
+   ],
+   "local_position": [
+    0.25,
+    0.0,
+    2.85
+   ],
+   "extras": {
+    "interactable": true,
+    "text": "RATIONS TODAY",
+    "legible_text_geometry": true
+   },
+   "world_rotation_quat": [
+    0.0,
+    0.18974,
+    -0.0,
+    0.98183
+   ]
+  },
+  {
+   "semantic_id": "RATION_StorageShelf",
+   "node": "RATION_StorageShelf",
+   "building": "RATION",
+   "world_position": [
+    -14.9106,
+    0.4,
+    2.986
+   ],
+   "local_position": [
+    -0.9,
+    0.2,
+    -1.705
+   ],
+   "extras": {
+    "interactable": true
+   },
+   "world_rotation_quat": [
+    0.0,
+    0.13053,
+    -0.0,
+    0.99144
+   ]
+  },
+  {
+   "semantic_id": "WATER_FilterStage",
+   "node": "WATER_FilterStage",
+   "building": "WATER",
+   "world_position": [
+    -14.28,
+    0.6,
+    -10.5731
+   ],
+   "local_position": [
+    -5.0,
+    0.0,
+    1.95
+   ],
+   "extras": {
+    "interactable": true,
+    "stage": "filtration",
+    "stage_order": 3,
+    "educational_label": "reserved_for_review"
+   },
+   "world_rotation_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ]
+  },
+  {
+   "semantic_id": "WATER_Door",
+   "node": "WATER_Door_R",
+   "building": "WATER",
+   "world_position": [
+    -7.602,
+    0.9,
+    -11.1986
+   ],
+   "local_position": [
+    1.7,
+    0.3,
+    2.26
+   ],
+   "extras": {
+    "instance_id": "WATER_Door_R",
+    "interactable": true,
+    "animation": "door",
+    "pivot_axis": "Z",
+    "closed_yaw_deg": 0.0,
+    "open_yaw_deg": 100.0,
+    "initial": "closed"
+   },
+   "pivot_axis_local_gltf": [
+    0,
+    1,
+    0
+   ],
+   "world_rotation_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ]
+  },
+  {
+   "semantic_id": "RATION_Counter",
+   "node": "RATION_Counter",
+   "building": "RATION",
+   "world_position": [
+    -13.9198,
+    0.4,
+    6.2974
+   ],
+   "local_position": [
+    -0.8,
+    0.2,
+    1.75
+   ],
+   "extras": {
+    "interactable": true
+   },
+   "world_rotation_quat": [
+    0.0,
+    0.13053,
+    -0.0,
+    0.99144
+   ]
+  },
+  {
+   "semantic_id": "ELEC_Bulb",
+   "node": "ELEC_Bulb_05",
+   "building": "ELEC",
+   "world_position": [
+    11.0581,
+    3.3998,
+    -4.874
+   ],
+   "local_position": [
+    1.3,
+    2.9498,
+    3.15
+   ],
+   "extras": {
+    "interactable": true,
+    "instance_id": "ELEC_Bulb_05",
+    "toggle": "emissive",
+    "group": "facade"
+   },
+   "world_rotation_quat": [
+    0.0,
+    -0.30071,
+    -0.0,
+    0.95372
+   ]
+  },
+  {
+   "semantic_id": "ELEC_Bulb",
+   "node": "ELEC_Bulb_01",
+   "building": "ELEC",
+   "world_position": [
+    8.1911,
+    3.5107,
+    -6.8815
+   ],
+   "local_position": [
+    -2.2,
+    3.0607,
+    3.15
+   ],
+   "extras": {
+    "interactable": true,
+    "instance_id": "ELEC_Bulb_01",
+    "toggle": "emissive",
+    "group": "facade"
+   },
+   "world_rotation_quat": [
+    0.0,
+    -0.30071,
+    -0.0,
+    0.95372
+   ]
+  },
+  {
+   "semantic_id": "WATER_MainValve",
+   "node": "WATER_MainValve",
+   "building": "WATER",
+   "world_position": [
+    -9.6754,
+    2.05,
+    -10.5033
+   ],
+   "local_position": [
+    -0.45,
+    1.45,
+    2.66
+   ],
+   "extras": {
+    "interactable": true,
+    "animation": "rotate",
+    "pivot_axis": "local_Z",
+    "note": "local Z = wall normal (glTF: local Y)",
+    "turns_open": 2
+   },
+   "pivot_axis_local_gltf": [
+    0,
+    1,
+    0
+   ],
+   "world_rotation_quat": [
+    0.70538,
+    0.04933,
+    -0.04933,
+    0.70538
+   ]
+  },
+  {
+   "semantic_id": "ELEC_Bulb",
+   "node": "ELEC_Bulb_04",
+   "building": "ELEC",
+   "world_position": [
+    10.6486,
+    3.3629,
+    -5.1608
+   ],
+   "local_position": [
+    0.8,
+    2.9129,
+    3.15
+   ],
+   "extras": {
+    "interactable": true,
+    "instance_id": "ELEC_Bulb_04",
+    "toggle": "emissive",
+    "group": "facade"
+   },
+   "world_rotation_quat": [
+    0.0,
+    -0.30071,
+    -0.0,
+    0.95372
+   ]
+  },
+  {
+   "semantic_id": "ELEC_Bulb",
+   "node": "ELEC_Bulb_09",
+   "building": "ELEC",
+   "world_position": [
+    12.5456,
+    3.08,
+    -9.2649
+   ],
+   "local_position": [
+    -0.0,
+    2.63,
+    -1.3
+   ],
+   "extras": {
+    "interactable": true,
+    "instance_id": "ELEC_Bulb_09",
+    "toggle": "emissive",
+    "group": "interior"
+   },
+   "world_rotation_quat": [
+    0.0,
+    -0.30071,
+    -0.0,
+    0.95372
+   ]
+  },
+  {
+   "semantic_id": "ELEC_CopperCoils",
+   "node": "ELEC_CopperCoils",
+   "building": "ELEC",
+   "world_position": [
+    10.2846,
+    1.34,
+    -9.2611
+   ],
+   "local_position": [
+    -1.85,
+    0.89,
+    -0.0
+   ],
+   "extras": {
+    "interactable": true
+   },
+   "world_rotation_quat": [
+    0.0,
+    -0.30071,
+    -0.0,
+    0.95372
+   ]
+  },
+  {
+   "semantic_id": "RATION_Door",
+   "node": "RATION_Door_Back",
+   "building": "RATION",
+   "world_position": [
+    -11.9374,
+    0.4,
+    1.7183
+   ],
+   "local_position": [
+    2.3,
+    0.2,
+    -2.16
+   ],
+   "extras": {
+    "instance_id": "RATION_Door_Back",
+    "interactable": true,
+    "animation": "door",
+    "pivot_axis": "Z",
+    "closed_yaw_deg": 180.0,
+    "open_yaw_deg": 80.0,
+    "initial": "closed"
+   },
+   "pivot_axis_local_gltf": [
+    0,
+    1,
+    0
+   ],
+   "world_rotation_quat": [
+    -0.0,
+    -0.99144,
+    0.0,
+    0.13053
+   ]
+  },
+  {
+   "semantic_id": "ELEC_Cable",
+   "node": "ELEC_Cables",
+   "building": "ELEC",
+   "world_position": [
+    11.8,
+    0.45,
+    -8.2
+   ],
+   "local_position": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "extras": {
+    "merged_from": [
+     "ELEC_Cable_01",
+     "ELEC_Cable_02",
+     "ELEC_Cable_03",
+     "ELEC_Cable_04",
+     "ELEC_Cable_05"
+    ],
+    "interactable": true,
+    "note": "overhead wires: separate geometry from poles/house; ELEC_Cable semantic id"
+   },
+   "world_rotation_quat": [
+    0.0,
+    -0.30071,
+    -0.0,
+    0.95372
+   ]
+  },
+  {
+   "semantic_id": "RATION_GrainBag",
+   "node": "RATION_GrainBag",
+   "building": "RATION",
+   "world_position": [
+    -9.8964,
+    0.2,
+    6.824
+   ],
+   "local_position": [
+    2.95,
+    0.0,
+    3.3
+   ],
+   "extras": {
+    "interactable": true,
+    "contents": "burlap",
+    "label": "GRAIN"
+   },
+   "world_rotation_quat": [
+    0.0,
+    -0.09396,
+    -0.0,
+    0.99558
+   ]
+  },
+  {
+   "semantic_id": "RATION_ProduceCrate",
+   "node": "RATION_ProduceCrate_04",
+   "building": "RATION",
+   "world_position": [
+    -15.2927,
+    0.2,
+    8.3217
+   ],
+   "local_position": [
+    -2.65,
+    0.0,
+    3.35
+   ],
+   "extras": {
+    "interactable": true,
+    "instance_id": "RATION_ProduceCrate_04",
+    "contents": "onion"
+   },
+   "world_rotation_quat": [
+    0.0,
+    0.20445,
+    -0.0,
+    0.97888
+   ]
+  },
+  {
+   "semantic_id": "ELEC_Bulb",
+   "node": "ELEC_Bulb_06",
+   "building": "ELEC",
+   "world_position": [
+    11.4677,
+    3.4544,
+    -4.5872
+   ],
+   "local_position": [
+    1.8,
+    3.0044,
+    3.15
+   ],
+   "extras": {
+    "interactable": true,
+    "instance_id": "ELEC_Bulb_06",
+    "toggle": "emissive",
+    "group": "facade"
+   },
+   "world_rotation_quat": [
+    0.0,
+    -0.30071,
+    -0.0,
+    0.95372
+   ]
+  },
+  {
+   "semantic_id": "ELEC_VoltageMeter",
+   "node": "ELEC_VoltageMeter",
+   "building": "ELEC",
+   "world_position": [
+    12.3689,
+    2.95,
+    -10.7559
+   ],
+   "local_position": [
+    -1.0,
+    2.5,
+    -2.42
+   ],
+   "extras": {
+    "interactable": true
+   },
+   "world_rotation_quat": [
+    0.0,
+    -0.30071,
+    -0.0,
+    0.95372
+   ]
+  },
+  {
+   "semantic_id": "WATER_DisinfectionMarker",
+   "node": "WATER_DisinfectionMarker",
+   "building": "WATER",
+   "world_position": [
+    -13.5249,
+    0.6,
+    -9.8714
+   ],
+   "local_position": [
+    -4.35,
+    0.0,
+    2.75
+   ],
+   "extras": {
+    "interactable": true,
+    "stage": "disinfection",
+    "stage_order": 4,
+    "reserved_teaching_marker": true,
+    "note": "Placeholder only. Gravel filtration alone does not make water safe; content requires educational review."
+   },
+   "world_rotation_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ]
+  },
+  {
+   "semantic_id": "ELEC_Generator",
+   "node": "ELEC_Generator",
+   "building": "ELEC",
+   "world_position": [
+    13.1394,
+    0.8,
+    -7.9336
+   ],
+   "local_position": [
+    1.25,
+    0.35,
+    -0.55
+   ],
+   "extras": {
+    "interactable": true
+   },
+   "world_rotation_quat": [
+    0.0,
+    -0.30071,
+    -0.0,
+    0.95372
+   ]
+  },
+  {
+   "semantic_id": "WATER_StorageTank",
+   "node": "WATER_StorageTank",
+   "building": "WATER",
+   "world_position": [
+    -5.1095,
+    6.68,
+    -16.4566
+   ],
+   "local_position": [
+    4.9,
+    6.08,
+    -2.6
+   ],
+   "extras": {
+    "interactable": true,
+    "stage": "storage",
+    "capacity_note": "stylised"
+   },
+   "world_rotation_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ]
+  },
+  {
+   "semantic_id": "WATER_Collection",
+   "node": "WATER_Collection",
+   "building": "WATER",
+   "world_position": [
+    -14.7114,
+    0.6,
+    -13.6429
+   ],
+   "local_position": [
+    -5.0,
+    0.0,
+    -1.15
+   ],
+   "extras": {
+    "interactable": true,
+    "stage": "collection",
+    "stage_order": 1,
+    "educational_label": "reserved_for_review"
+   },
+   "world_rotation_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ]
+  },
+  {
+   "semantic_id": "WATER_Well_Bucket",
+   "node": "WATER_Well_Bucket",
+   "building": "WATER",
+   "world_position": [
+    -4.252,
+    1.42,
+    -11.0736
+   ],
+   "local_position": [
+    5.0,
+    0.82,
+    2.85
+   ],
+   "extras": {
+    "interactable": true,
+    "animation": "translate",
+    "axis": "Z",
+    "min_z": 0.1,
+    "max_z": 0.82,
+    "parent_id": "WATER_Well"
+   },
+   "world_rotation_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ]
+  },
+  {
+   "semantic_id": "ELEC_PowerPole",
+   "node": "ELEC_PowerPole_02",
+   "building": "ELEC",
+   "world_position": [
+    17.8623,
+    0.45,
+    -8.2278
+   ],
+   "local_position": [
+    4.95,
+    0.0,
+    -3.5
+   ],
+   "extras": {
+    "interactable": true,
+    "instance_id": "ELEC_PowerPole_02"
+   },
+   "world_rotation_quat": [
+    -0.01063,
+    -0.7054,
+    -0.01058,
+    0.70865
+   ]
+  },
+  {
+   "semantic_id": "WATER_Well_Windlass",
+   "node": "WATER_Well_Windlass",
+   "building": "WATER",
+   "world_position": [
+    -4.4996,
+    1.98,
+    -11.0388
+   ],
+   "local_position": [
+    4.75,
+    1.38,
+    2.85
+   ],
+   "extras": {
+    "interactable": true,
+    "animation": "rotate",
+    "pivot_axis": "X",
+    "parent_id": "WATER_Well"
+   },
+   "pivot_axis_local_gltf": [
+    1,
+    0,
+    0
+   ],
+   "world_rotation_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ]
+  },
+  {
+   "semantic_id": "WATER_PipeNetwork",
+   "node": "WATER_PipeNetwork",
+   "building": "WATER",
+   "world_position": [
+    -9.6,
+    0.6,
+    -13.2
+   ],
+   "local_position": [
+    -0.0,
+    0.0,
+    -0.0
+   ],
+   "extras": {
+    "interactable": true,
+    "highlight": true
+   },
+   "world_rotation_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ]
+  },
+  {
+   "semantic_id": "WATER_Distribution",
+   "node": "WATER_Distribution",
+   "building": "WATER",
+   "world_position": [
+    -10.6138,
+    0.6,
+    -8.9172
+   ],
+   "local_position": [
+    -1.6,
+    0.0,
+    4.1
+   ],
+   "extras": {
+    "interactable": true,
+    "stage": "distribution",
+    "stage_order": 6
+   },
+   "world_rotation_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ]
+  },
+  {
+   "semantic_id": "ELEC_WaterWheel",
+   "node": "ELEC_WaterWheel",
+   "building": "ELEC",
+   "world_position": [
+    14.5074,
+    1.87,
+    -6.9757
+   ],
+   "local_position": [
+    2.92,
+    1.42,
+    -0.55
+   ],
+   "extras": {
+    "interactable": true,
+    "animation": "rotate",
+    "pivot_axis": "X",
+    "spin_dir": 1,
+    "rpm": 6.0,
+    "radius": 1.25
+   },
+   "pivot_axis_local_gltf": [
+    1,
+    0,
+    0
+   ],
+   "world_rotation_quat": [
+    0.0,
+    -0.30071,
+    -0.0,
+    0.95372
+   ]
+  }
+ ],
+ "zones": [
+  {
+   "semantic_id": "FARM_InteractionZone",
+   "node": "FARM_Zone_lettuce_beans",
+   "building": "EXPANSION",
+   "world_position": [
+    18.85,
+    1.012,
+    7.85
+   ],
+   "local_position": [
+    18.85,
+    1.012,
+    7.85
+   ],
+   "purpose": "crop_plot",
+   "half_extents_gltf": [
+    0.8499999999999996,
+    0.6,
+    1.3499999999999996
+   ],
+   "world_rotation_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "targets": []
+  },
+  {
+   "semantic_id": "FARM_InteractionZone",
+   "node": "FARM_Zone_cabbage",
+   "building": "EXPANSION",
+   "world_position": [
+    15.05,
+    1.012,
+    2.85
+   ],
+   "local_position": [
+    15.05,
+    1.012,
+    2.85
+   ],
+   "purpose": "crop_plot",
+   "half_extents_gltf": [
+    1.5500000000000007,
+    0.6,
+    1.2600000000000002
+   ],
+   "world_rotation_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "targets": []
+  },
+  {
+   "semantic_id": "RATION_InteractionZone",
+   "node": "RATION_InteractionZone_Sacks",
+   "building": "RATION",
+   "world_position": [
+    -10.7882,
+    0.9,
+    7.1665
+   ],
+   "local_position": [
+    2.0,
+    0.7,
+    3.4
+   ],
+   "purpose": "sacks",
+   "half_extents_gltf": [
+    0.45,
+    0.7,
+    0.45
+   ],
+   "world_rotation_quat": [
+    0.0,
+    0.13053,
+    -0.0,
+    0.99144
+   ],
+   "targets": [
+    "RATION_RiceBag",
+    "RATION_LentilBag",
+    "RATION_GrainBag"
+   ]
+  },
+  {
+   "semantic_id": "ELEC_InteractionZone",
+   "node": "ELEC_InteractionZone_Poles",
+   "building": "ELEC",
+   "world_position": [
+    8.1954,
+    1.15,
+    -8.2824
+   ],
+   "local_position": [
+    -3.0,
+    0.7,
+    2.0
+   ],
+   "purpose": "power_poles",
+   "half_extents_gltf": [
+    0.5,
+    0.7,
+    0.8
+   ],
+   "world_rotation_quat": [
+    0.0,
+    -0.30071,
+    -0.0,
+    0.95372
+   ],
+   "targets": [
+    "ELEC_PowerPole",
+    "ELEC_Cable"
+   ]
+  },
+  {
+   "semantic_id": "RATION_InteractionZone",
+   "node": "RATION_InteractionZone_Crates",
+   "building": "RATION",
+   "world_position": [
+    -14.363,
+    0.9,
+    7.3479
+   ],
+   "local_position": [
+    -1.5,
+    0.7,
+    2.65
+   ],
+   "purpose": "produce",
+   "half_extents_gltf": [
+    0.3,
+    0.7,
+    0.45
+   ],
+   "world_rotation_quat": [
+    0.0,
+    0.13053,
+    -0.0,
+    0.99144
+   ],
+   "targets": [
+    "RATION_ProduceCrate"
+   ]
+  },
+  {
+   "semantic_id": "FARM_InteractionZone",
+   "node": "FARM_Zone_grain",
+   "building": "EXPANSION",
+   "world_position": [
+    15.05,
+    1.012,
+    7.85
+   ],
+   "local_position": [
+    15.05,
+    1.012,
+    7.85
+   ],
+   "purpose": "crop_plot",
+   "half_extents_gltf": [
+    1.5500000000000007,
+    0.6,
+    1.3499999999999996
+   ],
+   "world_rotation_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "targets": []
+  },
+  {
+   "semantic_id": "ELEC_InteractionZone",
+   "node": "ELEC_InteractionZone_Generator",
+   "building": "ELEC",
+   "world_position": [
+    12.3203,
+    1.5,
+    -8.5071
+   ],
+   "local_position": [
+    0.25,
+    1.05,
+    -0.55
+   ],
+   "purpose": "generator",
+   "half_extents_gltf": [
+    0.45,
+    0.7,
+    0.7
+   ],
+   "world_rotation_quat": [
+    0.0,
+    -0.30071,
+    -0.0,
+    0.95372
+   ],
+   "targets": [
+    "ELEC_Generator"
+   ]
+  },
+  {
+   "semantic_id": "ELEC_InteractionZone",
+   "node": "ELEC_InteractionZone_Panel",
+   "building": "ELEC",
+   "world_position": [
+    12.4433,
+    1.5,
+    -9.6418
+   ],
+   "local_position": [
+    -0.3,
+    1.05,
+    -1.55
+   ],
+   "purpose": "control_panel",
+   "half_extents_gltf": [
+    1.2,
+    0.7,
+    0.6
+   ],
+   "world_rotation_quat": [
+    0.0,
+    -0.30071,
+    -0.0,
+    0.95372
+   ],
+   "targets": [
+    "ELEC_VoltageMeter",
+    "ELEC_MainSwitch"
+   ]
+  },
+  {
+   "semantic_id": "WATER_InteractionZone",
+   "node": "WATER_InteractionZone_Valve",
+   "building": "WATER",
+   "world_position": [
+    -9.5933,
+    1.3,
+    -9.919
+   ],
+   "local_position": [
+    -0.45,
+    0.7,
+    3.25
+   ],
+   "purpose": "main_valve",
+   "half_extents_gltf": [
+    0.6,
+    0.7,
+    0.5
+   ],
+   "world_rotation_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ],
+   "targets": [
+    "WATER_MainValve",
+    "WATER_PipeNetwork"
+   ]
+  },
+  {
+   "semantic_id": "WATER_InteractionZone",
+   "node": "WATER_InteractionZone_Cascade",
+   "building": "WATER",
+   "world_position": [
+    -13.3499,
+    1.3,
+    -12.2186
+   ],
+   "local_position": [
+    -3.85,
+    0.7,
+    0.45
+   ],
+   "purpose": "treatment_cascade",
+   "half_extents_gltf": [
+    0.42,
+    0.7,
+    1.9
+   ],
+   "world_rotation_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ],
+   "targets": [
+    "WATER_Collection",
+    "WATER_Sedimentation",
+    "WATER_FilterStage"
+   ]
+  },
+  {
+   "semantic_id": "ELEC_InteractionZone",
+   "node": "ELEC_InteractionZone_Coils",
+   "building": "ELEC",
+   "world_position": [
+    11.284,
+    1.5,
+    -9.2937
+   ],
+   "local_position": [
+    -1.05,
+    1.05,
+    -0.6
+   ],
+   "purpose": "copper_coils",
+   "half_extents_gltf": [
+    0.45,
+    0.7,
+    0.8
+   ],
+   "world_rotation_quat": [
+    0.0,
+    -0.30071,
+    -0.0,
+    0.95372
+   ],
+   "targets": [
+    "ELEC_CopperCoils"
+   ]
+  },
+  {
+   "semantic_id": "ELEC_InteractionZone",
+   "node": "ELEC_InteractionZone_WaterWheel",
+   "building": "ELEC",
+   "world_position": [
+    13.4175,
+    1.15,
+    -4.931
+   ],
+   "local_position": [
+    3.2,
+    0.7,
+    1.75
+   ],
+   "purpose": "waterwheel",
+   "half_extents_gltf": [
+    0.7,
+    0.7,
+    0.6
+   ],
+   "world_rotation_quat": [
+    0.0,
+    -0.30071,
+    -0.0,
+    0.95372
+   ],
+   "targets": [
+    "ELEC_WaterWheel"
+   ]
+  },
+  {
+   "semantic_id": "FARM_InteractionZone",
+   "node": "FARM_Zone_carrot",
+   "building": "EXPANSION",
+   "world_position": [
+    19.65,
+    1.012,
+    2.85
+   ],
+   "local_position": [
+    19.65,
+    1.012,
+    2.85
+   ],
+   "purpose": "crop_plot",
+   "half_extents_gltf": [
+    1.6500000000000004,
+    0.6,
+    1.2600000000000002
+   ],
+   "world_rotation_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "targets": []
+  },
+  {
+   "semantic_id": "RATION_InteractionZone",
+   "node": "RATION_InteractionZone_Stalls",
+   "building": "RATION",
+   "world_position": [
+    -8.8117,
+    0.9,
+    3.5311
+   ],
+   "local_position": [
+    4.85,
+    0.7,
+    0.4
+   ],
+   "purpose": "side_stalls",
+   "half_extents_gltf": [
+    0.4,
+    0.7,
+    1.4
+   ],
+   "world_rotation_quat": [
+    0.0,
+    0.13053,
+    -0.0,
+    0.99144
+   ],
+   "targets": [
+    "RATION_Stall"
+   ]
+  },
+  {
+   "semantic_id": "WATER_InteractionZone",
+   "node": "WATER_InteractionZone_Distribution",
+   "building": "WATER",
+   "world_position": [
+    -10.5373,
+    1.3,
+    -8.3726
+   ],
+   "local_position": [
+    -1.6,
+    0.7,
+    4.65
+   ],
+   "purpose": "distribution",
+   "half_extents_gltf": [
+    0.7,
+    0.7,
+    0.3
+   ],
+   "world_rotation_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ],
+   "targets": [
+    "WATER_Distribution"
+   ]
+  },
+  {
+   "semantic_id": "WATER_InteractionZone",
+   "node": "WATER_InteractionZone_Tank",
+   "building": "WATER",
+   "world_position": [
+    -3.1507,
+    1.3,
+    -16.53
+   ],
+   "local_position": [
+    6.85,
+    0.7,
+    -2.4
+   ],
+   "purpose": "storage_tank",
+   "half_extents_gltf": [
+    0.45,
+    0.7,
+    0.8
+   ],
+   "world_rotation_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ],
+   "targets": [
+    "WATER_StorageTank"
+   ]
+  },
+  {
+   "semantic_id": "RATION_InteractionZone",
+   "node": "RATION_InteractionZone_Scale",
+   "building": "RATION",
+   "world_position": [
+    -14.3908,
+    1.1,
+    5.6989
+   ],
+   "local_position": [
+    -1.1,
+    0.9,
+    1.05
+   ],
+   "purpose": "scale_shopkeeper",
+   "half_extents_gltf": [
+    0.8,
+    0.7,
+    0.35
+   ],
+   "world_rotation_quat": [
+    0.0,
+    0.13053,
+    -0.0,
+    0.99144
+   ],
+   "targets": [
+    "RATION_WeighingScale"
+   ]
+  },
+  {
+   "semantic_id": "WATER_InteractionZone",
+   "node": "WATER_InteractionZone_Well",
+   "building": "WATER",
+   "world_position": [
+    -4.2978,
+    1.3,
+    -9.6029
+   ],
+   "local_position": [
+    4.75,
+    0.7,
+    4.3
+   ],
+   "purpose": "well",
+   "half_extents_gltf": [
+    0.8,
+    0.7,
+    0.45
+   ],
+   "world_rotation_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ],
+   "targets": [
+    "WATER_Well",
+    "WATER_Well_Windlass"
+   ]
+  },
+  {
+   "semantic_id": "RATION_InteractionZone",
+   "node": "RATION_InteractionZone_Counter",
+   "building": "RATION",
+   "world_position": [
+    -13.661,
+    0.9,
+    7.2634
+   ],
+   "local_position": [
+    -0.8,
+    0.7,
+    2.75
+   ],
+   "purpose": "counter_customer",
+   "half_extents_gltf": [
+    1.2,
+    0.7,
+    0.4
+   ],
+   "world_rotation_quat": [
+    0.0,
+    0.13053,
+    -0.0,
+    0.99144
+   ],
+   "targets": [
+    "RATION_Counter",
+    "RATION_WeighingScale"
+   ]
+  },
+  {
+   "semantic_id": "WATER_InteractionZone",
+   "node": "WATER_InteractionZone_Basins",
+   "building": "WATER",
+   "world_position": [
+    -12.7822,
+    1.3,
+    -9.9757
+   ],
+   "local_position": [
+    -3.6,
+    0.7,
+    2.75
+   ],
+   "purpose": "basins_marker",
+   "half_extents_gltf": [
+    0.6,
+    0.7,
+    0.35
+   ],
+   "world_rotation_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ],
+   "targets": [
+    "WATER_DisinfectionMarker"
+   ]
+  },
+  {
+   "semantic_id": "WATER_InteractionZone",
+   "node": "WATER_InteractionZone_Interior",
+   "building": "WATER",
+   "world_position": [
+    -9.3447,
+    1.6,
+    -13.5388
+   ],
+   "local_position": [
+    0.3,
+    1.0,
+    -0.3
+   ],
+   "purpose": "test_station",
+   "half_extents_gltf": [
+    1.2,
+    0.7,
+    1.0
+   ],
+   "world_rotation_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ],
+   "targets": [
+    "WATER_TestStation",
+    "WATER_PipeNetwork"
+   ]
+  },
+  {
+   "semantic_id": "RATION_InteractionZone",
+   "node": "RATION_InteractionZone_Shelf",
+   "building": "RATION",
+   "world_position": [
+    -14.7152,
+    1.1,
+    3.7153
+   ],
+   "local_position": [
+    -0.9,
+    0.9,
+    -0.95
+   ],
+   "purpose": "storage_shelf",
+   "half_extents_gltf": [
+    1.5,
+    0.7,
+    0.4
+   ],
+   "world_rotation_quat": [
+    0.0,
+    0.13053,
+    -0.0,
+    0.99144
+   ],
+   "targets": [
+    "RATION_StorageShelf"
+   ]
+  }
+ ]
+}

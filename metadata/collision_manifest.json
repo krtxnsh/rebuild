@@ -1,0 +1,4886 @@
+{
+ "schema_version": "2.0.0",
+ "coordinate_system": "glTF 2.0: +Y up, right-handed, -Z forward. Authoring in Blender Z-up; conversion (x, y, z)_blender -> (x, z, -y)_gltf.",
+ "player_capsule": {
+  "height": 1.4,
+  "radius": 0.3
+ },
+ "terrain": {
+  "node": "TERRAIN_Ground",
+  "shape": "heightfield/trimesh from render mesh"
+ },
+ "colliders": [
+  {
+   "node": "COL_WATER_Wall_Right_00",
+   "shape": "box",
+   "building": "WATER",
+   "center_world": [
+    -6.5549,
+    2.9,
+    -13.628
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.75471,
+    -0.0,
+    0.65606
+   ],
+   "half_extents_gltf_local": [
+    2.05,
+    2.0,
+    0.145
+   ]
+  },
+  {
+   "node": "COL_ELEC_EntryRamp",
+   "shape": "box",
+   "building": "ELEC",
+   "center_world": [
+    9.9359,
+    0.585,
+    -5.5378
+   ],
+   "rotation_world_quat": [
+    0.17585,
+    -0.29555,
+    0.05545,
+    0.93736
+   ],
+   "half_extents_gltf_local": [
+    1.0,
+    0.06,
+    0.5
+   ]
+  },
+  {
+   "node": "COL_RiverEdge_002",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    1.217,
+    0.5,
+    -16.5866
+   ],
+   "rotation_world_quat": [
+    -0.0,
+    -0.80132,
+    0.0,
+    0.59824
+   ],
+   "half_extents_gltf_local": [
+    3.0824,
+    1.0,
+    0.15
+   ]
+  },
+  {
+   "node": "COL_HOUSE_04_Yard_01",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    8.0751,
+    0.3862,
+    -48.3048
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.08716,
+    -0.0,
+    0.99619
+   ],
+   "half_extents_gltf_local": [
+    0.5,
+    0.2,
+    1.25
+   ]
+  },
+  {
+   "node": "COL_FARM_Fence_05",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    12.6,
+    0.5796,
+    7.6
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.70711,
+    -0.0,
+    0.70711
+   ],
+   "half_extents_gltf_local": [
+    2.0,
+    0.45,
+    0.08
+   ]
+  },
+  {
+   "node": "COL_FARM_Plot_carrot",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    19.65,
+    0.612,
+    2.85
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    1.65,
+    0.2,
+    1.26
+   ]
+  },
+  {
+   "node": "COL_HOUSE_07_Yard_01",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    -19.9475,
+    0.8038,
+    -9.1711
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.87462,
+    -0.0,
+    0.48481
+   ],
+   "half_extents_gltf_local": [
+    0.925,
+    0.15,
+    0.24
+   ]
+  },
+  {
+   "node": "COL_HOUSE_06_PorchRail_0",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    26.7086,
+    2.4311,
+    -36.4669
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.5,
+    -0.0,
+    0.86603
+   ],
+   "half_extents_gltf_local": [
+    0.06,
+    0.5,
+    0.75
+   ]
+  },
+  {
+   "node": "COL_WATER_TestStation",
+   "shape": "box",
+   "building": "WATER",
+   "center_world": [
+    -7.0617,
+    1.35,
+    -13.1023
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ],
+   "half_extents_gltf_local": [
+    0.4,
+    0.45,
+    0.78
+   ]
+  },
+  {
+   "node": "COL_HOUSE_03_Yard_01",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    -17.603,
+    2.924,
+    -41.3418
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.17365,
+    -0.0,
+    0.98481
+   ],
+   "half_extents_gltf_local": [
+    2.575,
+    0.15,
+    0.24
+   ]
+  },
+  {
+   "node": "COL_HOUSE_05_Body_0",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    34.0,
+    5.6945,
+    -43.0
+   ],
+   "rotation_world_quat": [
+    -0.0,
+    -0.70711,
+    0.0,
+    0.70711
+   ],
+   "half_extents_gltf_local": [
+    2.7,
+    1.8,
+    2.2
+   ]
+  },
+  {
+   "node": "COL_HOUSE_01_Yard_00",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    -22.0107,
+    1.8294,
+    -31.8202
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.59482,
+    -0.0,
+    0.80386
+   ],
+   "half_extents_gltf_local": [
+    0.825,
+    0.15,
+    0.24
+   ]
+  },
+  {
+   "node": "COL_FARM_Wheelbarrow",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    11.5,
+    0.5734,
+    3.7
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.8,
+    0.4,
+    0.45
+   ]
+  },
+  {
+   "node": "COL_Tree_00",
+   "shape": "capsule",
+   "building": null,
+   "center_world": [
+    -26.0,
+    2.4022,
+    12.0
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.42,
+    1.8,
+    0.42
+   ]
+  },
+  {
+   "node": "COL_BRIDGE_Main_Rail_0_01",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    -2.1412,
+    1.6089,
+    -1.6104
+   ],
+   "rotation_world_quat": [
+    -0.00482,
+    -0.0435,
+    0.10992,
+    0.99298
+   ],
+   "half_extents_gltf_local": [
+    0.9907,
+    0.55,
+    0.08
+   ]
+  },
+  {
+   "node": "COL_WATER_Wall_Left_00",
+   "shape": "box",
+   "building": "WATER",
+   "center_world": [
+    -12.6451,
+    2.9,
+    -12.772
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.65606,
+    -0.0,
+    0.75471
+   ],
+   "half_extents_gltf_local": [
+    2.05,
+    2.0,
+    0.145
+   ]
+  },
+  {
+   "node": "COL_RATION_Stall_01",
+   "shape": "box",
+   "building": "RATION",
+   "center_world": [
+    -9.5094,
+    0.8,
+    4.598
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.13053,
+    -0.0,
+    0.99144
+   ],
+   "half_extents_gltf_local": [
+    0.5,
+    0.6,
+    0.78
+   ]
+  },
+  {
+   "node": "COL_ELEC_Pole_02",
+   "shape": "box",
+   "building": "ELEC",
+   "center_world": [
+    17.8623,
+    3.65,
+    -8.2278
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.30071,
+    -0.0,
+    0.95372
+   ],
+   "half_extents_gltf_local": [
+    0.18,
+    3.2,
+    0.18
+   ]
+  },
+  {
+   "node": "COL_RiverEdge_003",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    6.586,
+    0.5,
+    -14.9949
+   ],
+   "rotation_world_quat": [
+    -0.0,
+    -0.80132,
+    0.0,
+    0.59824
+   ],
+   "half_extents_gltf_local": [
+    3.0824,
+    1.0,
+    0.15
+   ]
+  },
+  {
+   "node": "COL_EXP_Sign_01",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    -22.9,
+    2.8839,
+    -32.9
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.1,
+    1.1,
+    0.1
+   ]
+  },
+  {
+   "node": "COL_HOUSE_04_StepRamp",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    4.4499,
+    1.2141,
+    -46.4613
+   ],
+   "rotation_world_quat": [
+    0.22822,
+    -0.08484,
+    0.01997,
+    0.9697
+   ],
+   "half_extents_gltf_local": [
+    0.75,
+    0.05,
+    1.2513
+   ]
+  },
+  {
+   "node": "COL_FARM_Fence_01",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    16.2,
+    0.8436,
+    0.8
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    3.6,
+    0.45,
+    0.08
+   ]
+  },
+  {
+   "node": "COL_HOUSE_07_Body_0",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    -21.25,
+    3.1066,
+    -6.5
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.87462,
+    -0.0,
+    0.48481
+   ],
+   "half_extents_gltf_local": [
+    2.7,
+    1.8,
+    2.2
+   ]
+  },
+  {
+   "node": "COL_RATION_Floor",
+   "shape": "box",
+   "building": "RATION",
+   "center_world": [
+    -13.6,
+    0.3,
+    4.4
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.13053,
+    -0.0,
+    0.99144
+   ],
+   "half_extents_gltf_local": [
+    3.0,
+    0.1,
+    2.2
+   ]
+  },
+  {
+   "node": "COL_Tree_01",
+   "shape": "capsule",
+   "building": null,
+   "center_world": [
+    -29.0,
+    3.2121,
+    -2.0
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.455,
+    1.95,
+    0.455
+   ]
+  },
+  {
+   "node": "COL_ELEC_Fence_00",
+   "shape": "box",
+   "building": "ELEC",
+   "center_world": [
+    8.5643,
+    1.0,
+    -9.8553
+   ],
+   "rotation_world_quat": [
+    -0.0,
+    -0.88701,
+    0.0,
+    0.46175
+   ],
+   "half_extents_gltf_local": [
+    2.9,
+    0.55,
+    0.05
+   ]
+  },
+  {
+   "node": "COL_WATER_Wall_Front_00",
+   "shape": "box",
+   "building": "WATER",
+   "center_world": [
+    -10.8817,
+    2.9,
+    -10.8235
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ],
+   "half_extents_gltf_local": [
+    1.6,
+    2.0,
+    0.145
+   ]
+  },
+  {
+   "node": "COL_WATER_Distribution",
+   "shape": "box",
+   "building": "WATER",
+   "center_world": [
+    -10.6138,
+    0.95,
+    -8.9172
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ],
+   "half_extents_gltf_local": [
+    0.65,
+    0.35,
+    0.38
+   ]
+  },
+  {
+   "node": "COL_RATION_Stall_02",
+   "shape": "box",
+   "building": "RATION",
+   "center_world": [
+    -9.9494,
+    0.8,
+    2.9559
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.13053,
+    -0.0,
+    0.99144
+   ],
+   "half_extents_gltf_local": [
+    0.5,
+    0.6,
+    0.78
+   ]
+  },
+  {
+   "node": "COL_ENV_LampPost_01",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    10.7248,
+    1.6036,
+    -2.9658
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.1,
+    1.2,
+    0.1
+   ]
+  },
+  {
+   "node": "COL_HOUSE_05_Yard_07",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    38.25,
+    3.9012,
+    -40.55
+   ],
+   "rotation_world_quat": [
+    -0.0,
+    -0.70711,
+    0.0,
+    0.70711
+   ],
+   "half_extents_gltf_local": [
+    0.1,
+    1.0,
+    0.1
+   ]
+  },
+  {
+   "node": "COL_ELEC_Fence_04",
+   "shape": "box",
+   "building": "ELEC",
+   "center_world": [
+    12.2335,
+    1.0,
+    -2.8913
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.02613,
+    -0.0,
+    0.99966
+   ],
+   "half_extents_gltf_local": [
+    0.9434,
+    0.55,
+    0.05
+   ]
+  },
+  {
+   "node": "COL_WATER_Basin_02",
+   "shape": "box",
+   "building": "WATER",
+   "center_world": [
+    -12.8125,
+    0.9,
+    -9.1131
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ],
+   "half_extents_gltf_local": [
+    0.48,
+    0.3,
+    0.48
+   ]
+  },
+  {
+   "node": "COL_HOUSE_03_Body_1",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    -17.0533,
+    5.249,
+    -44.4365
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.17365,
+    -0.0,
+    0.98481
+   ],
+   "half_extents_gltf_local": [
+    1.15,
+    1.3,
+    2.0
+   ]
+  },
+  {
+   "node": "COL_Tree_11",
+   "shape": "capsule",
+   "building": null,
+   "center_world": [
+    24.0,
+    2.4591,
+    -13.0
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.455,
+    1.95,
+    0.455
+   ]
+  },
+  {
+   "node": "COL_RiverEdge_013",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    3.9316,
+    0.5,
+    30.6894
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.64063,
+    -0.0,
+    0.76785
+   ],
+   "half_extents_gltf_local": [
+    3.1216,
+    1.0,
+    0.15
+   ]
+  },
+  {
+   "node": "COL_HOUSE_01_PorchRail_1",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    -19.7443,
+    2.6014,
+    -28.4088
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.59482,
+    -0.0,
+    0.80386
+   ],
+   "half_extents_gltf_local": [
+    0.06,
+    0.5,
+    0.75
+   ]
+  },
+  {
+   "node": "COL_EXP_GardenFence_2",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    -11.6,
+    0.536,
+    13.6
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    1.96,
+    0.45,
+    0.06
+   ]
+  },
+  {
+   "node": "COL_ELEC_Workbench",
+   "shape": "box",
+   "building": "ELEC",
+   "center_world": [
+    12.4673,
+    1.28,
+    -5.8405
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.30071,
+    -0.0,
+    0.95372
+   ],
+   "half_extents_gltf_local": [
+    0.32,
+    0.48,
+    0.62
+   ]
+  },
+  {
+   "node": "COL_BRIDGE_FootSouth_Deck",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    -1.8648,
+    0.29,
+    14.0952
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.00734,
+    -0.0,
+    0.99997
+   ],
+   "half_extents_gltf_local": [
+    5.2,
+    0.06,
+    0.9
+   ]
+  },
+  {
+   "node": "COL_BRIDGE_Main_Deck_03",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    1.8112,
+    1.2878,
+    -2.4178
+   ],
+   "rotation_world_quat": [
+    0.00163,
+    -0.04373,
+    -0.03724,
+    0.99835
+   ],
+   "half_extents_gltf_local": [
+    0.9894,
+    0.06,
+    1.1
+   ]
+  },
+  {
+   "node": "COL_WATER_HerbBed",
+   "shape": "box",
+   "building": "WATER",
+   "center_world": [
+    -12.0328,
+    0.8,
+    -16.14
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ],
+   "half_extents_gltf_local": [
+    1.3,
+    0.2,
+    0.45
+   ]
+  },
+  {
+   "node": "COL_RATION_Wall_Right_00",
+   "shape": "box",
+   "building": "RATION",
+   "center_world": [
+    -10.823,
+    2.375,
+    3.6559
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.79335,
+    -0.0,
+    0.60876
+   ],
+   "half_extents_gltf_local": [
+    1.95,
+    1.975,
+    0.145
+   ]
+  },
+  {
+   "node": "COL_Tree_02",
+   "shape": "capsule",
+   "building": null,
+   "center_world": [
+    -24.5,
+    2.6573,
+    -14.0
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.385,
+    1.65,
+    0.385
+   ]
+  },
+  {
+   "node": "COL_BRIDGE_Main_Rail_1_01",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    -1.9401,
+    1.6089,
+    -3.9016
+   ],
+   "rotation_world_quat": [
+    -0.00482,
+    -0.0435,
+    0.10992,
+    0.99298
+   ],
+   "half_extents_gltf_local": [
+    0.9907,
+    0.55,
+    0.08
+   ]
+  },
+  {
+   "node": "COL_BRIDGE_Main_Deck_00",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    -3.9666,
+    0.4211,
+    -2.925
+   ],
+   "rotation_world_quat": [
+    -0.00778,
+    -0.04307,
+    0.17763,
+    0.98312
+   ],
+   "half_extents_gltf_local": [
+    1.0519,
+    0.06,
+    1.1
+   ]
+  },
+  {
+   "node": "COL_ELEC_Pole_01",
+   "shape": "box",
+   "building": "ELEC",
+   "center_world": [
+    6.9584,
+    3.75,
+    -8.7823
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.30071,
+    -0.0,
+    0.95372
+   ],
+   "half_extents_gltf_local": [
+    0.18,
+    3.3,
+    0.18
+   ]
+  },
+  {
+   "node": "COL_RiverEdge_005",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    4.9851,
+    0.5,
+    -9.1905
+   ],
+   "rotation_world_quat": [
+    -0.0,
+    -0.78969,
+    0.0,
+    0.6135
+   ],
+   "half_extents_gltf_local": [
+    3.0473,
+    1.0,
+    0.15
+   ]
+  },
+  {
+   "node": "COL_HOUSE_01_Yard_03",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    -19.1318,
+    1.8083,
+    -27.6026
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.59482,
+    -0.0,
+    0.80386
+   ],
+   "half_extents_gltf_local": [
+    0.4,
+    0.45,
+    1.1
+   ]
+  },
+  {
+   "node": "COL_WATER_Wall_Back_00",
+   "shape": "box",
+   "building": "WATER",
+   "center_world": [
+    -7.2785,
+    2.9,
+    -15.7226
+   ],
+   "rotation_world_quat": [
+    -0.0,
+    -0.99756,
+    0.0,
+    0.06976
+   ],
+   "half_extents_gltf_local": [
+    0.55,
+    2.0,
+    0.145
+   ]
+  },
+  {
+   "node": "COL_HOUSE_07_StepRamp",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    -18.8469,
+    0.981,
+    -7.8248
+   ],
+   "rotation_world_quat": [
+    0.1188,
+    0.84795,
+    -0.21432,
+    0.47003
+   ],
+   "half_extents_gltf_local": [
+    0.75,
+    0.05,
+    0.7273
+   ]
+  },
+  {
+   "node": "COL_RATION_Crates",
+   "shape": "box",
+   "building": "RATION",
+   "center_world": [
+    -15.3349,
+    0.5,
+    7.9707
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.13053,
+    -0.0,
+    0.99144
+   ],
+   "half_extents_gltf_local": [
+    0.85,
+    0.3,
+    0.65
+   ]
+  },
+  {
+   "node": "COL_HOUSE_02_Yard_01",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    -28.5505,
+    1.8189,
+    -34.8624
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.5373,
+    -0.0,
+    0.84339
+   ],
+   "half_extents_gltf_local": [
+    0.925,
+    0.15,
+    0.24
+   ]
+  },
+  {
+   "node": "COL_HOUSE_06_Body_0",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    30.5,
+    3.6811,
+    -36.0
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.5,
+    -0.0,
+    0.86603
+   ],
+   "half_extents_gltf_local": [
+    2.6,
+    1.75,
+    2.4
+   ]
+  },
+  {
+   "node": "COL_Tree_18",
+   "shape": "capsule",
+   "building": null,
+   "center_world": [
+    -19.0,
+    3.9255,
+    -38.0
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.35,
+    1.5,
+    0.35
+   ]
+  },
+  {
+   "node": "COL_WATER_TowerPost_11",
+   "shape": "box",
+   "building": "WATER",
+   "center_world": [
+    -4.1563,
+    3.6,
+    -17.7216
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ],
+   "half_extents_gltf_local": [
+    0.14,
+    3.0,
+    0.14
+   ]
+  },
+  {
+   "node": "COL_HOUSE_05_Yard_06",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    38.25,
+    4.7533,
+    -45.45
+   ],
+   "rotation_world_quat": [
+    -0.0,
+    -0.70711,
+    0.0,
+    0.70711
+   ],
+   "half_extents_gltf_local": [
+    0.1,
+    1.0,
+    0.1
+   ]
+  },
+  {
+   "node": "COL_EXP_Gathering_Lantern",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    -21.2,
+    3.6736,
+    -38.2
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.12,
+    1.15,
+    0.12
+   ]
+  },
+  {
+   "node": "COL_ELEC_Wall_Back_01",
+   "shape": "box",
+   "building": "ELEC",
+   "center_world": [
+    12.5066,
+    2.8,
+    -10.9525
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.95372,
+    -0.0,
+    0.30071
+   ],
+   "half_extents_gltf_local": [
+    1.5,
+    2.0,
+    0.16
+   ]
+  },
+  {
+   "node": "COL_ELEC_Spools",
+   "shape": "box",
+   "building": "ELEC",
+   "center_world": [
+    7.4333,
+    0.8,
+    -6.4966
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.30071,
+    -0.0,
+    0.95372
+   ],
+   "half_extents_gltf_local": [
+    0.6,
+    0.35,
+    0.45
+   ]
+  },
+  {
+   "node": "COL_BRIDGE_Main_Deck_02",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    -0.1147,
+    1.2878,
+    -2.5869
+   ],
+   "rotation_world_quat": [
+    -0.00163,
+    -0.04373,
+    0.03724,
+    0.99835
+   ],
+   "half_extents_gltf_local": [
+    0.9894,
+    0.06,
+    1.1
+   ]
+  },
+  {
+   "node": "COL_WATER_Basin_01",
+   "shape": "box",
+   "building": "WATER",
+   "center_world": [
+    -14.0851,
+    0.9,
+    -9.1867
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ],
+   "half_extents_gltf_local": [
+    0.56,
+    0.3,
+    0.56
+   ]
+  },
+  {
+   "node": "COL_RATION_EntryRamp",
+   "shape": "box",
+   "building": "RATION",
+   "center_world": [
+    -11.5653,
+    0.27,
+    6.3912
+   ],
+   "rotation_world_quat": [
+    0.15881,
+    0.12884,
+    -0.02091,
+    0.97864
+   ],
+   "half_extents_gltf_local": [
+    0.8,
+    0.05,
+    0.35
+   ]
+  },
+  {
+   "node": "COL_BRIDGE_Main_Rail_1_00",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    -3.866,
+    1.0311,
+    -4.0706
+   ],
+   "rotation_world_quat": [
+    -0.00778,
+    -0.04307,
+    0.17763,
+    0.98312
+   ],
+   "half_extents_gltf_local": [
+    1.0319,
+    0.55,
+    0.08
+   ]
+  },
+  {
+   "node": "COL_RiverEdge_006",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    -3.3161,
+    0.5,
+    6.9155
+   ],
+   "rotation_world_quat": [
+    -0.0,
+    -0.80998,
+    0.0,
+    0.58645
+   ],
+   "half_extents_gltf_local": [
+    3.031,
+    1.0,
+    0.15
+   ]
+  },
+  {
+   "node": "COL_ELEC_Fence_03",
+   "shape": "box",
+   "building": "ELEC",
+   "center_world": [
+    10.6585,
+    1.0,
+    -3.1701
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.17306,
+    -0.0,
+    0.98491
+   ],
+   "half_extents_gltf_local": [
+    0.6731,
+    0.55,
+    0.05
+   ]
+  },
+  {
+   "node": "COL_FARM_Pump",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    3.5,
+    0.4702,
+    6.35
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.3,
+    0.7,
+    0.3
+   ]
+  },
+  {
+   "node": "COL_ELEC_Cistern",
+   "shape": "box",
+   "building": "ELEC",
+   "center_world": [
+    17.2319,
+    2.25,
+    -10.8667
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.30071,
+    -0.0,
+    0.95372
+   ],
+   "half_extents_gltf_local": [
+    0.65,
+    1.8,
+    0.65
+   ]
+  },
+  {
+   "node": "COL_Tree_07",
+   "shape": "capsule",
+   "building": null,
+   "center_world": [
+    -12.0,
+    2.9451,
+    -33.0
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.385,
+    1.65,
+    0.385
+   ]
+  },
+  {
+   "node": "COL_ELEC_Pool",
+   "shape": "box",
+   "building": "ELEC",
+   "center_world": [
+    14.6958,
+    0.65,
+    -6.8438
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.30071,
+    -0.0,
+    0.95372
+   ],
+   "half_extents_gltf_local": [
+    0.62,
+    0.2,
+    1.47
+   ]
+  },
+  {
+   "node": "COL_HOUSE_07_Yard_03",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    -23.5559,
+    2.1164,
+    -2.1701
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.87462,
+    -0.0,
+    0.48481
+   ],
+   "half_extents_gltf_local": [
+    0.1,
+    1.0,
+    0.1
+   ]
+  },
+  {
+   "node": "COL_ELEC_Wall_Right_00",
+   "shape": "box",
+   "building": "ELEC",
+   "center_world": [
+    13.7332,
+    2.8,
+    -6.8464
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.46175,
+    -0.0,
+    0.88701
+   ],
+   "half_extents_gltf_local": [
+    2.52,
+    2.0,
+    0.16
+   ]
+  },
+  {
+   "node": "COL_ENV_Signpost",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    -7.8963,
+    1.2431,
+    -1.2277
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.12,
+    1.0,
+    0.12
+   ]
+  },
+  {
+   "node": "COL_Tree_24",
+   "shape": "capsule",
+   "building": null,
+   "center_world": [
+    -33.0,
+    2.6512,
+    24.0
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.42,
+    1.8,
+    0.42
+   ]
+  },
+  {
+   "node": "COL_RATION_Counter",
+   "shape": "box",
+   "building": "RATION",
+   "center_world": [
+    -13.9198,
+    0.9,
+    6.2974
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.13053,
+    -0.0,
+    0.99144
+   ],
+   "half_extents_gltf_local": [
+    1.46,
+    0.5,
+    0.37
+   ]
+  },
+  {
+   "node": "COL_HOUSE_05_Yard_05",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    29.56,
+    1.9237,
+    -39.75
+   ],
+   "rotation_world_quat": [
+    -0.0,
+    -0.70711,
+    0.0,
+    0.70711
+   ],
+   "half_extents_gltf_local": [
+    0.06,
+    0.5,
+    2.65
+   ]
+  },
+  {
+   "node": "COL_EXP_Gathering_Bench",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    -22.2,
+    2.4772,
+    -34.65
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.9,
+    0.45,
+    0.3
+   ]
+  },
+  {
+   "node": "COL_HOUSE_08_Body_1",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    26.6373,
+    2.2608,
+    -8.1
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.25882,
+    -0.0,
+    0.96593
+   ],
+   "half_extents_gltf_local": [
+    1.15,
+    1.3,
+    2.0
+   ]
+  },
+  {
+   "node": "COL_HOUSE_06_Yard_06",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    26.5367,
+    1.2514,
+    -37.4646
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.5,
+    -0.0,
+    0.86603
+   ],
+   "half_extents_gltf_local": [
+    0.4,
+    0.45,
+    1.1
+   ]
+  },
+  {
+   "node": "COL_HOUSE_06_Yard_05",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    27.1463,
+    1.2734,
+    -30.3687
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.5,
+    -0.0,
+    0.86603
+   ],
+   "half_extents_gltf_local": [
+    0.06,
+    0.5,
+    2.33
+   ]
+  },
+  {
+   "node": "COL_HOUSE_06_StepRamp",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    26.2392,
+    1.3311,
+    -33.54
+   ],
+   "rotation_world_quat": [
+    0.2166,
+    -0.48411,
+    0.12505,
+    0.8385
+   ],
+   "half_extents_gltf_local": [
+    0.75,
+    0.05,
+    1.2802
+   ]
+  },
+  {
+   "node": "COL_HOUSE_03_Yard_00",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    -22.231,
+    2.8969,
+    -39.6574
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.17365,
+    -0.0,
+    0.98481
+   ],
+   "half_extents_gltf_local": [
+    0.75,
+    0.15,
+    0.24
+   ]
+  },
+  {
+   "node": "COL_HOUSE_05_Yard_03",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    26.97,
+    1.9528,
+    -44.975
+   ],
+   "rotation_world_quat": [
+    -0.0,
+    -0.70711,
+    0.0,
+    0.70711
+   ],
+   "half_extents_gltf_local": [
+    1.335,
+    0.5,
+    0.06
+   ]
+  },
+  {
+   "node": "COL_EXP_Gathering_Noticeboard",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    -23.1,
+    3.3604,
+    -37.3
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.25882,
+    -0.0,
+    0.96593
+   ],
+   "half_extents_gltf_local": [
+    0.7,
+    1.0,
+    0.15
+   ]
+  },
+  {
+   "node": "COL_ELEC_Floor",
+   "shape": "box",
+   "building": "ELEC",
+   "center_world": [
+    11.8,
+    0.7,
+    -8.2
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.30071,
+    -0.0,
+    0.95372
+   ],
+   "half_extents_gltf_local": [
+    2.5,
+    0.1,
+    2.8
+   ]
+  },
+  {
+   "node": "COL_HOUSE_01_PorchRail_0",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    -21.0892,
+    2.6014,
+    -32.8078
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.59482,
+    -0.0,
+    0.80386
+   ],
+   "half_extents_gltf_local": [
+    0.06,
+    0.5,
+    0.75
+   ]
+  },
+  {
+   "node": "COL_RiverEdge_009",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    1.471,
+    0.5,
+    19.2393
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.65648,
+    -0.0,
+    0.75434
+   ],
+   "half_extents_gltf_local": [
+    3.0956,
+    1.0,
+    0.15
+   ]
+  },
+  {
+   "node": "COL_RATION_SideShelf",
+   "shape": "box",
+   "building": "RATION",
+   "center_world": [
+    -16.0113,
+    1.2,
+    5.2532
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.13053,
+    -0.0,
+    0.99144
+   ],
+   "half_extents_gltf_local": [
+    0.22,
+    0.8,
+    1.02
+   ]
+  },
+  {
+   "node": "COL_HOUSE_01_Yard_02",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    -16.6917,
+    1.3728,
+    -27.1461
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.59482,
+    -0.0,
+    0.80386
+   ],
+   "half_extents_gltf_local": [
+    0.5,
+    0.2,
+    1.25
+   ]
+  },
+  {
+   "node": "COL_RATION_Cart",
+   "shape": "box",
+   "building": "RATION",
+   "center_world": [
+    -8.9724,
+    0.7,
+    1.193
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.3665,
+    -0.0,
+    0.93042
+   ],
+   "half_extents_gltf_local": [
+    1.15,
+    0.5,
+    0.6
+   ]
+  },
+  {
+   "node": "COL_RiverEdge_004",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    -0.4411,
+    0.5,
+    -10.575
+   ],
+   "rotation_world_quat": [
+    -0.0,
+    -0.78969,
+    0.0,
+    0.6135
+   ],
+   "half_extents_gltf_local": [
+    3.0473,
+    1.0,
+    0.15
+   ]
+  },
+  {
+   "node": "COL_HOUSE_04_Body_0",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    3.5,
+    4.7522,
+    -50.0
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.08716,
+    -0.0,
+    0.99619
+   ],
+   "half_extents_gltf_local": [
+    3.0,
+    3.0,
+    2.3
+   ]
+  },
+  {
+   "node": "COL_HOUSE_02_StepRamp",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    -29.0801,
+    1.7739,
+    -33.2061
+   ],
+   "rotation_world_quat": [
+    0.20318,
+    0.52148,
+    -0.12944,
+    0.81855
+   ],
+   "half_extents_gltf_local": [
+    0.75,
+    0.05,
+    0.724
+   ]
+  },
+  {
+   "node": "COL_FARM_Fence_03",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    21.8,
+    1.1156,
+    5.2
+   ],
+   "rotation_world_quat": [
+    -0.0,
+    -0.70711,
+    0.0,
+    0.70711
+   ],
+   "half_extents_gltf_local": [
+    4.4,
+    0.45,
+    0.08
+   ]
+  },
+  {
+   "node": "COL_RiverEdge_008",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    -4.0753,
+    0.5,
+    20.0124
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.65648,
+    -0.0,
+    0.75434
+   ],
+   "half_extents_gltf_local": [
+    3.0956,
+    1.0,
+    0.15
+   ]
+  },
+  {
+   "node": "COL_Tree_22",
+   "shape": "capsule",
+   "building": null,
+   "center_world": [
+    -36.0,
+    3.0534,
+    -12.0
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.385,
+    1.65,
+    0.385
+   ]
+  },
+  {
+   "node": "COL_FARM_Fence_00",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    12.6,
+    0.7112,
+    2.55
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.70711,
+    -0.0,
+    0.70711
+   ],
+   "half_extents_gltf_local": [
+    1.75,
+    0.45,
+    0.08
+   ]
+  },
+  {
+   "node": "COL_ENV_LampPost_00",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    -7.9296,
+    1.4684,
+    -2.4096
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.1,
+    1.2,
+    0.1
+   ]
+  },
+  {
+   "node": "COL_WATER_TowerPost_00",
+   "shape": "box",
+   "building": "WATER",
+   "center_world": [
+    -6.0628,
+    3.6,
+    -15.1917
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ],
+   "half_extents_gltf_local": [
+    0.14,
+    3.0,
+    0.14
+   ]
+  },
+  {
+   "node": "COL_BRIDGE_FootUpper_Deck",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    5.6678,
+    0.29,
+    -23.4261
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.0914,
+    -0.0,
+    0.99581
+   ],
+   "half_extents_gltf_local": [
+    5.2,
+    0.06,
+    0.9
+   ]
+  },
+  {
+   "node": "COL_HOUSE_03_Yard_03",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    -24.9813,
+    3.7972,
+    -42.828
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.17365,
+    -0.0,
+    0.98481
+   ],
+   "half_extents_gltf_local": [
+    0.3,
+    0.5,
+    0.85
+   ]
+  },
+  {
+   "node": "COL_Tree_10",
+   "shape": "capsule",
+   "building": null,
+   "center_world": [
+    21.0,
+    2.2231,
+    -23.0
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.385,
+    1.65,
+    0.385
+   ]
+  },
+  {
+   "node": "COL_RiverEdge_012",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    -1.5778,
+    0.5,
+    31.6928
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.64063,
+    -0.0,
+    0.76785
+   ],
+   "half_extents_gltf_local": [
+    3.1216,
+    1.0,
+    0.15
+   ]
+  },
+  {
+   "node": "COL_EXP_GardenFence_0",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    -11.6,
+    0.6495,
+    10.4
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    1.96,
+    0.45,
+    0.06
+   ]
+  },
+  {
+   "node": "COL_BRIDGE_Main_Rail_0_00",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    -4.0672,
+    1.0311,
+    -1.7794
+   ],
+   "rotation_world_quat": [
+    -0.00778,
+    -0.04307,
+    0.17763,
+    0.98312
+   ],
+   "half_extents_gltf_local": [
+    1.0319,
+    0.55,
+    0.08
+   ]
+  },
+  {
+   "node": "COL_WATER_FilterStage",
+   "shape": "box",
+   "building": "WATER",
+   "center_world": [
+    -14.28,
+    0.99,
+    -10.5731
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ],
+   "half_extents_gltf_local": [
+    0.7,
+    0.39,
+    0.7
+   ]
+  },
+  {
+   "node": "COL_ELEC_Pole_03",
+   "shape": "box",
+   "building": "ELEC",
+   "center_world": [
+    15.4695,
+    3.5,
+    -3.6773
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.30071,
+    -0.0,
+    0.95372
+   ],
+   "half_extents_gltf_local": [
+    0.18,
+    3.05,
+    0.18
+   ]
+  },
+  {
+   "node": "COL_Tree_21",
+   "shape": "capsule",
+   "building": null,
+   "center_world": [
+    28.0,
+    2.4958,
+    -30.0
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.385,
+    1.65,
+    0.385
+   ]
+  },
+  {
+   "node": "COL_RiverEdge_007",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    2.0041,
+    0.5,
+    8.6635
+   ],
+   "rotation_world_quat": [
+    -0.0,
+    -0.80998,
+    0.0,
+    0.58645
+   ],
+   "half_extents_gltf_local": [
+    3.031,
+    1.0,
+    0.15
+   ]
+  },
+  {
+   "node": "COL_ELEC_Wall_Left_00",
+   "shape": "box",
+   "building": "ELEC",
+   "center_world": [
+    9.8668,
+    2.8,
+    -9.5536
+   ],
+   "rotation_world_quat": [
+    -0.0,
+    -0.88701,
+    0.0,
+    0.46175
+   ],
+   "half_extents_gltf_local": [
+    2.52,
+    2.0,
+    0.16
+   ]
+  },
+  {
+   "node": "COL_RATION_Wall_Left_00",
+   "shape": "box",
+   "building": "RATION",
+   "center_world": [
+    -16.377,
+    2.375,
+    5.1441
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.60876,
+    -0.0,
+    0.79335
+   ],
+   "half_extents_gltf_local": [
+    1.95,
+    1.975,
+    0.145
+   ]
+  },
+  {
+   "node": "COL_WATER_Wall_Front_01",
+   "shape": "box",
+   "building": "WATER",
+   "center_world": [
+    -6.8711,
+    2.9,
+    -11.3871
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ],
+   "half_extents_gltf_local": [
+    0.75,
+    2.0,
+    0.145
+   ]
+  },
+  {
+   "node": "COL_FARM_Fence_02",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    21.5,
+    1.128,
+    0.8
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.3,
+    0.45,
+    0.08
+   ]
+  },
+  {
+   "node": "COL_HOUSE_07_Yard_02",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    -23.7778,
+    1.1696,
+    -10.1678
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.87462,
+    -0.0,
+    0.48481
+   ],
+   "half_extents_gltf_local": [
+    0.5,
+    0.2,
+    1.25
+   ]
+  },
+  {
+   "node": "COL_RATION_InteriorSacks",
+   "shape": "box",
+   "building": "RATION",
+   "center_world": [
+    -11.4336,
+    0.7,
+    3.4054
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.13053,
+    -0.0,
+    0.99144
+   ],
+   "half_extents_gltf_local": [
+    0.4,
+    0.3,
+    0.55
+   ]
+  },
+  {
+   "node": "COL_Tree_23",
+   "shape": "capsule",
+   "building": null,
+   "center_world": [
+    36.0,
+    2.934,
+    16.0
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.455,
+    1.95,
+    0.455
+   ]
+  },
+  {
+   "node": "COL_Tree_17",
+   "shape": "capsule",
+   "building": null,
+   "center_world": [
+    33.0,
+    2.2095,
+    -9.0
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.42,
+    1.8,
+    0.42
+   ]
+  },
+  {
+   "node": "COL_RATION_Wall_Front_00",
+   "shape": "box",
+   "building": "RATION",
+   "center_world": [
+    -15.6227,
+    2.375,
+    7.0902
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.13053,
+    -0.0,
+    0.99144
+   ],
+   "half_extents_gltf_local": [
+    0.35,
+    1.975,
+    0.145
+   ]
+  },
+  {
+   "node": "COL_EXP_GardenBed_0",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    -11.85,
+    0.3385,
+    12.75
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    1.3,
+    0.2,
+    0.45
+   ]
+  },
+  {
+   "node": "COL_FARM_Plot_lettuce_beans",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    18.85,
+    0.612,
+    7.85
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.85,
+    0.2,
+    1.35
+   ]
+  },
+  {
+   "node": "COL_WATER_Floor",
+   "shape": "box",
+   "building": "WATER",
+   "center_world": [
+    -9.6,
+    0.8,
+    -13.2
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ],
+   "half_extents_gltf_local": [
+    3.2,
+    0.1,
+    2.3
+   ]
+  },
+  {
+   "node": "COL_HOUSE_03_Yard_02",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    -14.3838,
+    3.2865,
+    -45.7274
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.17365,
+    -0.0,
+    0.98481
+   ],
+   "half_extents_gltf_local": [
+    0.5,
+    0.2,
+    1.25
+   ]
+  },
+  {
+   "node": "COL_WATER_Fence_01",
+   "shape": "box",
+   "building": "WATER",
+   "center_world": [
+    -12.8157,
+    1.15,
+    -7.6989
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ],
+   "half_extents_gltf_local": [
+    2.45,
+    0.55,
+    0.07
+   ]
+  },
+  {
+   "node": "COL_HOUSE_05_Yard_01",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    31.48,
+    2.1614,
+    -41.275
+   ],
+   "rotation_world_quat": [
+    -0.0,
+    -0.70711,
+    0.0,
+    0.70711
+   ],
+   "half_extents_gltf_local": [
+    0.775,
+    0.15,
+    0.24
+   ]
+  },
+  {
+   "node": "COL_HOUSE_01_Yard_01",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    -21.0605,
+    1.5967,
+    -28.7122
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.59482,
+    -0.0,
+    0.80386
+   ],
+   "half_extents_gltf_local": [
+    0.825,
+    0.15,
+    0.24
+   ]
+  },
+  {
+   "node": "COL_HOUSE_06_Yard_03",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    22.568,
+    0.9247,
+    -33.7587
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.5,
+    -0.0,
+    0.86603
+   ],
+   "half_extents_gltf_local": [
+    1.235,
+    0.5,
+    0.06
+   ]
+  },
+  {
+   "node": "COL_RATION_Wall_Front_01",
+   "shape": "box",
+   "building": "RATION",
+   "center_world": [
+    -10.5032,
+    2.375,
+    5.7184
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.13053,
+    -0.0,
+    0.99144
+   ],
+   "half_extents_gltf_local": [
+    0.35,
+    1.975,
+    0.145
+   ]
+  },
+  {
+   "node": "COL_RiverEdge_001",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    10.4518,
+    0.5,
+    -32.5807
+   ],
+   "rotation_world_quat": [
+    -0.0,
+    -0.80769,
+    0.0,
+    0.58961
+   ],
+   "half_extents_gltf_local": [
+    3.0908,
+    1.0,
+    0.15
+   ]
+  },
+  {
+   "node": "COL_ELEC_CoilBench",
+   "shape": "box",
+   "building": "ELEC",
+   "center_world": [
+    10.6287,
+    1.3,
+    -9.7526
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.30071,
+    -0.0,
+    0.95372
+   ],
+   "half_extents_gltf_local": [
+    0.35,
+    0.5,
+    0.78
+   ]
+  },
+  {
+   "node": "COL_WATER_EntryRamp_Rear",
+   "shape": "box",
+   "building": "WATER",
+   "center_world": [
+    -8.4339,
+    0.71,
+    -16.0399
+   ],
+   "rotation_world_quat": [
+    -0.17799,
+    0.06864,
+    0.01245,
+    0.98156
+   ],
+   "half_extents_gltf_local": [
+    0.6,
+    0.06,
+    0.45
+   ]
+  },
+  {
+   "node": "COL_HOUSE_08_Yard_03",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    28.7462,
+    0.9277,
+    -8.0474
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.25882,
+    -0.0,
+    0.96593
+   ],
+   "half_extents_gltf_local": [
+    0.4,
+    0.45,
+    0.9
+   ]
+  },
+  {
+   "node": "COL_HOUSE_04_Body_1",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    1.0877,
+    3.3522,
+    -46.9729
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.08716,
+    -0.0,
+    0.99619
+   ],
+   "half_extents_gltf_local": [
+    1.5,
+    1.6,
+    1.25
+   ]
+  },
+  {
+   "node": "COL_HOUSE_05_Yard_04",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    26.97,
+    1.5675,
+    -40.875
+   ],
+   "rotation_world_quat": [
+    -0.0,
+    -0.70711,
+    0.0,
+    0.70711
+   ],
+   "half_extents_gltf_local": [
+    1.185,
+    0.5,
+    0.06
+   ]
+  },
+  {
+   "node": "COL_FARM_Fence_04",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    17.2,
+    0.8811,
+    9.6
+   ],
+   "rotation_world_quat": [
+    -0.0,
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "half_extents_gltf_local": [
+    4.6,
+    0.45,
+    0.08
+   ]
+  },
+  {
+   "node": "COL_BRIDGE_Main_Deck_05",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    5.663,
+    0.4211,
+    -2.0797
+   ],
+   "rotation_world_quat": [
+    0.00778,
+    -0.04307,
+    -0.17763,
+    0.98312
+   ],
+   "half_extents_gltf_local": [
+    1.0519,
+    0.06,
+    1.1
+   ]
+  },
+  {
+   "node": "COL_HOUSE_08_StepRamp",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    23.6605,
+    0.8754,
+    -3.356
+   ],
+   "rotation_world_quat": [
+    0.15292,
+    0.25556,
+    -0.04097,
+    0.95374
+   ],
+   "half_extents_gltf_local": [
+    0.77,
+    0.05,
+    0.3369
+   ]
+  },
+  {
+   "node": "COL_ENV_LampPost_03",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    7.4328,
+    1.3197,
+    0.1549
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.1,
+    1.2,
+    0.1
+   ]
+  },
+  {
+   "node": "COL_HOUSE_06_Body_1",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    27.8586,
+    3.0311,
+    -34.475
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.5,
+    -0.0,
+    0.86603
+   ],
+   "half_extents_gltf_local": [
+    2.4,
+    0.05,
+    0.75
+   ]
+  },
+  {
+   "node": "COL_HOUSE_06_Yard_04",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    24.593,
+    1.1444,
+    -30.2513
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.5,
+    -0.0,
+    0.86603
+   ],
+   "half_extents_gltf_local": [
+    1.235,
+    0.5,
+    0.06
+   ]
+  },
+  {
+   "node": "COL_WATER_Trough",
+   "shape": "box",
+   "building": "WATER",
+   "center_world": [
+    -11.2428,
+    0.95,
+    -9.0813
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ],
+   "half_extents_gltf_local": [
+    1.0,
+    0.35,
+    0.2
+   ]
+  },
+  {
+   "node": "COL_HOUSE_06_PorchRail_1",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    29.0086,
+    2.4311,
+    -32.4831
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.5,
+    -0.0,
+    0.86603
+   ],
+   "half_extents_gltf_local": [
+    0.06,
+    0.5,
+    0.75
+   ]
+  },
+  {
+   "node": "COL_HOUSE_05_StepRamp",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    30.46,
+    3.1062,
+    -42.85
+   ],
+   "rotation_world_quat": [
+    0.17888,
+    -0.68411,
+    0.17888,
+    0.68411
+   ],
+   "half_extents_gltf_local": [
+    0.75,
+    0.05,
+    1.6514
+   ]
+  },
+  {
+   "node": "COL_RiverEdge_015",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    4.7376,
+    0.5,
+    36.828
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.68001,
+    -0.0,
+    0.7332
+   ],
+   "half_extents_gltf_local": [
+    2.7842,
+    1.0,
+    0.15
+   ]
+  },
+  {
+   "node": "COL_EXP_GardenFence_1",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    -13.5,
+    0.6351,
+    12.0
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.06,
+    0.45,
+    1.66
+   ]
+  },
+  {
+   "node": "COL_HOUSE_01_Body_1",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    -20.4167,
+    3.2014,
+    -30.6083
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.59482,
+    -0.0,
+    0.80386
+   ],
+   "half_extents_gltf_local": [
+    2.4,
+    0.05,
+    0.75
+   ]
+  },
+  {
+   "node": "COL_BRIDGE_Main_Rail_0_05",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    5.5625,
+    1.0311,
+    -0.9341
+   ],
+   "rotation_world_quat": [
+    0.00778,
+    -0.04307,
+    -0.17763,
+    0.98312
+   ],
+   "half_extents_gltf_local": [
+    1.0319,
+    0.55,
+    0.08
+   ]
+  },
+  {
+   "node": "COL_RATION_Barrels",
+   "shape": "box",
+   "building": "RATION",
+   "center_world": [
+    -17.3365,
+    0.65,
+    4.0553
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.13053,
+    -0.0,
+    0.99144
+   ],
+   "half_extents_gltf_local": [
+    0.38,
+    0.45,
+    0.75
+   ]
+  },
+  {
+   "node": "COL_RiverEdge_000",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    5.8789,
+    0.5,
+    -34.0438
+   ],
+   "rotation_world_quat": [
+    -0.0,
+    -0.80769,
+    0.0,
+    0.58961
+   ],
+   "half_extents_gltf_local": [
+    3.0908,
+    1.0,
+    0.15
+   ]
+  },
+  {
+   "node": "COL_ELEC_Shelf",
+   "shape": "box",
+   "building": "ELEC",
+   "center_world": [
+    9.2276,
+    1.75,
+    -8.048
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.30071,
+    -0.0,
+    0.95372
+   ],
+   "half_extents_gltf_local": [
+    0.2,
+    0.95,
+    0.65
+   ]
+  },
+  {
+   "node": "COL_BRIDGE_Main_Rail_1_03",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    1.9117,
+    1.8978,
+    -3.5634
+   ],
+   "rotation_world_quat": [
+    0.00163,
+    -0.04373,
+    -0.03724,
+    0.99835
+   ],
+   "half_extents_gltf_local": [
+    0.9694,
+    0.55,
+    0.08
+   ]
+  },
+  {
+   "node": "COL_HOUSE_08_Yard_02",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    18.5199,
+    0.6582,
+    -3.7598
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.25882,
+    -0.0,
+    0.96593
+   ],
+   "half_extents_gltf_local": [
+    0.5,
+    0.2,
+    1.25
+   ]
+  },
+  {
+   "node": "COL_WATER_Wall_Back_01",
+   "shape": "box",
+   "building": "WATER",
+   "center_world": [
+    -10.992,
+    2.9,
+    -15.2007
+   ],
+   "rotation_world_quat": [
+    -0.0,
+    -0.99756,
+    0.0,
+    0.06976
+   ],
+   "half_extents_gltf_local": [
+    2.1,
+    2.0,
+    0.145
+   ]
+  },
+  {
+   "node": "COL_EXP_Sign_02",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    8.5,
+    1.1288,
+    4.4
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.1,
+    1.1,
+    0.1
+   ]
+  },
+  {
+   "node": "COL_Tree_20",
+   "shape": "capsule",
+   "building": null,
+   "center_world": [
+    -2.0,
+    2.8563,
+    -44.0
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.385,
+    1.65,
+    0.385
+   ]
+  },
+  {
+   "node": "COL_HOUSE_04_Yard_02",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    7.2423,
+    0.7129,
+    -49.3401
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.08716,
+    -0.0,
+    0.99619
+   ],
+   "half_extents_gltf_local": [
+    0.25,
+    0.45,
+    0.8
+   ]
+  },
+  {
+   "node": "COL_HOUSE_08_Body_0",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    23.0,
+    2.8108,
+    -6.0
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.25882,
+    -0.0,
+    0.96593
+   ],
+   "half_extents_gltf_local": [
+    3.2,
+    1.85,
+    2.4
+   ]
+  },
+  {
+   "node": "COL_FARM_Shelter",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    20.8,
+    1.6876,
+    8.05
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.8,
+    1.0,
+    1.35
+   ]
+  },
+  {
+   "node": "COL_WATER_Fence_03",
+   "shape": "box",
+   "building": "WATER",
+   "center_world": [
+    -2.4634,
+    1.15,
+    -10.921
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.71727,
+    -0.0,
+    0.69679
+   ],
+   "half_extents_gltf_local": [
+    1.3583,
+    0.55,
+    0.07
+   ]
+  },
+  {
+   "node": "COL_WATER_TowerPost_10",
+   "shape": "box",
+   "building": "WATER",
+   "center_world": [
+    -3.8446,
+    3.6,
+    -15.5034
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ],
+   "half_extents_gltf_local": [
+    0.14,
+    3.0,
+    0.14
+   ]
+  },
+  {
+   "node": "COL_BRIDGE_Main_Rail_1_05",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    5.7636,
+    1.0311,
+    -3.2253
+   ],
+   "rotation_world_quat": [
+    0.00778,
+    -0.04307,
+    -0.17763,
+    0.98312
+   ],
+   "half_extents_gltf_local": [
+    1.0319,
+    0.55,
+    0.08
+   ]
+  },
+  {
+   "node": "COL_WATER_Shelf",
+   "shape": "box",
+   "building": "WATER",
+   "center_world": [
+    -12.1196,
+    1.85,
+    -11.5836
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ],
+   "half_extents_gltf_local": [
+    0.22,
+    0.95,
+    0.68
+   ]
+  },
+  {
+   "node": "COL_RATION_Sign",
+   "shape": "box",
+   "building": "RATION",
+   "center_world": [
+    -12.6209,
+    0.65,
+    7.0882
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.13053,
+    -0.0,
+    0.99144
+   ],
+   "half_extents_gltf_local": [
+    0.36,
+    0.45,
+    0.3
+   ]
+  },
+  {
+   "node": "COL_ELEC_Panel",
+   "shape": "box",
+   "building": "ELEC",
+   "center_world": [
+    12.9538,
+    2.2,
+    -10.3708
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.30071,
+    -0.0,
+    0.95372
+   ],
+   "half_extents_gltf_local": [
+    1.4,
+    1.4,
+    0.1
+   ]
+  },
+  {
+   "node": "COL_HOUSE_03_StepRamp",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    -20.5351,
+    3.3985,
+    -39.5297
+   ],
+   "rotation_world_quat": [
+    0.22983,
+    0.16885,
+    -0.04052,
+    0.95761
+   ],
+   "half_extents_gltf_local": [
+    0.77,
+    0.05,
+    1.2569
+   ]
+  },
+  {
+   "node": "COL_Tree_09",
+   "shape": "capsule",
+   "building": null,
+   "center_world": [
+    14.0,
+    2.2198,
+    -31.0
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.455,
+    1.95,
+    0.455
+   ]
+  },
+  {
+   "node": "COL_RiverEdge_011",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    2.5712,
+    0.5,
+    24.6637
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.60618,
+    -0.0,
+    0.79533
+   ],
+   "half_extents_gltf_local": [
+    2.8148,
+    1.0,
+    0.15
+   ]
+  },
+  {
+   "node": "COL_ELEC_WaterWheel",
+   "shape": "box",
+   "building": "ELEC",
+   "center_world": [
+    14.5074,
+    1.87,
+    -6.9757
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.30071,
+    -0.0,
+    0.95372
+   ],
+   "half_extents_gltf_local": [
+    0.35,
+    1.25,
+    1.25
+   ]
+  },
+  {
+   "node": "COL_EXP_Sign_03",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    11.6,
+    1.3239,
+    -21.4
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.1,
+    1.1,
+    0.1
+   ]
+  },
+  {
+   "node": "COL_BRIDGE_Main_Deck_01",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    -2.0407,
+    0.9989,
+    -2.756
+   ],
+   "rotation_world_quat": [
+    -0.00482,
+    -0.0435,
+    0.10992,
+    0.99298
+   ],
+   "half_extents_gltf_local": [
+    1.0107,
+    0.06,
+    1.1
+   ]
+  },
+  {
+   "node": "COL_BRIDGE_Main_Rail_0_04",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    3.6365,
+    1.6089,
+    -1.1032
+   ],
+   "rotation_world_quat": [
+    0.00482,
+    -0.0435,
+    -0.10992,
+    0.99298
+   ],
+   "half_extents_gltf_local": [
+    0.9907,
+    0.55,
+    0.08
+   ]
+  },
+  {
+   "node": "COL_WATER_Vat",
+   "shape": "box",
+   "building": "WATER",
+   "center_world": [
+    -11.9456,
+    1.7,
+    -14.0821
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ],
+   "half_extents_gltf_local": [
+    0.62,
+    0.8,
+    0.62
+   ]
+  },
+  {
+   "node": "COL_ELEC_Generator",
+   "shape": "box",
+   "building": "ELEC",
+   "center_world": [
+    13.1394,
+    1.4,
+    -7.9336
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.30071,
+    -0.0,
+    0.95372
+   ],
+   "half_extents_gltf_local": [
+    0.55,
+    0.6,
+    0.5
+   ]
+  },
+  {
+   "node": "COL_Tree_16",
+   "shape": "capsule",
+   "building": null,
+   "center_world": [
+    -34.0,
+    2.7678,
+    4.0
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.42,
+    1.8,
+    0.42
+   ]
+  },
+  {
+   "node": "COL_WATER_Collection",
+   "shape": "box",
+   "building": "WATER",
+   "center_world": [
+    -14.7114,
+    1.3,
+    -13.6429
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ],
+   "half_extents_gltf_local": [
+    0.7,
+    0.7,
+    0.65
+   ]
+  },
+  {
+   "node": "COL_WATER_Fence_02",
+   "shape": "box",
+   "building": "WATER",
+   "center_world": [
+    -4.4758,
+    1.15,
+    -9.073
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.11702,
+    -0.0,
+    0.99313
+   ],
+   "half_extents_gltf_local": [
+    2.1095,
+    0.55,
+    0.07
+   ]
+  },
+  {
+   "node": "COL_FARM_Plot_cabbage",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    15.05,
+    0.612,
+    2.85
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    1.55,
+    0.2,
+    1.26
+   ]
+  },
+  {
+   "node": "COL_HOUSE_07_Yard_00",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    -18.1988,
+    0.717,
+    -6.3725
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.87462,
+    -0.0,
+    0.48481
+   ],
+   "half_extents_gltf_local": [
+    0.775,
+    0.15,
+    0.24
+   ]
+  },
+  {
+   "node": "COL_RATION_Sacks",
+   "shape": "box",
+   "building": "RATION",
+   "center_world": [
+    -9.9999,
+    0.53,
+    6.4377
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.13053,
+    -0.0,
+    0.99144
+   ],
+   "half_extents_gltf_local": [
+    0.62,
+    0.33,
+    0.55
+   ]
+  },
+  {
+   "node": "COL_HOUSE_02_Yard_02",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    -33.7345,
+    1.5496,
+    -31.956
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.5373,
+    -0.0,
+    0.84339
+   ],
+   "half_extents_gltf_local": [
+    0.3,
+    0.5,
+    0.85
+   ]
+  },
+  {
+   "node": "COL_BRIDGE_Main_Rail_1_04",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    3.8377,
+    1.6089,
+    -3.3944
+   ],
+   "rotation_world_quat": [
+    0.00482,
+    -0.0435,
+    -0.10992,
+    0.99298
+   ],
+   "half_extents_gltf_local": [
+    0.9907,
+    0.55,
+    0.08
+   ]
+  },
+  {
+   "node": "COL_WATER_Crates",
+   "shape": "box",
+   "building": "WATER",
+   "center_world": [
+    -7.2905,
+    1.25,
+    -15.0898
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ],
+   "half_extents_gltf_local": [
+    0.35,
+    0.35,
+    0.3
+   ]
+  },
+  {
+   "node": "COL_ELEC_Fence_02",
+   "shape": "box",
+   "building": "ELEC",
+   "center_world": [
+    7.4638,
+    1.0,
+    -5.407
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.42316,
+    -0.0,
+    0.90606
+   ],
+   "half_extents_gltf_local": [
+    0.6731,
+    0.55,
+    0.05
+   ]
+  },
+  {
+   "node": "COL_HOUSE_03_Body_0",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    -21.0,
+    5.799,
+    -43.0
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.17365,
+    -0.0,
+    0.98481
+   ],
+   "half_extents_gltf_local": [
+    3.2,
+    1.85,
+    2.4
+   ]
+  },
+  {
+   "node": "COL_HOUSE_05_Yard_00",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    31.48,
+    2.7334,
+    -44.575
+   ],
+   "rotation_world_quat": [
+    -0.0,
+    -0.70711,
+    0.0,
+    0.70711
+   ],
+   "half_extents_gltf_local": [
+    0.925,
+    0.15,
+    0.24
+   ]
+  },
+  {
+   "node": "COL_HOUSE_01_StepRamp",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    -21.746,
+    1.8394,
+    -30.2019
+   ],
+   "rotation_world_quat": [
+    0.16558,
+    -0.58207,
+    0.12252,
+    0.78662
+   ],
+   "half_extents_gltf_local": [
+    0.75,
+    0.05,
+    0.6993
+   ]
+  },
+  {
+   "node": "COL_Tree_06",
+   "shape": "capsule",
+   "building": null,
+   "center_world": [
+    -7.0,
+    2.4082,
+    -28.0
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.455,
+    1.95,
+    0.455
+   ]
+  },
+  {
+   "node": "COL_Tree_15",
+   "shape": "capsule",
+   "building": null,
+   "center_world": [
+    19.0,
+    2.2451,
+    21.0
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.42,
+    1.8,
+    0.42
+   ]
+  },
+  {
+   "node": "COL_WATER_TowerPost_01",
+   "shape": "box",
+   "building": "WATER",
+   "center_world": [
+    -6.3745,
+    3.6,
+    -17.4099
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ],
+   "half_extents_gltf_local": [
+    0.14,
+    3.0,
+    0.14
+   ]
+  },
+  {
+   "node": "COL_ELEC_Wall_Front_00",
+   "shape": "box",
+   "building": "ELEC",
+   "center_world": [
+    8.8408,
+    2.8,
+    -7.0248
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.30071,
+    -0.0,
+    0.95372
+   ],
+   "half_extents_gltf_local": [
+    0.75,
+    2.0,
+    0.16
+   ]
+  },
+  {
+   "node": "COL_FARM_Scarecrow",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    15.05,
+    1.2605,
+    7.85
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.3,
+    1.0,
+    0.2
+   ]
+  },
+  {
+   "node": "COL_HOUSE_08_Yard_01",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    26.6333,
+    0.7785,
+    -4.9569
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.25882,
+    -0.0,
+    0.96593
+   ],
+   "half_extents_gltf_local": [
+    2.575,
+    0.15,
+    0.24
+   ]
+  },
+  {
+   "node": "COL_HOUSE_02_Yard_00",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    -29.9451,
+    1.363,
+    -31.8716
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.5373,
+    -0.0,
+    0.84339
+   ],
+   "half_extents_gltf_local": [
+    0.775,
+    0.15,
+    0.24
+   ]
+  },
+  {
+   "node": "COL_HOUSE_04_Yard_00",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    3.2912,
+    1.0026,
+    -47.3764
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.08716,
+    -0.0,
+    0.99619
+   ],
+   "half_extents_gltf_local": [
+    0.5,
+    0.15,
+    0.24
+   ]
+  },
+  {
+   "node": "COL_HOUSE_02_Body_0",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    -31.5,
+    3.8924,
+    -34.5
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.5373,
+    -0.0,
+    0.84339
+   ],
+   "half_extents_gltf_local": [
+    2.7,
+    1.8,
+    2.2
+   ]
+  },
+  {
+   "node": "COL_BRIDGE_Main_Deck_04",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    3.7371,
+    0.9989,
+    -2.2488
+   ],
+   "rotation_world_quat": [
+    0.00482,
+    -0.0435,
+    -0.10992,
+    0.99298
+   ],
+   "half_extents_gltf_local": [
+    1.0107,
+    0.06,
+    1.1
+   ]
+  },
+  {
+   "node": "COL_WATER_Sedimentation",
+   "shape": "box",
+   "building": "WATER",
+   "center_world": [
+    -14.5026,
+    1.14,
+    -12.1575
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ],
+   "half_extents_gltf_local": [
+    0.7,
+    0.54,
+    0.7
+   ]
+  },
+  {
+   "node": "COL_WATER_Fence_04",
+   "shape": "box",
+   "building": "WATER",
+   "center_world": [
+    -3.0872,
+    1.15,
+    -16.4379
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.75471,
+    -0.0,
+    0.65606
+   ],
+   "half_extents_gltf_local": [
+    1.9,
+    0.55,
+    0.07
+   ]
+  },
+  {
+   "node": "COL_Tree_05",
+   "shape": "capsule",
+   "building": null,
+   "center_world": [
+    -16.0,
+    2.9213,
+    -26.0
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.42,
+    1.8,
+    0.42
+   ]
+  },
+  {
+   "node": "COL_Tree_14",
+   "shape": "capsule",
+   "building": null,
+   "center_world": [
+    -23.0,
+    2.8214,
+    21.0
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.385,
+    1.65,
+    0.385
+   ]
+  },
+  {
+   "node": "COL_EXP_GardenBed_1",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    -11.85,
+    0.3931,
+    11.25
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    1.3,
+    0.2,
+    0.45
+   ]
+  },
+  {
+   "node": "COL_ENV_LampPost_02",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    -10.0068,
+    1.8,
+    -6.9923
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.1,
+    1.2,
+    0.1
+   ]
+  },
+  {
+   "node": "COL_HOUSE_06_Yard_02",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    23.9463,
+    0.9948,
+    -35.9113
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.5,
+    -0.0,
+    0.86603
+   ],
+   "half_extents_gltf_local": [
+    0.06,
+    0.5,
+    2.33
+   ]
+  },
+  {
+   "node": "COL_HOUSE_06_Yard_01",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    27.6579,
+    0.9004,
+    -32.4827
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.5,
+    -0.0,
+    0.86603
+   ],
+   "half_extents_gltf_local": [
+    0.825,
+    0.15,
+    0.24
+   ]
+  },
+  {
+   "node": "COL_RiverEdge_014",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    -0.8466,
+    0.5,
+    37.2489
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.68001,
+    -0.0,
+    0.7332
+   ],
+   "half_extents_gltf_local": [
+    2.7842,
+    1.0,
+    0.15
+   ]
+  },
+  {
+   "node": "COL_HOUSE_01_Body_0",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    -17.5,
+    3.8514,
+    -31.5
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.59482,
+    -0.0,
+    0.80386
+   ],
+   "half_extents_gltf_local": [
+    2.6,
+    1.75,
+    2.4
+   ]
+  },
+  {
+   "node": "COL_RATION_Wall_Back_00",
+   "shape": "box",
+   "building": "RATION",
+   "center_world": [
+    -11.5773,
+    2.375,
+    1.7098
+   ],
+   "rotation_world_quat": [
+    -0.0,
+    -0.99144,
+    0.0,
+    0.13053
+   ],
+   "half_extents_gltf_local": [
+    0.35,
+    1.975,
+    0.145
+   ]
+  },
+  {
+   "node": "COL_BRIDGE_Main_Rail_0_03",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    1.7106,
+    1.8978,
+    -1.2722
+   ],
+   "rotation_world_quat": [
+    0.00163,
+    -0.04373,
+    -0.03724,
+    0.99835
+   ],
+   "half_extents_gltf_local": [
+    0.9694,
+    0.55,
+    0.08
+   ]
+  },
+  {
+   "node": "COL_WATER_Well",
+   "shape": "box",
+   "building": "WATER",
+   "center_world": [
+    -4.4996,
+    1.2,
+    -11.0388
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ],
+   "half_extents_gltf_local": [
+    0.95,
+    0.6,
+    0.95
+   ]
+  },
+  {
+   "node": "COL_WATER_Fence_00",
+   "shape": "box",
+   "building": "WATER",
+   "center_world": [
+    -15.8264,
+    1.15,
+    -11.5171
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.65606,
+    -0.0,
+    0.75471
+   ],
+   "half_extents_gltf_local": [
+    4.2,
+    0.55,
+    0.07
+   ]
+  },
+  {
+   "node": "COL_Tree_04",
+   "shape": "capsule",
+   "building": null,
+   "center_world": [
+    -31.0,
+    2.2761,
+    -21.0
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.35,
+    1.5,
+    0.35
+   ]
+  },
+  {
+   "node": "COL_Tree_13",
+   "shape": "capsule",
+   "building": null,
+   "center_world": [
+    25.0,
+    2.1794,
+    10.0
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.385,
+    1.65,
+    0.385
+   ]
+  },
+  {
+   "node": "COL_ELEC_Wall_Back_00",
+   "shape": "box",
+   "building": "ELEC",
+   "center_world": [
+    15.005,
+    2.8,
+    -9.2031
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.95372,
+    -0.0,
+    0.30071
+   ],
+   "half_extents_gltf_local": [
+    0.45,
+    2.0,
+    0.16
+   ]
+  },
+  {
+   "node": "COL_WATER_Barrels",
+   "shape": "box",
+   "building": "WATER",
+   "center_world": [
+    -5.1283,
+    1.05,
+    -14.4344
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ],
+   "half_extents_gltf_local": [
+    0.75,
+    0.45,
+    0.45
+   ]
+  },
+  {
+   "node": "COL_Tree_19",
+   "shape": "capsule",
+   "building": null,
+   "center_world": [
+    9.0,
+    1.9475,
+    -45.0
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.42,
+    1.8,
+    0.42
+   ]
+  },
+  {
+   "node": "COL_FARM_Plot_grain",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    15.05,
+    0.612,
+    7.85
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    1.55,
+    0.2,
+    1.35
+   ]
+  },
+  {
+   "node": "COL_HOUSE_08_Yard_00",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    22.3681,
+    0.8783,
+    -2.4944
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.25882,
+    -0.0,
+    0.96593
+   ],
+   "half_extents_gltf_local": [
+    0.75,
+    0.15,
+    0.24
+   ]
+  },
+  {
+   "node": "COL_WATER_EntryRamp",
+   "shape": "box",
+   "building": "WATER",
+   "center_world": [
+    -8.3895,
+    0.71,
+    -10.6941
+   ],
+   "rotation_world_quat": [
+    0.17799,
+    0.06864,
+    -0.01245,
+    0.98156
+   ],
+   "half_extents_gltf_local": [
+    0.9,
+    0.06,
+    0.45
+   ]
+  },
+  {
+   "node": "COL_RATION_Wall_Back_01",
+   "shape": "box",
+   "building": "RATION",
+   "center_world": [
+    -15.0064,
+    2.375,
+    2.6286
+   ],
+   "rotation_world_quat": [
+    -0.0,
+    -0.99144,
+    0.0,
+    0.13053
+   ],
+   "half_extents_gltf_local": [
+    2.1,
+    1.975,
+    0.145
+   ]
+  },
+  {
+   "node": "COL_BRIDGE_Main_Rail_1_02",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    -0.0142,
+    1.8978,
+    -3.7325
+   ],
+   "rotation_world_quat": [
+    -0.00163,
+    -0.04373,
+    0.03724,
+    0.99835
+   ],
+   "half_extents_gltf_local": [
+    0.9694,
+    0.55,
+    0.08
+   ]
+  },
+  {
+   "node": "COL_Tree_03",
+   "shape": "capsule",
+   "building": null,
+   "center_world": [
+    -24.3,
+    3.1489,
+    -23.2
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.42,
+    1.8,
+    0.42
+   ]
+  },
+  {
+   "node": "COL_Tree_12",
+   "shape": "capsule",
+   "building": null,
+   "center_world": [
+    27.0,
+    2.4159,
+    -2.0
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.42,
+    1.8,
+    0.42
+   ]
+  },
+  {
+   "node": "COL_HOUSE_05_Yard_02",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    29.56,
+    2.8466,
+    -46.25
+   ],
+   "rotation_world_quat": [
+    -0.0,
+    -0.70711,
+    0.0,
+    0.70711
+   ],
+   "half_extents_gltf_local": [
+    0.06,
+    0.5,
+    2.65
+   ]
+  },
+  {
+   "node": "COL_ELEC_Fence_05",
+   "shape": "box",
+   "building": "ELEC",
+   "center_world": [
+    14.8963,
+    1.0,
+    -5.2995
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.46175,
+    -0.0,
+    0.88701
+   ],
+   "half_extents_gltf_local": [
+    3.0,
+    0.55,
+    0.05
+   ]
+  },
+  {
+   "node": "COL_ELEC_Fence_01",
+   "shape": "box",
+   "building": "ELEC",
+   "center_world": [
+    6.9663,
+    1.0,
+    -6.7015
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.67684,
+    -0.0,
+    0.73613
+   ],
+   "half_extents_gltf_local": [
+    0.781,
+    0.55,
+    0.05
+   ]
+  },
+  {
+   "node": "COL_HOUSE_06_Yard_00",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    26.0329,
+    0.812,
+    -35.2973
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.5,
+    -0.0,
+    0.86603
+   ],
+   "half_extents_gltf_local": [
+    0.825,
+    0.15,
+    0.24
+   ]
+  },
+  {
+   "node": "COL_ELEC_Wall_Front_01",
+   "shape": "box",
+   "building": "ELEC",
+   "center_world": [
+    11.7078,
+    2.8,
+    -5.0173
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.30071,
+    -0.0,
+    0.95372
+   ],
+   "half_extents_gltf_local": [
+    0.75,
+    2.0,
+    0.16
+   ]
+  },
+  {
+   "node": "COL_RATION_Shelf",
+   "shape": "box",
+   "building": "RATION",
+   "center_world": [
+    -14.9093,
+    1.5,
+    2.9909
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.13053,
+    -0.0,
+    0.99144
+   ],
+   "half_extents_gltf_local": [
+    1.82,
+    1.1,
+    0.25
+   ]
+  },
+  {
+   "node": "COL_Tree_08",
+   "shape": "capsule",
+   "building": null,
+   "center_world": [
+    3.5,
+    2.1884,
+    -36.0
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "half_extents_gltf_local": [
+    0.42,
+    1.8,
+    0.42
+   ]
+  },
+  {
+   "node": "COL_RiverEdge_010",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    -2.8284,
+    0.5,
+    26.1482
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.60618,
+    -0.0,
+    0.79533
+   ],
+   "half_extents_gltf_local": [
+    2.8148,
+    1.0,
+    0.15
+   ]
+  },
+  {
+   "node": "COL_ELEC_Chimney",
+   "shape": "box",
+   "building": "ELEC",
+   "center_world": [
+    10.2398,
+    4.15,
+    -11.0626
+   ],
+   "rotation_world_quat": [
+    0.0,
+    -0.30071,
+    -0.0,
+    0.95372
+   ],
+   "half_extents_gltf_local": [
+    0.48,
+    3.7,
+    0.53
+   ]
+  },
+  {
+   "node": "COL_HOUSE_07_Yard_04",
+   "shape": "box",
+   "building": "EXPANSION",
+   "center_world": [
+    -26.1525,
+    2.1915,
+    -6.3256
+   ],
+   "rotation_world_quat": [
+    0.0,
+    0.87462,
+    -0.0,
+    0.48481
+   ],
+   "half_extents_gltf_local": [
+    0.1,
+    1.0,
+    0.1
+   ]
+  },
+  {
+   "node": "COL_BRIDGE_Main_Rail_0_02",
+   "shape": "box",
+   "building": null,
+   "center_world": [
+    -0.2153,
+    1.8978,
+    -1.4413
+   ],
+   "rotation_world_quat": [
+    -0.00163,
+    -0.04373,
+    0.03724,
+    0.99835
+   ],
+   "half_extents_gltf_local": [
+    0.9694,
+    0.55,
+    0.08
+   ]
+  }
+ ]
+}

@@ -1,0 +1,407 @@
+{
+ "optimize": {
+  "ELEC_ExteriorStatic": 6,
+  "WATER_ExteriorStatic": 6,
+  "RATION_ExteriorStatic": 8,
+  "WATER_Surfaces": true,
+  "ELEC_Cables": true,
+  "VEG_Trees_Far": true,
+  "soft_slots_remapped": 31
+ },
+ "animations": [
+  "ANIM_ELEC_WaterWheel_Spin",
+  "ANIM_WATER_Windlass_Crank",
+  "ANIM_RATION_Scale_Balance",
+  "ANIM_ELEC_Needle_Sweep"
+ ],
+ "sizes": {
+  "village_complete": 14851080,
+  "water_treatment": 3539616,
+  "electricity_room": 2957784,
+  "ration_shop": 3146712
+ },
+ "inspect": {
+  "village_complete": {
+   "file": "village_complete.glb",
+   "bytes": 14851080,
+   "nodes": 280,
+   "meshes": 87,
+   "mesh_nodes": 87,
+   "primitives_drawn": 155,
+   "triangles_drawn_all_nodes": 228122,
+   "materials": [
+    "M_Stone",
+    "M_Wood",
+    "M_Brick",
+    "M_Metal",
+    "M_Clay",
+    "M_GlassWarm",
+    "M_Water",
+    "M_WaterFall",
+    "M_Bulb",
+    "M_Slate",
+    "M_Plaster",
+    "M_Soft",
+    "M_Terrain"
+   ],
+   "images": [
+    {
+     "name": "T_Stone_Normal",
+     "mime": "image/png",
+     "bytes": 59533,
+     "w": 512,
+     "h": 512
+    },
+    {
+     "name": "T_Stone",
+     "mime": "image/png",
+     "bytes": 136069,
+     "w": 512,
+     "h": 512
+    },
+    {
+     "name": "T_Wood",
+     "mime": "image/png",
+     "bytes": 267821,
+     "w": 512,
+     "h": 512
+    },
+    {
+     "name": "T_Brick_Normal",
+     "mime": "image/png",
+     "bytes": 83522,
+     "w": 512,
+     "h": 512
+    },
+    {
+     "name": "T_Brick_Albedo",
+     "mime": "image/png",
+     "bytes": 114654,
+     "w": 512,
+     "h": 512
+    },
+    {
+     "name": "T_Plaster",
+     "mime": "image/png",
+     "bytes": 83081,
+     "w": 512,
+     "h": 512
+    }
+   ],
+   "decoded_texture_MiB_with_mips": 8.0,
+   "animations": [
+    "ANIM_ELEC_Needle_Sweep",
+    "ANIM_ELEC_WaterWheel_Spin",
+    "ANIM_RATION_Scale_Balance",
+    "ANIM_WATER_Windlass_Crank"
+   ],
+   "nodes_with_semantic_id": 280,
+   "primitives_with_COLOR_0": 155,
+   "primitives_missing_NORMAL": 0,
+   "extensionsUsed": [
+    "KHR_materials_emissive_strength"
+   ],
+   "landmark_BLD_ELEC_ROOT": {
+    "translation": [
+     11.800000190734863,
+     0.44999998807907104,
+     -8.199999809265137
+    ],
+    "rotation": [
+     0,
+     -0.30070579051971436,
+     0,
+     0.9537169933319092
+    ]
+   },
+   "alpha_modes": [
+    "BLEND",
+    "OPAQUE"
+   ],
+   "double_sided_materials": [
+    "M_WaterFall",
+    "M_Soft"
+   ]
+  },
+  "water_treatment": {
+   "file": "water_treatment.glb",
+   "bytes": 3539616,
+   "nodes": 69,
+   "meshes": 21,
+   "mesh_nodes": 21,
+   "primitives_drawn": 45,
+   "triangles_drawn_all_nodes": 41214,
+   "materials": [
+    "M_Stone",
+    "M_Plaster",
+    "M_Wood",
+    "M_Metal",
+    "M_Clay",
+    "M_Soft",
+    "M_WaterFall",
+    "M_Water",
+    "M_GlassWarm"
+   ],
+   "images": [
+    {
+     "name": "T_Stone_Normal",
+     "mime": "image/png",
+     "bytes": 59533,
+     "w": 512,
+     "h": 512
+    },
+    {
+     "name": "T_Stone",
+     "mime": "image/png",
+     "bytes": 136069,
+     "w": 512,
+     "h": 512
+    },
+    {
+     "name": "T_Plaster",
+     "mime": "image/png",
+     "bytes": 83081,
+     "w": 512,
+     "h": 512
+    },
+    {
+     "name": "T_Wood",
+     "mime": "image/png",
+     "bytes": 267821,
+     "w": 512,
+     "h": 512
+    }
+   ],
+   "decoded_texture_MiB_with_mips": 5.33,
+   "animations": [
+    "ANIM_WATER_Windlass_Crank"
+   ],
+   "nodes_with_semantic_id": 69,
+   "primitives_with_COLOR_0": 45,
+   "primitives_missing_NORMAL": 0,
+   "extensionsUsed": [
+    "KHR_materials_emissive_strength"
+   ],
+   "landmark_BLD_ELEC_ROOT": null,
+   "alpha_modes": [
+    "BLEND",
+    "OPAQUE"
+   ],
+   "double_sided_materials": [
+    "M_Soft",
+    "M_WaterFall"
+   ]
+  },
+  "electricity_room": {
+   "file": "electricity_room.glb",
+   "bytes": 2957784,
+   "nodes": 68,
+   "meshes": 27,
+   "mesh_nodes": 27,
+   "primitives_drawn": 44,
+   "triangles_drawn_all_nodes": 31166,
+   "materials": [
+    "M_Stone",
+    "M_Wood",
+    "M_Brick",
+    "M_Metal",
+    "M_Clay",
+    "M_GlassWarm",
+    "M_Water",
+    "M_WaterFall",
+    "M_Bulb",
+    "M_Slate"
+   ],
+   "images": [
+    {
+     "name": "T_Stone_Normal",
+     "mime": "image/png",
+     "bytes": 59533,
+     "w": 512,
+     "h": 512
+    },
+    {
+     "name": "T_Stone",
+     "mime": "image/png",
+     "bytes": 136069,
+     "w": 512,
+     "h": 512
+    },
+    {
+     "name": "T_Wood",
+     "mime": "image/png",
+     "bytes": 267821,
+     "w": 512,
+     "h": 512
+    },
+    {
+     "name": "T_Brick_Normal",
+     "mime": "image/png",
+     "bytes": 83522,
+     "w": 512,
+     "h": 512
+    },
+    {
+     "name": "T_Brick_Albedo",
+     "mime": "image/png",
+     "bytes": 114654,
+     "w": 512,
+     "h": 512
+    }
+   ],
+   "decoded_texture_MiB_with_mips": 6.67,
+   "animations": [
+    "ANIM_ELEC_Needle_Sweep",
+    "ANIM_ELEC_WaterWheel_Spin"
+   ],
+   "nodes_with_semantic_id": 68,
+   "primitives_with_COLOR_0": 44,
+   "primitives_missing_NORMAL": 0,
+   "extensionsUsed": [
+    "KHR_materials_emissive_strength"
+   ],
+   "landmark_BLD_ELEC_ROOT": {
+    "translation": null,
+    "rotation": null
+   },
+   "alpha_modes": [
+    "BLEND",
+    "OPAQUE"
+   ],
+   "double_sided_materials": [
+    "M_WaterFall"
+   ]
+  },
+  "ration_shop": {
+   "file": "ration_shop.glb",
+   "bytes": 3146712,
+   "nodes": 53,
+   "meshes": 19,
+   "mesh_nodes": 19,
+   "primitives_drawn": 38,
+   "triangles_drawn_all_nodes": 41255,
+   "materials": [
+    "M_Stone",
+    "M_Wood",
+    "M_Plaster",
+    "M_Metal",
+    "M_Soft",
+    "M_Clay",
+    "M_GlassWarm"
+   ],
+   "images": [
+    {
+     "name": "T_Stone_Normal",
+     "mime": "image/png",
+     "bytes": 59533,
+     "w": 512,
+     "h": 512
+    },
+    {
+     "name": "T_Stone",
+     "mime": "image/png",
+     "bytes": 136069,
+     "w": 512,
+     "h": 512
+    },
+    {
+     "name": "T_Wood",
+     "mime": "image/png",
+     "bytes": 267821,
+     "w": 512,
+     "h": 512
+    },
+    {
+     "name": "T_Plaster",
+     "mime": "image/png",
+     "bytes": 83081,
+     "w": 512,
+     "h": 512
+    }
+   ],
+   "decoded_texture_MiB_with_mips": 5.33,
+   "animations": [
+    "ANIM_RATION_Scale_Balance"
+   ],
+   "nodes_with_semantic_id": 53,
+   "primitives_with_COLOR_0": 38,
+   "primitives_missing_NORMAL": 0,
+   "extensionsUsed": [
+    "KHR_materials_emissive_strength"
+   ],
+   "landmark_BLD_ELEC_ROOT": null,
+   "alpha_modes": [
+    "OPAQUE"
+   ],
+   "double_sided_materials": [
+    "M_Soft"
+   ]
+  }
+ },
+ "manifest": {
+  "interactables": 48,
+  "zones": 18,
+  "markers": 10,
+  "colliders": 144,
+  "water_targets": 5,
+  "cameras": 9
+ },
+ "stats": {
+  "WATER": {
+   "tris": 41214,
+   "mesh_objects": 21,
+   "draw_primitives": 45,
+   "interior_tris": 2284
+  },
+  "ELEC": {
+   "tris": 31166,
+   "mesh_objects": 27,
+   "draw_primitives": 44,
+   "interior_tris": 3216
+  },
+  "RATION": {
+   "tris": 41255,
+   "mesh_objects": 19,
+   "draw_primitives": 38,
+   "interior_tris": 2340
+  },
+  "ENV": {
+   "tris": 114487,
+   "mesh_objects": 20,
+   "draw_primitives": 28,
+   "by_object": {
+    "TERRAIN_Ground": 28800,
+    "VEG_GroundCover_ES": 11061,
+    "VEG_GroundCover_WS": 10717,
+    "VEG_GroundCover_WN": 9879,
+    "VEG_Trees_Far": 8956,
+    "VEG_GroundCover_EN": 7758,
+    "VEG_Trees_West": 6968,
+    "BRIDGE_Main": 6228,
+    "VEG_Trees_East": 4824,
+    "TERRAIN_Paths": 3040,
+    "ENV_VillageProps": 2612,
+    "BRIDGE_FootSouth": 2256,
+    "BRIDGE_FootUpper": 2256,
+    "VEG_Reeds_LilyPads": 2021,
+    "ENV_RiverbankRocks": 1920
+   }
+  },
+  "TOTAL_tris": 228122,
+  "materials": [
+   "M_Brick",
+   "M_Bulb",
+   "M_Clay",
+   "M_GlassWarm",
+   "M_Metal",
+   "M_Plaster",
+   "M_Slate",
+   "M_Soft",
+   "M_Stone",
+   "M_Terrain",
+   "M_Water",
+   "M_WaterFall",
+   "M_Wood"
+  ]
+ }
+}

@@ -1,0 +1,46 @@
+{
+ "probe": "preview/index.html?autocheck=1&motionprobe=1",
+ "run": "v40, 2026-11-17, built-in browser pane (hidden, so rAF paused)",
+ "mode": "fixed-step simulation of stepEffects() + real renders",
+ "notes": [
+  "t0 offsets are non-zero because the live loop advanced all effects together by ~1.4 s of effect time before the probe started; the probe measures deltas from t0.",
+  "flowCheck: per triangle, the surface gradient of glTF uv.v; texture features move along -grad(v) when offset.y grows (river) and along +grad(v) when it shrinks (falls). 'along' = cos > 0.7 with the reference direction (steepest descent for falls, layout.py STREAM centre line for the river).",
+  "preFixDrift_blender: the direction still surfaces drifted before the still-water fix, when they shared the river's scrolled material (Blender axes, +Y = north).",
+  "staticWall region: first raycast hit ELEC_Door_R (M_Wood), not animated during the probe."
+ ],
+ "textureDiag": {"waterMaterialInstances": 1, "uniqueWaterMaps": 1, "fallMaterialInstances": 1, "fallSharesWaterMap": true,
+  "afterFix": {"uniqueWaterMaps": 1, "uniqueWaterNormals": 1, "uniqueFallMaps": 1, "fallOverlapsWater": false, "stillWaterMaterials": 1,
+   "stillWaterMeshes": ["ELEC_PoolWater", "WATER_Surfaces", "EXP_Farm_Irrigation"], "stillSharesRiverTextures": false}},
+ "offsets": {
+  "t0":   {"riverMap": [0.1121], "riverNormal": [[0.021, 0.0701]], "falls": [-0.8409], "stillMap": [0], "stillNormal": [[0.0144, 0.028]], "cloudRotY": 0.00561},
+  "t2s":  {"riverMap": [0.2721], "riverNormal": [[0.051, 0.1701]], "falls": [-2.0409], "stillMap": [0], "stillNormal": [[0.0276, 0.0194]], "cloudRotY": 0.01361},
+  "t32s": {"riverMap": [2.6721], "riverNormal": [[0.501, 1.6701]], "falls": [-20.0409], "stillMap": [0], "stillNormal": [[-0.0259, 0.0026]], "cloudRotY": 0.13361}},
+ "expectedPer2s": {"river": 0.16, "normal_y": 0.1, "normal_x": 0.03, "falls": -1.2, "cloudRotY": 0.008, "stillMap": 0, "stillNormal": "bounded wobble |offset| <= 0.03, no net drift"},
+ "foamOpacity": {"min": 0.49, "max": 0.699},
+ "pixelDiff_0_to_2s": {"river": 9.177, "cloud": 3.026, "staticWall": 0},
+ "pixelDiff_0_to_32s": {"river": 7.374, "cloud": 30.21, "staticWall": 0},
+ "groundTruthWindows": {"cloud": {"center": [64, 896], "coverage": 0.711}, "river": {"center": [760, 376], "coverage": 1}},
+ "regionHits": {"river": {"object": "WATER_River", "material": "M_Water", "dist": 8.16}, "cloud": {"object": "EXP_Sky_Clouds", "material": "M_Cloud", "dist": 260.26},
+  "staticWall": {"object": "ELEC_Door_R", "material": "M_Wood", "dist": 22.81}},
+ "riverPixel": {"t0": [146, 183, 192, 255], "t2s": [184, 197, 198, 255], "t32s": [178, 195, 198, 255]},
+ "canvas": [1510, 1250, 2],
+ "camera": {"name": "CAM_11_Player_Sky", "pos": [-3.6, 0.65, 12.2], "fov": 73.37, "aspect": 1.208},
+ "swapDemoPrimitives": 6,
+ "flowCheck": {
+  "WATER_River": {"material": "M_Water", "shader_target": "water_flow", "flow_axis": "uv_v", "scrolled": "map offset.y +0.08/s", "reference": "STREAM centre line",
+   "area_m2": 1024.149, "motionDir_blender": [-0.121, -0.993, 0], "consistency": 0.977, "along": 1, "sideways": 0, "against": 0, "level": 0, "meanCos": 0.998},
+  "ELEC_WheelFall": {"material": "M_WaterFall", "shader_target": "waterfall", "flow_axis": "uv_v", "scrolled": "map offset.y -0.6/s", "reference": "steepest descent",
+   "area_m2": 1.366, "motionDir_blender": [-0.267, -0.381, -0.885], "consistency": 0.854, "along": 1, "sideways": 0, "against": 0, "level": 0, "meanCos": 1},
+  "WATER_Falls": {"material": "M_WaterFall", "shader_target": "waterfall", "flow_axis": "uv_v", "scrolled": "map offset.y -0.6/s", "reference": "steepest descent",
+   "area_m2": 0.348, "motionDir_blender": [0.089, -0.785, -0.614], "consistency": 0.851, "along": 0.679, "sideways": 0.321, "against": 0, "level": 0, "meanCos": 0.698,
+   "largestOffFlow_blenderXYZ_cos_area": [[-13.48, 9.18, 1.09, 0.41, 0.0355], [-13.36, 9.09, 1.06, 0.41, 0.0355], [-12.42, 9.04, 1.1, -0.54, 0.0204], [-12.37, 8.95, 1.15, -0.54, 0.0204]]},
+  "ELEC_PoolWater": {"material": "M_Water_still", "shader_target": "water_still", "flow_axis": null, "scrolled": false, "area_m2": 8.034, "preFixDrift_blender": [0.573, 0.819, 0.021], "preFixDriftConsistency": 0.98},
+  "WATER_Surfaces": {"material": "M_Water_still", "shader_target": "water_still", "flow_axis": null, "scrolled": false, "area_m2": 23.58, "preFixDrift_blender": [-0.139, 0.99, 0.017], "preFixDriftConsistency": 0.984},
+  "EXP_Farm_Irrigation": {"material": "M_Water_still", "shader_target": "water_flow", "flow_axis": "box_uv", "scrolled": false, "area_m2": 12.833, "preFixDrift_blender": [0, 0.999, 0.048], "preFixDriftConsistency": 0.955}},
+ "waterFallsComponents_blender": [
+  {"part": "stage spout 1", "faces": 3, "area": 0.0915, "bbox": [[-14.71, 12.55, 1.58], [-14.43, 12.75, 1.87]], "alongFlow": true},
+  {"part": "stage spout 2", "faces": 3, "area": 0.0867, "bbox": [[-14.5, 11.01, 1.28], [-14.22, 11.22, 1.55]], "alongFlow": true},
+  {"part": "stage spout 3 (into first clay pot)", "faces": 3, "area": 0.0583, "bbox": [[-14.26, 9.45, 1.07], [-14.01, 9.63, 1.25]], "alongFlow": true},
+  {"part": "pot-to-pot transfer chute", "faces": 1, "area": 0.0711, "bbox": [[-13.65, 9.0, 1.04], [-13.19, 9.28, 1.11]], "alongFlow": false, "cos": 0.41},
+  {"part": "pot-to-trough chute", "faces": 1, "area": 0.0408, "bbox": [[-12.54, 8.87, 1.05], [-12.25, 9.12, 1.2]], "alongFlow": false, "cos": -0.54}]
+}

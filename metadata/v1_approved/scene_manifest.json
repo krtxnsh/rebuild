@@ -1,0 +1,1541 @@
+{
+ "schema_version": "1.0.0",
+ "generator": "rebuild_village_output/scripts (Blender 5.3.0)",
+ "units": "metres",
+ "coordinate_system": "glTF 2.0: +Y up, right-handed, -Z forward. Authoring in Blender Z-up; conversion (x, y, z)_blender -> (x, z, -y)_gltf.",
+ "files": {
+  "village": "exports/village_complete.glb",
+  "WATER": "exports/water_treatment.glb",
+  "ELEC": "exports/electricity_room.glb",
+  "RATION": "exports/ration_shop.glb"
+ },
+ "buildings": {
+  "WATER": {
+   "root_node": "BLD_WATER_ROOT",
+   "standalone_glb": "exports/water_treatment.glb",
+   "standalone_origin": "root at glTF origin, identity rotation",
+   "assembled_translation": [
+    -9.6,
+    0.6,
+    -13.2
+   ],
+   "assembled_rotation_quat": [
+    0.0,
+    0.06976,
+    -0.0,
+    0.99756
+   ],
+   "assembled_yaw_deg_about_+Y": 8.0,
+   "groups": {
+    "Exterior": "WATER_Exterior_Group",
+    "Roof": "WATER_Roof_Group",
+    "Interior": "WATER_Interior_Group",
+    "Interactables": "WATER_Interactables_Group",
+    "Colliders": "WATER_Colliders_Group",
+    "Zones": "WATER_Zones_Group"
+   },
+   "cutaway": {
+    "roof_group": "WATER_Roof_Group",
+    "interior_group": "WATER_Interior_Group"
+   }
+  },
+  "ELEC": {
+   "root_node": "BLD_ELEC_ROOT",
+   "standalone_glb": "exports/electricity_room.glb",
+   "standalone_origin": "root at glTF origin, identity rotation",
+   "assembled_translation": [
+    11.8,
+    0.45,
+    -8.2
+   ],
+   "assembled_rotation_quat": [
+    0.0,
+    -0.30071,
+    -0.0,
+    0.95372
+   ],
+   "assembled_yaw_deg_about_+Y": -35.0,
+   "groups": {
+    "Exterior": "ELEC_Exterior_Group",
+    "Roof": "ELEC_Roof_Group",
+    "Interior": "ELEC_Interior_Group",
+    "Interactables": "ELEC_Interactables_Group",
+    "Colliders": "ELEC_Colliders_Group",
+    "Zones": "ELEC_Zones_Group"
+   },
+   "cutaway": {
+    "roof_group": "ELEC_Roof_Group",
+    "interior_group": "ELEC_Interior_Group"
+   }
+  },
+  "RATION": {
+   "root_node": "BLD_RATION_ROOT",
+   "standalone_glb": "exports/ration_shop.glb",
+   "standalone_origin": "root at glTF origin, identity rotation",
+   "assembled_translation": [
+    -13.6,
+    0.2,
+    4.4
+   ],
+   "assembled_rotation_quat": [
+    0.0,
+    0.13053,
+    -0.0,
+    0.99144
+   ],
+   "assembled_yaw_deg_about_+Y": 15.0,
+   "groups": {
+    "Exterior": "RATION_Exterior_Group",
+    "Roof": "RATION_Roof_Group",
+    "Interior": "RATION_Interior_Group",
+    "Interactables": "RATION_Interactables_Group",
+    "Colliders": "RATION_Colliders_Group",
+    "Zones": "RATION_Zones_Group"
+   },
+   "cutaway": {
+    "roof_group": "RATION_Roof_Group",
+    "interior_group": "RATION_Interior_Group"
+   }
+  }
+ },
+ "interactables_count": 48,
+ "zones_count": 18,
+ "navigation": {
+  "paths": [
+   {
+    "name": "PATH_Ration_Bridge",
+    "width": 2.6,
+    "points": [
+     [
+      -11.19,
+      0.2,
+      7.7918
+     ],
+     [
+      -10.6374,
+      0.2,
+      8.126
+     ],
+     [
+      -10.0831,
+      0.2,
+      8.5163
+     ],
+     [
+      -9.5323,
+      0.2,
+      8.7944
+     ],
+     [
+      -8.99,
+      0.2,
+      8.7918
+     ],
+     [
+      -8.5459,
+      0.1981,
+      8.5323
+     ],
+     [
+      -8.089,
+      0.1955,
+      8.1005
+     ],
+     [
+      -7.645,
+      0.197,
+      7.5393
+     ],
+     [
+      -7.2401,
+      0.1982,
+      6.8916
+     ],
+     [
+      -6.9,
+      0.1947,
+      6.2
+     ],
+     [
+      -6.7052,
+      0.1876,
+      5.6704
+     ],
+     [
+      -6.5437,
+      0.1829,
+      5.0881
+     ],
+     [
+      -6.4086,
+      0.1788,
+      4.4651
+     ],
+     [
+      -6.2934,
+      0.173,
+      3.8129
+     ],
+     [
+      -6.1913,
+      0.1638,
+      3.1435
+     ],
+     [
+      -6.0957,
+      0.1564,
+      2.4686
+     ],
+     [
+      -6.0,
+      0.1365,
+      1.8
+     ],
+     [
+      -5.9213,
+      0.1242,
+      1.1808
+     ],
+     [
+      -5.8547,
+      0.1169,
+      0.5018
+     ],
+     [
+      -5.7969,
+      0.109,
+      -0.2054
+     ],
+     [
+      -5.7447,
+      0.1071,
+      -0.9093
+     ],
+     [
+      -5.6949,
+      0.1036,
+      -1.5784
+     ],
+     [
+      -5.6442,
+      0.1014,
+      -2.1812
+     ],
+     [
+      -5.5894,
+      0.1,
+      -2.6863
+     ],
+     [
+      -5.5273,
+      0.1,
+      -3.062
+     ],
+     [
+      -5.2362,
+      0.1,
+      -3.3429
+     ],
+     [
+      -4.9296,
+      0.1,
+      -3.0096
+     ]
+    ]
+   },
+   {
+    "name": "PATH_Water_Bridge",
+    "width": 2.4,
+    "points": [
+     [
+      -8.5466,
+      0.6,
+      -10.0156
+     ],
+     [
+      -8.3953,
+      0.6,
+      -9.3379
+     ],
+     [
+      -8.2432,
+      0.6,
+      -8.6416
+     ],
+     [
+      -8.0928,
+      0.6,
+      -7.9823
+     ],
+     [
+      -7.9466,
+      0.6,
+      -7.4156
+     ],
+     [
+      -7.6983,
+      0.5988,
+      -6.7078
+     ],
+     [
+      -7.4,
+      0.5086,
+      -6.0
+     ],
+     [
+      -7.1789,
+      0.4078,
+      -5.3803
+     ],
+     [
+      -6.9204,
+      0.2344,
+      -4.6326
+     ],
+     [
+      -6.6517,
+      0.1502,
+      -3.9187
+     ],
+     [
+      -6.4,
+      0.1135,
+      -3.4
+     ],
+     [
+      -5.9557,
+      0.106,
+      -3.0896
+     ],
+     [
+      -5.5273,
+      0.1,
+      -3.062
+     ]
+    ]
+   },
+   {
+    "name": "PATH_Bridge_Elec",
+    "width": 2.6,
+    "points": [
+     [
+      6.626,
+      0.1,
+      -1.9952
+     ],
+     [
+      6.8887,
+      0.1,
+      -1.8746
+     ],
+     [
+      7.2237,
+      0.1032,
+      -1.9427
+     ],
+     [
+      7.6359,
+      0.1092,
+      -2.3856
+     ],
+     [
+      8.1124,
+      0.1161,
+      -2.9962
+     ],
+     [
+      8.4,
+      0.1589,
+      -3.4
+     ],
+     [
+      8.1242,
+      0.1345,
+      -3.1889
+     ],
+     [
+      7.8763,
+      0.1127,
+      -2.9957
+     ],
+     [
+      8.2004,
+      0.1541,
+      -3.3806
+     ],
+     [
+      8.7383,
+      0.2534,
+      -3.9882
+     ],
+     [
+      9.2763,
+      0.3586,
+      -4.5957
+     ]
+    ]
+   },
+   {
+    "name": "PATH_Road_North",
+    "width": 2.2,
+    "points": [
+     [
+      -8.5466,
+      0.6,
+      -10.0156
+     ],
+     [
+      -10.5125,
+      0.6,
+      -9.2817
+     ],
+     [
+      -12.5041,
+      0.6,
+      -8.4595
+     ],
+     [
+      -14.2902,
+      0.6,
+      -8.344
+     ],
+     [
+      -15.3854,
+      0.6,
+      -9.2008
+     ],
+     [
+      -16.0928,
+      0.6,
+      -10.5396
+     ],
+     [
+      -16.6861,
+      0.6,
+      -12.271
+     ],
+     [
+      -17.2673,
+      0.6,
+      -14.2459
+     ],
+     [
+      -17.9386,
+      0.6089,
+      -16.3151
+     ],
+     [
+      -18.5997,
+      0.6961,
+      -17.9984
+     ],
+     [
+      -19.231,
+      0.9013,
+      -19.5868
+     ],
+     [
+      -19.8949,
+      1.1716,
+      -21.2637
+     ],
+     [
+      -20.5854,
+      1.36,
+      -23.0066
+     ],
+     [
+      -21.2963,
+      1.4067,
+      -24.7926
+     ],
+     [
+      -22.0215,
+      1.4149,
+      -26.599
+     ],
+     [
+      -22.7548,
+      1.4335,
+      -28.4031
+     ],
+     [
+      -23.4563,
+      1.4999,
+      -30.0769
+     ],
+     [
+      -24.1675,
+      1.6019,
+      -31.6671
+     ],
+     [
+      -24.9007,
+      1.7315,
+      -33.2505
+     ],
+     [
+      -25.6445,
+      1.8803,
+      -34.8539
+     ],
+     [
+      -26.3877,
+      2.0479,
+      -36.504
+     ],
+     [
+      -27.1189,
+      2.2789,
+      -38.2273
+     ],
+     [
+      -27.8267,
+      2.59,
+      -40.0504
+     ],
+     [
+      -28.5,
+      2.9811,
+      -42.0
+     ],
+     [
+      -28.9972,
+      3.3563,
+      -43.5885
+     ],
+     [
+      -29.488,
+      3.7902,
+      -45.248
+     ],
+     [
+      -29.9708,
+      4.2364,
+      -46.9695
+     ],
+     [
+      -30.444,
+      4.6921,
+      -48.744
+     ],
+     [
+      -30.9062,
+      5.1379,
+      -50.5625
+     ],
+     [
+      -31.356,
+      5.5618,
+      -52.416
+     ],
+     [
+      -31.7917,
+      5.9675,
+      -54.2955
+     ],
+     [
+      -32.212,
+      6.3349,
+      -56.192
+     ],
+     [
+      -32.6152,
+      6.6656,
+      -58.0965
+     ],
+     [
+      -33.0,
+      7.0056,
+      -60.0
+     ],
+     [
+      -33.3291,
+      7.3156,
+      -61.743
+     ],
+     [
+      -33.6367,
+      7.5906,
+      -63.5146
+     ],
+     [
+      -33.9264,
+      7.8186,
+      -65.3103
+     ],
+     [
+      -34.2014,
+      7.9691,
+      -67.1255
+     ],
+     [
+      -34.4651,
+      8.0048,
+      -68.9557
+     ],
+     [
+      -34.7209,
+      7.9126,
+      -70.7964
+     ],
+     [
+      -34.9722,
+      7.7922,
+      -72.6431
+     ],
+     [
+      -35.2224,
+      7.6915,
+      -74.4914
+     ],
+     [
+      -35.4748,
+      7.6256,
+      -76.3366
+     ],
+     [
+      -35.7329,
+      7.5858,
+      -78.1743
+     ],
+     [
+      -36.0,
+      7.5603,
+      -80.0
+     ]
+    ]
+   },
+   {
+    "name": "PATH_Upper_Loop",
+    "width": 1.8,
+    "points": [
+     [
+      -2.8,
+      0.6,
+      -13.4
+     ],
+     [
+      -2.6936,
+      0.6,
+      -13.9986
+     ],
+     [
+      -2.5944,
+      0.6,
+      -14.5949
+     ],
+     [
+      -2.4986,
+      0.6,
+      -15.1902
+     ],
+     [
+      -2.4029,
+      0.5988,
+      -15.7855
+     ],
+     [
+      -2.3036,
+      0.5968,
+      -16.3819
+     ],
+     [
+      -2.1973,
+      0.5961,
+      -16.9805
+     ],
+     [
+      -2.0802,
+      0.5783,
+      -17.5823
+     ],
+     [
+      -1.949,
+      0.5695,
+      -18.1884
+     ],
+     [
+      -1.8,
+      0.5415,
+      -18.8
+     ],
+     [
+      -1.6234,
+      0.4984,
+      -19.4493
+     ],
+     [
+      -1.4177,
+      0.444,
+      -20.1514
+     ],
+     [
+      -1.1921,
+      0.3639,
+      -20.8815
+     ],
+     [
+      -0.9559,
+      0.3107,
+      -21.6149
+     ],
+     [
+      -0.7183,
+      0.2433,
+      -22.3268
+     ],
+     [
+      -0.4884,
+      0.2182,
+      -22.9924
+     ],
+     [
+      -0.2754,
+      0.2207,
+      -23.5869
+     ],
+     [
+      -0.0885,
+      0.2189,
+      -24.0856
+     ],
+     [
+      0.063,
+      0.22,
+      -24.4638
+     ],
+     [
+      0.3945,
+      0.2198,
+      -24.778
+     ],
+     [
+      0.5547,
+      0.2198,
+      -24.3728
+     ]
+    ]
+   },
+   {
+    "name": "PATH_Upper_Loop_E",
+    "width": 1.8,
+    "points": [
+     [
+      10.7809,
+      0.2201,
+      -22.4795
+     ],
+     [
+      11.162,
+      0.2201,
+      -22.6651
+     ],
+     [
+      11.2725,
+      0.2205,
+      -22.3885
+     ],
+     [
+      11.0788,
+      0.2202,
+      -21.9781
+     ],
+     [
+      10.7467,
+      0.2204,
+      -21.4222
+     ],
+     [
+      10.3545,
+      0.2172,
+      -20.7636
+     ],
+     [
+      9.9804,
+      0.2117,
+      -20.0451
+     ],
+     [
+      9.7028,
+      0.2094,
+      -19.3096
+     ],
+     [
+      9.6,
+      0.2138,
+      -18.6
+     ],
+     [
+      9.6749,
+      0.2681,
+      -18.0035
+     ],
+     [
+      9.8612,
+      0.3192,
+      -17.3874
+     ],
+     [
+      10.1285,
+      0.3666,
+      -16.7571
+     ],
+     [
+      10.4463,
+      0.4113,
+      -16.1178
+     ],
+     [
+      10.7845,
+      0.4426,
+      -15.475
+     ],
+     [
+      11.1125,
+      0.4472,
+      -14.8339
+     ],
+     [
+      11.4,
+      0.45,
+      -14.2
+     ]
+    ]
+   },
+   {
+    "name": "PATH_South_Loop",
+    "width": 1.8,
+    "points": [
+     [
+      -8.19,
+      0.1878,
+      8.9918
+     ],
+     [
+      -7.9998,
+      0.1596,
+      9.6149
+     ],
+     [
+      -7.7979,
+      0.1108,
+      10.2352
+     ],
+     [
+      -7.6195,
+      0.064,
+      10.861
+     ],
+     [
+      -7.5,
+      0.0577,
+      11.5
+     ],
+     [
+      -7.4762,
+      0.1368,
+      12.2207
+     ],
+     [
+      -7.5202,
+      0.1891,
+      12.9967
+     ],
+     [
+      -7.5701,
+      0.2139,
+      13.694
+     ],
+     [
+      -7.5642,
+      0.2086,
+      14.1789
+     ],
+     [
+      -7.3494,
+      0.2102,
+      14.3431
+     ],
+     [
+      -7.0642,
+      0.2182,
+      14.1716
+     ]
+    ]
+   },
+   {
+    "name": "PATH_South_Loop_E",
+    "width": 1.8,
+    "points": [
+     [
+      3.3347,
+      0.2196,
+      14.0189
+     ],
+     [
+      3.3868,
+      0.2192,
+      14.203
+     ],
+     [
+      3.8346,
+      0.2196,
+      14.0116
+     ],
+     [
+      4.2023,
+      0.2179,
+      13.7739
+     ],
+     [
+      4.6851,
+      0.1149,
+      13.4864
+     ],
+     [
+      5.2452,
+      -0.0047,
+      13.1404
+     ],
+     [
+      5.8445,
+      -0.1159,
+      12.7274
+     ],
+     [
+      6.4454,
+      -0.1862,
+      12.2387
+     ],
+     [
+      7.0098,
+      -0.2159,
+      11.6658
+     ],
+     [
+      7.5,
+      -0.1842,
+      11.0
+     ],
+     [
+      7.759,
+      -0.1651,
+      10.5519
+     ],
+     [
+      8.02,
+      -0.1454,
+      10.0479
+     ],
+     [
+      8.2796,
+      -0.1233,
+      9.4976
+     ],
+     [
+      8.5345,
+      -0.0952,
+      8.9103
+     ],
+     [
+      8.7813,
+      -0.0673,
+      8.2952
+     ],
+     [
+      9.0166,
+      -0.0379,
+      7.6618
+     ],
+     [
+      9.2371,
+      -0.0074,
+      7.0194
+     ],
+     [
+      9.4395,
+      0.0205,
+      6.3773
+     ],
+     [
+      9.6203,
+      0.0461,
+      5.745
+     ],
+     [
+      9.7762,
+      0.0684,
+      5.1318
+     ],
+     [
+      9.9039,
+      0.0857,
+      4.547
+     ],
+     [
+      10.0,
+      0.1008,
+      4.0
+     ],
+     [
+      10.0694,
+      0.1309,
+      3.3163
+     ],
+     [
+      10.075,
+      0.1563,
+      2.6615
+     ],
+     [
+      10.0296,
+      0.2052,
+      2.0296
+     ],
+     [
+      9.946,
+      0.2569,
+      1.4151
+     ],
+     [
+      9.8368,
+      0.2887,
+      0.8121
+     ],
+     [
+      9.7148,
+      0.3042,
+      0.2148
+     ],
+     [
+      9.5929,
+      0.2967,
+      -0.3824
+     ],
+     [
+      9.4837,
+      0.2687,
+      -0.9855
+     ],
+     [
+      9.4,
+      0.2388,
+      -1.6
+     ]
+    ]
+   }
+  ],
+  "bridges": {
+   "BRIDGE_Main": {
+    "west_end": [
+     -4.9296,
+     0.1,
+     -3.0096
+    ],
+    "east_end": [
+     6.626,
+     0.1,
+     -1.9952
+    ],
+    "deck_clear_width": 1.86
+   },
+   "BRIDGE_FootUpper": {
+    "west_end": [
+     0.5547,
+     0.2198,
+     -24.3728
+    ],
+    "east_end": [
+     10.7809,
+     0.2201,
+     -22.4795
+    ],
+    "deck_clear_width": 1.6
+   },
+   "BRIDGE_FootSouth": {
+    "west_end": [
+     -7.0642,
+     0.2182,
+     14.1716
+    ],
+    "east_end": [
+     3.3347,
+     0.2196,
+     14.0189
+    ],
+    "deck_clear_width": 1.6
+   }
+  },
+  "min_path_width_m": 1.8
+ },
+ "spawn_points": [
+  {
+   "semantic_id": "SPAWN_Player_Main",
+   "node": "SPAWN_Player_Main",
+   "building": null,
+   "world_position": [
+    -8.6,
+    0.2,
+    3.6
+   ],
+   "local_position": null,
+   "kind": "spawn",
+   "forward_world_gltf": [
+    0.4855,
+    0.0,
+    -0.8742
+   ],
+   "extras": {
+    "capsule_height": 1.4,
+    "capsule_radius": 0.3
+   }
+  },
+  {
+   "semantic_id": "SPAWN_ELEC_Outside",
+   "node": "SPAWN_ELEC_Outside",
+   "building": null,
+   "world_position": [
+    9.2763,
+    0.3586,
+    -4.5957
+   ],
+   "local_position": null,
+   "kind": "spawn",
+   "forward_world_gltf": [
+    0.5736,
+    0.0,
+    -0.8192
+   ],
+   "extras": {
+    "faces": "building_entrance"
+   }
+  },
+  {
+   "semantic_id": "SPAWN_RATION_Outside",
+   "node": "SPAWN_RATION_Outside",
+   "building": null,
+   "world_position": [
+    -11.19,
+    0.2,
+    7.7918
+   ],
+   "local_position": null,
+   "kind": "spawn",
+   "forward_world_gltf": [
+    -0.2588,
+    0.0,
+    -0.9659
+   ],
+   "extras": {
+    "faces": "building_entrance"
+   }
+  },
+  {
+   "semantic_id": "SPAWN_WATER_Outside",
+   "node": "SPAWN_WATER_Outside",
+   "building": null,
+   "world_position": [
+    -8.5466,
+    0.6,
+    -10.0156
+   ],
+   "local_position": null,
+   "kind": "spawn",
+   "forward_world_gltf": [
+    -0.1392,
+    0.0,
+    -0.9903
+   ],
+   "extras": {
+    "faces": "building_entrance"
+   }
+  }
+ ],
+ "entrances": [
+  {
+   "semantic_id": "ELEC_Entrance",
+   "node": "ELEC_Entrance",
+   "building": "ELEC",
+   "world_position": [
+    9.6778,
+    0.45,
+    -5.1691
+   ],
+   "local_position": [
+    -0.0,
+    0.0,
+    3.7
+   ],
+   "kind": "entrance",
+   "forward_world_gltf": [
+    0.5736,
+    0.0,
+    -0.8192
+   ],
+   "extras": {
+    "door_ids": [
+     "ELEC_Door_L",
+     "ELEC_Door_R"
+    ],
+    "clear_width": 2.0,
+    "clear_height": 2.5
+   }
+  },
+  {
+   "semantic_id": "WATER_Entrance_Rear",
+   "node": "WATER_Entrance_Rear",
+   "building": "WATER",
+   "world_position": [
+    -8.4965,
+    0.6,
+    -16.4855
+   ],
+   "local_position": [
+    1.55,
+    0.0,
+    -3.1
+   ],
+   "kind": "entrance",
+   "forward_world_gltf": [
+    -0.1392,
+    0.0,
+    -0.9903
+   ],
+   "extras": {
+    "door_ids": [
+     "WATER_Door_Back"
+    ],
+    "clear_width": 1.1,
+    "clear_height": 2.05
+   }
+  },
+  {
+   "semantic_id": "RATION_Entrance_Rear",
+   "node": "RATION_Entrance_Rear",
+   "building": "RATION",
+   "world_position": [
+    -12.6861,
+    0.2,
+    1.0493
+   ],
+   "local_position": [
+    1.75,
+    0.0,
+    -3.0
+   ],
+   "kind": "entrance",
+   "forward_world_gltf": [
+    -0.2588,
+    0.0,
+    -0.9659
+   ],
+   "extras": {
+    "door_ids": [
+     "RATION_Door_Back"
+    ],
+    "clear_width": 1.1,
+    "clear_height": 2.05
+   }
+  },
+  {
+   "semantic_id": "RATION_Entrance",
+   "node": "RATION_Entrance",
+   "building": "RATION",
+   "world_position": [
+    -11.3971,
+    0.2,
+    7.0191
+   ],
+   "local_position": [
+    1.45,
+    0.0,
+    3.1
+   ],
+   "kind": "entrance",
+   "forward_world_gltf": [
+    -0.2588,
+    0.0,
+    -0.9659
+   ],
+   "extras": {
+    "door_ids": [],
+    "clear_width": 1.45,
+    "clear_height": 2.35,
+    "note": "open market front; entry gap beside counter"
+   }
+  },
+  {
+   "semantic_id": "ELEC_Entrance_Rear",
+   "node": "ELEC_Entrance_Rear",
+   "building": "ELEC",
+   "world_position": [
+    14.6676,
+    0.45,
+    -10.4648
+   ],
+   "local_position": [
+    1.05,
+    0.0,
+    -3.5
+   ],
+   "kind": "entrance",
+   "forward_world_gltf": [
+    0.5736,
+    0.0,
+    -0.8192
+   ],
+   "extras": {
+    "door_ids": [
+     "ELEC_Door_Back"
+    ],
+    "clear_width": 1.1,
+    "clear_height": 2.1
+   }
+  },
+  {
+   "semantic_id": "WATER_Entrance",
+   "node": "WATER_Entrance",
+   "building": "WATER",
+   "world_position": [
+    -8.3129,
+    0.6,
+    -10.1494
+   ],
+   "local_position": [
+    0.85,
+    0.0,
+    3.2
+   ],
+   "kind": "entrance",
+   "forward_world_gltf": [
+    -0.1392,
+    0.0,
+    -0.9903
+   ],
+   "extras": {
+    "door_ids": [
+     "WATER_Door_L",
+     "WATER_Door_R"
+    ],
+    "clear_width": 1.7,
+    "clear_height": 2.3
+   }
+  }
+ ],
+ "cameras": [
+  {
+   "name": "CAM_01_Village_Hero",
+   "position": [
+    -1.5,
+    14.0,
+    28.0
+   ],
+   "target": [
+    1.2,
+    3.6,
+    -9.0
+   ],
+   "focal_length_mm": 24.0,
+   "sensor_width_mm": 36.0,
+   "type": "PERSP"
+  },
+  {
+   "name": "CAM_02_Village_TopDown",
+   "position": [
+    0.0,
+    150.0,
+    -6.0
+   ],
+   "target": [
+    0.0,
+    0.0,
+    -6.01
+   ],
+   "focal_length_mm": 35.0,
+   "sensor_width_mm": 36.0,
+   "type": "ORTHO"
+  },
+  {
+   "name": "CAM_03_Elec_Exterior",
+   "position": [
+    12.7402,
+    6.65,
+    5.2765
+   ],
+   "target": [
+    12.0457,
+    3.05,
+    -8.0279
+   ],
+   "focal_length_mm": 32.0,
+   "sensor_width_mm": 36.0,
+   "type": "PERSP"
+  },
+  {
+   "name": "CAM_04_Elec_Interior",
+   "position": [
+    9.9893,
+    2.55,
+    -6.6601
+   ],
+   "target": [
+    13.3404,
+    2.15,
+    -10.0512
+   ],
+   "focal_length_mm": 16.0,
+   "sensor_width_mm": 36.0,
+   "type": "PERSP"
+  },
+  {
+   "name": "CAM_05_Water_Exterior",
+   "position": [
+    -17.0511,
+    7.8,
+    -1.5496
+   ],
+   "target": [
+    -9.4019,
+    2.8,
+    -13.2278
+   ],
+   "focal_length_mm": 30.0,
+   "sensor_width_mm": 36.0,
+   "type": "PERSP"
+  },
+  {
+   "name": "CAM_06_Water_Interior",
+   "position": [
+    -8.4938,
+    2.35,
+    -11.4368
+   ],
+   "target": [
+    -10.4725,
+    2.0,
+    -15.097
+   ],
+   "focal_length_mm": 16.0,
+   "sensor_width_mm": 36.0,
+   "type": "PERSP"
+  },
+  {
+   "name": "CAM_07_Ration_Exterior",
+   "position": [
+    -3.1947,
+    6.4,
+    11.5506
+   ],
+   "target": [
+    -13.0773,
+    1.9,
+    5.1917
+   ],
+   "focal_length_mm": 30.0,
+   "sensor_width_mm": 36.0,
+   "type": "PERSP"
+  },
+  {
+   "name": "CAM_08_Ration_Interior",
+   "position": [
+    -11.3109,
+    1.85,
+    6.3748
+   ],
+   "target": [
+    -15.0059,
+    1.4,
+    3.0167
+   ],
+   "focal_length_mm": 16.0,
+   "sensor_width_mm": 36.0,
+   "type": "PERSP"
+  },
+  {
+   "name": "CAM_09_Ground_Player",
+   "position": [
+    -10.4296,
+    1.8008,
+    1.4904
+   ],
+   "target": [
+    10.626,
+    2.2,
+    -6.4952
+   ],
+   "focal_length_mm": 22.0,
+   "sensor_width_mm": 36.0,
+   "type": "PERSP"
+  }
+ ],
+ "water_and_special_shader_targets": [
+  {
+   "node": "WATER_Falls",
+   "semantic_id": "WATER_Falls",
+   "target": "waterfall",
+   "material": [
+    "M_WaterFall"
+   ],
+   "flow_axis": "uv_v",
+   "flow_speed": null
+  },
+  {
+   "node": "ELEC_WheelFall",
+   "semantic_id": "ELEC_WheelFall",
+   "target": "waterfall",
+   "material": [
+    "M_WaterFall"
+   ],
+   "flow_axis": "uv_v",
+   "flow_speed": null
+  },
+  {
+   "node": "WATER_Surfaces",
+   "semantic_id": "WATER_Surfaces",
+   "target": "water_still",
+   "material": [
+    "M_Water"
+   ],
+   "flow_axis": null,
+   "flow_speed": null
+  },
+  {
+   "node": "ELEC_PoolWater",
+   "semantic_id": "ELEC_PoolWater",
+   "target": "water_still",
+   "material": [
+    "M_Water"
+   ],
+   "flow_axis": null,
+   "flow_speed": null
+  },
+  {
+   "node": "WATER_River",
+   "semantic_id": "WATER_River",
+   "target": "water_flow",
+   "material": [
+    "M_Water"
+   ],
+   "flow_axis": "uv_v",
+   "flow_speed": 0.25
+  }
+ ],
+ "lod": {
+  "provided": false,
+  "reason": "Measured LOD0 totals are inside the provisional budget (see reports/performance_report.md); LOD nodes not authored yet. Runtime switching would need explicit THREE.LOD setup."
+ },
+ "animations": {
+  "ANIM_ELEC_WaterWheel_Spin": "ELEC_WaterWheel, local X, 360 deg / 120 frames @30fps (loop)",
+  "ANIM_WATER_Windlass_Crank": "WATER_Well_Windlass, local X, 720 deg / 120 frames",
+  "ANIM_RATION_Scale_Balance": "RATION_WeighingScale_Beam, +/-10 deg rocking",
+  "ANIM_ELEC_Needle_Sweep": "ELEC_VoltageMeter_Needle sweep"
+ },
+ "runtime_notes": [
+  "Collections are authoring-only; use the *_Group Empty nodes for runtime grouping.",
+  "Hide <KEY>_Roof_Group (and optionally walls) for indoor camera cutaway.",
+  "Emissive toggles: ELEC_Bulb_* (material M_Bulb), lantern/lamp glass objects. Clone material per node before toggling.",
+  "Water: material M_Water / M_WaterFall are replacement targets; scroll UV v for flow.",
+  "Colliders/zones/markers are Empty nodes with extras; build physics shapes from collision_manifest.json."
+ ]
+}

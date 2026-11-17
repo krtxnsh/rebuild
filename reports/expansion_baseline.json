@@ -1,0 +1,1000 @@
+{
+ "source_file": "blender/village_master.blend (approved v1)",
+ "backup": "blender/village_master_v1_approved.blend",
+ "roots": {
+  "WATER": {
+   "location": [
+    -9.6,
+    13.2,
+    0.6
+   ],
+   "rotation_deg": [
+    0.0,
+    -0.0,
+    8.0
+   ],
+   "matrix_world": [
+    [
+     0.990268,
+     -0.139173,
+     0.0,
+     -9.6
+    ],
+    [
+     0.139173,
+     0.990268,
+     0.0,
+     13.2
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.6
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "descendant_count": 68,
+   "descendant_names_hash": 467581998,
+   "mesh_tris": 41214
+  },
+  "ELEC": {
+   "location": [
+    11.8,
+    8.2,
+    0.45
+   ],
+   "rotation_deg": [
+    0.0,
+    0.0,
+    -35.0
+   ],
+   "matrix_world": [
+    [
+     0.819152,
+     0.573576,
+     0.0,
+     11.8
+    ],
+    [
+     -0.573576,
+     0.819152,
+     0.0,
+     8.2
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.45
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "descendant_count": 67,
+   "descendant_names_hash": 4210347472,
+   "mesh_tris": 31166
+  },
+  "RATION": {
+   "location": [
+    -13.6,
+    -4.4,
+    0.2
+   ],
+   "rotation_deg": [
+    0.0,
+    -0.0,
+    15.0
+   ],
+   "matrix_world": [
+    [
+     0.965926,
+     -0.258819,
+     0.0,
+     -13.6
+    ],
+    [
+     0.258819,
+     0.965926,
+     0.0,
+     -4.4
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.2
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "descendant_count": 52,
+   "descendant_names_hash": 947087199,
+   "mesh_tris": 41255
+  }
+ },
+ "bridges": {
+  "BRIDGE_Main": {
+   "matrix_world": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "tris": 6228,
+   "verts": 3368,
+   "vert_checksum": 12833.5242
+  },
+  "BRIDGE_FootUpper": {
+   "matrix_world": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "tris": 2256,
+   "verts": 1248,
+   "vert_checksum": 30092.3177
+  },
+  "BRIDGE_FootSouth": {
+   "matrix_world": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "tris": 2256,
+   "verts": 1248,
+   "vert_checksum": -14907.1803
+  }
+ },
+ "objects": {
+  "TERRAIN_Ground": {
+   "tris": 28800,
+   "verts": 14641,
+   "mats": [
+    "M_Terrain"
+   ],
+   "checksum": 317044.435
+  },
+  "TERRAIN_FarHills": {
+   "tris": 1150,
+   "verts": 704,
+   "mats": [
+    "M_Terrain"
+   ],
+   "checksum": 88715.786
+  },
+  "WATER_River": {
+   "tris": 1550,
+   "verts": 936,
+   "mats": [
+    "M_Water"
+   ],
+   "checksum": 9679.065
+  },
+  "ENV_RiverbankRocks": {
+   "tris": 1920,
+   "verts": 1152,
+   "mats": [
+    "M_Stone"
+   ],
+   "checksum": 12012.546
+  },
+  "BRIDGE_Main": {
+   "tris": 6228,
+   "verts": 3368,
+   "mats": [
+    "M_Wood",
+    "M_Stone"
+   ],
+   "checksum": 12833.524
+  },
+  "BRIDGE_FootUpper": {
+   "tris": 2256,
+   "verts": 1248,
+   "mats": [
+    "M_Wood"
+   ],
+   "checksum": 30092.318
+  },
+  "BRIDGE_FootSouth": {
+   "tris": 2256,
+   "verts": 1248,
+   "mats": [
+    "M_Wood"
+   ],
+   "checksum": -14907.18
+  },
+  "TERRAIN_Paths": {
+   "tris": 3040,
+   "verts": 1915,
+   "mats": [
+    "M_Terrain",
+    "M_Stone"
+   ],
+   "checksum": 1479.056
+  },
+  "WATER_Roof": {
+   "tris": 12056,
+   "verts": 10781,
+   "mats": [
+    "M_Wood",
+    "M_Clay"
+   ],
+   "checksum": 47278.492
+  },
+  "WATER_ExteriorStatic": {
+   "tris": 14034,
+   "verts": 8276,
+   "mats": [
+    "M_Stone",
+    "M_Plaster",
+    "M_Wood",
+    "M_Metal",
+    "M_Clay",
+    "M_Soft"
+   ],
+   "checksum": 15804.143
+  },
+  "WATER_InteriorFitout": {
+   "tris": 2284,
+   "verts": 1280,
+   "mats": [
+    "M_Wood",
+    "M_Metal",
+    "M_Clay"
+   ],
+   "checksum": -1409.884
+  },
+  "WATER_LanternGlass": {
+   "tris": 28,
+   "verts": 16,
+   "mats": [
+    "M_GlassWarm"
+   ],
+   "checksum": 50.96
+  },
+  "WATER_Falls": {
+   "tris": 22,
+   "verts": 32,
+   "mats": [
+    "M_WaterFall"
+   ],
+   "checksum": -216.128
+  },
+  "WATER_Surfaces": {
+   "tris": 324,
+   "verts": 180,
+   "mats": [
+    "M_Water"
+   ],
+   "checksum": 159.92
+  },
+  "WATER_StorageTank": {
+   "tris": 840,
+   "verts": 434,
+   "mats": [
+    "M_Wood",
+    "M_Metal"
+   ],
+   "checksum": 538.0
+  },
+  "WATER_Collection": {
+   "tris": 416,
+   "verts": 256,
+   "mats": [
+    "M_Wood",
+    "M_Metal"
+   ],
+   "checksum": 180.344
+  },
+  "WATER_Sedimentation": {
+   "tris": 416,
+   "verts": 256,
+   "mats": [
+    "M_Wood",
+    "M_Metal"
+   ],
+   "checksum": 135.984
+  },
+  "WATER_FilterStage": {
+   "tris": 754,
+   "verts": 464,
+   "mats": [
+    "M_Wood",
+    "M_Metal",
+    "M_Stone"
+   ],
+   "checksum": 244.023
+  },
+  "WATER_DisinfectionMarker": {
+   "tris": 100,
+   "verts": 56,
+   "mats": [
+    "M_Wood",
+    "M_Clay"
+   ],
+   "checksum": 46.488
+  },
+  "WATER_Distribution": {
+   "tris": 468,
+   "verts": 256,
+   "mats": [
+    "M_Stone",
+    "M_Metal"
+   ],
+   "checksum": 228.08
+  },
+  "WATER_Well": {
+   "tris": 2408,
+   "verts": 1669,
+   "mats": [
+    "M_Stone",
+    "M_Wood",
+    "M_Clay"
+   ],
+   "checksum": 2644.367
+  },
+  "WATER_Well_Windlass": {
+   "tris": 408,
+   "verts": 212,
+   "mats": [
+    "M_Wood",
+    "M_Soft",
+    "M_Metal"
+   ],
+   "checksum": 10.152
+  },
+  "WATER_Well_Bucket": {
+   "tris": 180,
+   "verts": 98,
+   "mats": [
+    "M_Soft",
+    "M_Wood",
+    "M_Metal"
+   ],
+   "checksum": 15.16
+  },
+  "WATER_PipeNetwork": {
+   "tris": 4500,
+   "verts": 2404,
+   "mats": [
+    "M_Metal",
+    "M_Clay"
+   ],
+   "checksum": 4985.566
+  },
+  "WATER_MainValve": {
+   "tris": 216,
+   "verts": 120,
+   "mats": [
+    "M_Metal"
+   ],
+   "checksum": -0.0
+  },
+  "WATER_TestStation": {
+   "tris": 404,
+   "verts": 252,
+   "mats": [
+    "M_Wood",
+    "M_Clay",
+    "M_Soft"
+   ],
+   "checksum": 228.132
+  },
+  "WATER_Door_L": {
+   "tris": 452,
+   "verts": 256,
+   "mats": [
+    "M_Wood"
+   ],
+   "checksum": 425.26
+  },
+  "WATER_Door_R": {
+   "tris": 452,
+   "verts": 256,
+   "mats": [
+    "M_Wood"
+   ],
+   "checksum": 144.027
+  },
+  "WATER_Door_Back": {
+   "tris": 452,
+   "verts": 256,
+   "mats": [
+    "M_Wood"
+   ],
+   "checksum": 437.671
+  },
+  "ELEC_Roof": {
+   "tris": 7076,
+   "verts": 4596,
+   "mats": [
+    "M_Wood",
+    "M_Slate"
+   ],
+   "checksum": 22342.977
+  },
+  "ELEC_ExteriorStatic": {
+   "tris": 11256,
+   "verts": 6873,
+   "mats": [
+    "M_Stone",
+    "M_Wood",
+    "M_Brick",
+    "M_Metal",
+    "M_Clay",
+    "M_GlassWarm"
+   ],
+   "checksum": 7459.503
+  },
+  "ELEC_InteriorFitout": {
+   "tris": 3216,
+   "verts": 2080,
+   "mats": [
+    "M_Wood",
+    "M_Metal",
+    "M_Clay",
+    "M_Slate"
+   ],
+   "checksum": 3775.5
+  },
+  "ELEC_PoolWater": {
+   "tris": 24,
+   "verts": 16,
+   "mats": [
+    "M_Water"
+   ],
+   "checksum": 107.928
+  },
+  "ELEC_WheelFall": {
+   "tris": 16,
+   "verts": 18,
+   "mats": [
+    "M_WaterFall"
+   ],
+   "checksum": 100.518
+  },
+  "ELEC_WaterWheel": {
+   "tris": 808,
+   "verts": 468,
+   "mats": [
+    "M_Wood",
+    "M_Metal"
+   ],
+   "checksum": -9.88
+  },
+  "ELEC_PowerPole_01": {
+   "tris": 676,
+   "verts": 384,
+   "mats": [
+    "M_Wood",
+    "M_Clay"
+   ],
+   "checksum": 2230.72
+  },
+  "ELEC_PowerPole_02": {
+   "tris": 676,
+   "verts": 384,
+   "mats": [
+    "M_Wood",
+    "M_Clay"
+   ],
+   "checksum": 2155.52
+  },
+  "ELEC_PowerPole_03": {
+   "tris": 676,
+   "verts": 384,
+   "mats": [
+    "M_Wood",
+    "M_Clay"
+   ],
+   "checksum": 2042.72
+  },
+  "ELEC_Bulb_01": {
+   "tris": 108,
+   "verts": 60,
+   "mats": [
+    "M_Bulb"
+   ],
+   "checksum": -5.55
+  },
+  "ELEC_Bulb_02": {
+   "tris": 108,
+   "verts": 60,
+   "mats": [
+    "M_Bulb"
+   ],
+   "checksum": -5.55
+  },
+  "ELEC_Bulb_03": {
+   "tris": 108,
+   "verts": 60,
+   "mats": [
+    "M_Bulb"
+   ],
+   "checksum": -5.55
+  },
+  "ELEC_Bulb_04": {
+   "tris": 108,
+   "verts": 60,
+   "mats": [
+    "M_Bulb"
+   ],
+   "checksum": -5.55
+  },
+  "ELEC_Bulb_05": {
+   "tris": 108,
+   "verts": 60,
+   "mats": [
+    "M_Bulb"
+   ],
+   "checksum": -5.55
+  },
+  "ELEC_Bulb_06": {
+   "tris": 108,
+   "verts": 60,
+   "mats": [
+    "M_Bulb"
+   ],
+   "checksum": -5.55
+  },
+  "ELEC_Bulb_07": {
+   "tris": 108,
+   "verts": 60,
+   "mats": [
+    "M_Bulb"
+   ],
+   "checksum": -5.55
+  },
+  "ELEC_Bulb_08": {
+   "tris": 108,
+   "verts": 60,
+   "mats": [
+    "M_Bulb"
+   ],
+   "checksum": -5.55
+  },
+  "ELEC_Bulb_09": {
+   "tris": 108,
+   "verts": 60,
+   "mats": [
+    "M_Bulb"
+   ],
+   "checksum": -5.55
+  },
+  "ELEC_VoltageMeter": {
+   "tris": 636,
+   "verts": 468,
+   "mats": [
+    "M_Metal",
+    "M_Clay"
+   ],
+   "checksum": -6.119
+  },
+  "ELEC_VoltageMeter_Needle": {
+   "tris": 40,
+   "verts": 24,
+   "mats": [
+    "M_Clay",
+    "M_Metal"
+   ],
+   "checksum": 0.669
+  },
+  "ELEC_MainSwitch": {
+   "tris": 64,
+   "verts": 40,
+   "mats": [
+    "M_Metal",
+    "M_Wood"
+   ],
+   "checksum": 11.728
+  },
+  "ELEC_Generator": {
+   "tris": 660,
+   "verts": 344,
+   "mats": [
+    "M_Metal"
+   ],
+   "checksum": 271.52
+  },
+  "ELEC_CopperCoils": {
+   "tris": 2184,
+   "verts": 1116,
+   "mats": [
+    "M_Wood",
+    "M_Metal"
+   ],
+   "checksum": 776.18
+  },
+  "ELEC_Door_L": {
+   "tris": 452,
+   "verts": 256,
+   "mats": [
+    "M_Wood"
+   ],
+   "checksum": 478.315
+  },
+  "ELEC_Door_R": {
+   "tris": 452,
+   "verts": 256,
+   "mats": [
+    "M_Wood"
+   ],
+   "checksum": 142.108
+  },
+  "ELEC_Door_Back": {
+   "tris": 452,
+   "verts": 256,
+   "mats": [
+    "M_Wood"
+   ],
+   "checksum": 444.063
+  },
+  "ELEC_Cables": {
+   "tris": 830,
+   "verts": 425,
+   "mats": [
+    "M_Metal"
+   ],
+   "checksum": 2544.038
+  },
+  "RATION_Roof": {
+   "tris": 11764,
+   "verts": 10472,
+   "mats": [
+    "M_Wood",
+    "M_Clay"
+   ],
+   "checksum": 44877.685
+  },
+  "RATION_ExteriorStatic": {
+   "tris": 13815,
+   "verts": 8190,
+   "mats": [
+    "M_Stone",
+    "M_Wood",
+    "M_Plaster",
+    "M_Metal",
+    "M_Soft",
+    "M_Clay",
+    "M_GlassWarm"
+   ],
+   "checksum": 25963.475
+  },
+  "RATION_InteriorFitout": {
+   "tris": 2340,
+   "verts": 1284,
+   "mats": [
+    "M_Wood",
+    "M_Clay",
+    "M_Soft",
+    "M_Metal"
+   ],
+   "checksum": -540.492
+  },
+  "RATION_InteriorLanternGlass": {
+   "tris": 28,
+   "verts": 16,
+   "mats": [
+    "M_GlassWarm"
+   ],
+   "checksum": 29.84
+  },
+  "RATION_RiceBag": {
+   "tris": 428,
+   "verts": 344,
+   "mats": [
+    "M_Soft"
+   ],
+   "checksum": 74.168
+  },
+  "RATION_LentilBag": {
+   "tris": 452,
+   "verts": 384,
+   "mats": [
+    "M_Soft"
+   ],
+   "checksum": 90.191
+  },
+  "RATION_GrainBag": {
+   "tris": 660,
+   "verts": 496,
+   "mats": [
+    "M_Soft"
+   ],
+   "checksum": 101.42
+  },
+  "RATION_ProduceCrate_01": {
+   "tris": 708,
+   "verts": 406,
+   "mats": [
+    "M_Wood",
+    "M_Soft"
+   ],
+   "checksum": 112.615
+  },
+  "RATION_ProduceCrate_02": {
+   "tris": 776,
+   "verts": 496,
+   "mats": [
+    "M_Wood",
+    "M_Soft"
+   ],
+   "checksum": 150.633
+  },
+  "RATION_ProduceCrate_03": {
+   "tris": 856,
+   "verts": 476,
+   "mats": [
+    "M_Wood",
+    "M_Soft"
+   ],
+   "checksum": 128.647
+  },
+  "RATION_ProduceCrate_04": {
+   "tris": 776,
+   "verts": 486,
+   "mats": [
+    "M_Wood",
+    "M_Soft"
+   ],
+   "checksum": 150.819
+  },
+  "RATION_Sign": {
+   "tris": 688,
+   "verts": 668,
+   "mats": [
+    "M_Wood",
+    "M_Clay"
+   ],
+   "checksum": 172.952
+  },
+  "RATION_Counter": {
+   "tris": 748,
+   "verts": 436,
+   "mats": [
+    "M_Wood",
+    "M_Soft",
+    "M_Clay"
+   ],
+   "checksum": 573.305
+  },
+  "RATION_WeighingScale": {
+   "tris": 136,
+   "verts": 74,
+   "mats": [
+    "M_Metal"
+   ],
+   "checksum": 21.92
+  },
+  "RATION_WeighingScale_Beam": {
+   "tris": 24,
+   "verts": 16,
+   "mats": [
+    "M_Metal"
+   ],
+   "checksum": 0.56
+  },
+  "RATION_WeighingScale_PanL": {
+   "tris": 108,
+   "verts": 72,
+   "mats": [
+    "M_Metal"
+   ],
+   "checksum": -17.16
+  },
+  "RATION_WeighingScale_PanR": {
+   "tris": 108,
+   "verts": 72,
+   "mats": [
+    "M_Metal"
+   ],
+   "checksum": -17.16
+  },
+  "RATION_StorageShelf": {
+   "tris": 6388,
+   "verts": 3632,
+   "mats": [
+    "M_Wood",
+    "M_Soft",
+    "M_Clay"
+   ],
+   "checksum": 3304.418
+  },
+  "RATION_Door_Back": {
+   "tris": 452,
+   "verts": 256,
+   "mats": [
+    "M_Wood"
+   ],
+   "checksum": 437.671
+  },
+  "VEG_Trees_West": {
+   "tris": 6968,
+   "verts": 3718,
+   "mats": [
+    "M_Wood",
+    "M_Soft"
+   ],
+   "checksum": -68485.563
+  },
+  "VEG_Trees_Centre": {
+   "tris": 536,
+   "verts": 286,
+   "mats": [
+    "M_Wood",
+    "M_Soft"
+   ],
+   "checksum": 9864.342
+  },
+  "VEG_Trees_East": {
+   "tris": 4824,
+   "verts": 2574,
+   "mats": [
+    "M_Wood",
+    "M_Soft"
+   ],
+   "checksum": 109595.297
+  },
+  "VEG_GroundCover_EN": {
+   "tris": 7758,
+   "verts": 6528,
+   "mats": [
+    "M_Soft"
+   ],
+   "checksum": 322252.251
+  },
+  "VEG_GroundCover_WS": {
+   "tris": 10717,
+   "verts": 7971,
+   "mats": [
+    "M_Soft"
+   ],
+   "checksum": -292956.452
+  },
+  "VEG_GroundCover_ES": {
+   "tris": 11061,
+   "verts": 8787,
+   "mats": [
+    "M_Soft"
+   ],
+   "checksum": 167342.745
+  },
+  "VEG_GroundCover_WN": {
+   "tris": 9879,
+   "verts": 7383,
+   "mats": [
+    "M_Soft"
+   ],
+   "checksum": -84620.7
+  },
+  "VEG_Reeds_LilyPads": {
+   "tris": 2021,
+   "verts": 1701,
+   "mats": [
+    "M_Soft"
+   ],
+   "checksum": 15915.66
+  },
+  "VEG_Trees_Far": {
+   "tris": 8956,
+   "verts": 6120,
+   "mats": [
+    "M_Wood",
+    "M_Soft"
+   ],
+   "checksum": 306463.96
+  },
+  "ENV_Signpost": {
+   "tris": 1843,
+   "verts": 1825,
+   "mats": [
+    "M_Wood"
+   ],
+   "checksum": 3107.68
+  },
+  "ENV_VillageProps": {
+   "tris": 2612,
+   "verts": 1516,
+   "mats": [
+    "M_Wood",
+    "M_Metal",
+    "M_Stone"
+   ],
+   "checksum": 9946.435
+  },
+  "ENV_LampGlass": {
+   "tris": 112,
+   "verts": 64,
+   "mats": [
+    "M_GlassWarm"
+   ],
+   "checksum": 334.915
+  },
+  "PROXY_PlayerCapsule": {
+   "tris": 120,
+   "verts": 72,
+   "mats": [
+    "M_Soft"
+   ],
+   "checksum": 50.4
+  }
+ },
+ "total_tris": 228122,
+ "primitives": 155
+}

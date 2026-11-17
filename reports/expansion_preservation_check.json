@@ -1,0 +1,162 @@
+{
+ "unchanged": [
+  "TERRAIN_Ground",
+  "TERRAIN_FarHills",
+  "WATER_River",
+  "ENV_RiverbankRocks",
+  "BRIDGE_Main",
+  "BRIDGE_FootUpper",
+  "BRIDGE_FootSouth",
+  "WATER_Roof",
+  "WATER_ExteriorStatic",
+  "WATER_InteriorFitout",
+  "WATER_LanternGlass",
+  "WATER_Falls",
+  "WATER_Surfaces",
+  "WATER_StorageTank",
+  "WATER_Collection",
+  "WATER_Sedimentation",
+  "WATER_FilterStage",
+  "WATER_DisinfectionMarker",
+  "WATER_Distribution",
+  "WATER_Well",
+  "WATER_Well_Windlass",
+  "WATER_Well_Bucket",
+  "WATER_PipeNetwork",
+  "WATER_MainValve",
+  "WATER_TestStation",
+  "WATER_Door_L",
+  "WATER_Door_R",
+  "WATER_Door_Back",
+  "ELEC_Roof",
+  "ELEC_ExteriorStatic",
+  "ELEC_InteriorFitout",
+  "ELEC_PoolWater",
+  "ELEC_WheelFall",
+  "ELEC_WaterWheel",
+  "ELEC_PowerPole_01",
+  "ELEC_PowerPole_02",
+  "ELEC_PowerPole_03",
+  "ELEC_Bulb_01",
+  "ELEC_Bulb_02",
+  "ELEC_Bulb_03",
+  "ELEC_Bulb_04",
+  "ELEC_Bulb_05",
+  "ELEC_Bulb_06",
+  "ELEC_Bulb_07",
+  "ELEC_Bulb_08",
+  "ELEC_Bulb_09",
+  "ELEC_VoltageMeter",
+  "ELEC_VoltageMeter_Needle",
+  "ELEC_MainSwitch",
+  "ELEC_Generator",
+  "ELEC_CopperCoils",
+  "ELEC_Door_L",
+  "ELEC_Door_R",
+  "ELEC_Door_Back",
+  "ELEC_Cables",
+  "RATION_Roof",
+  "RATION_ExteriorStatic",
+  "RATION_InteriorFitout",
+  "RATION_InteriorLanternGlass",
+  "RATION_RiceBag",
+  "RATION_LentilBag",
+  "RATION_GrainBag",
+  "RATION_ProduceCrate_01",
+  "RATION_ProduceCrate_02",
+  "RATION_ProduceCrate_03",
+  "RATION_ProduceCrate_04",
+  "RATION_Sign",
+  "RATION_Counter",
+  "RATION_WeighingScale",
+  "RATION_WeighingScale_Beam",
+  "RATION_WeighingScale_PanL",
+  "RATION_WeighingScale_PanR",
+  "RATION_StorageShelf",
+  "RATION_Door_Back",
+  "VEG_Trees_Centre",
+  "VEG_Trees_East",
+  "VEG_Reeds_LilyPads",
+  "VEG_Trees_Far",
+  "ENV_Signpost",
+  "ENV_LampGlass",
+  "PROXY_PlayerCapsule"
+ ],
+ "changed": {
+  "TERRAIN_Paths": {
+   "verts_v1": 1915,
+   "verts_v2": 1720,
+   "checksum_v1": 1479.056,
+   "checksum_v2": 2133.4
+  },
+  "VEG_Trees_West": {
+   "verts_v1": 3718,
+   "verts_v2": 3718,
+   "checksum_v1": -68485.563,
+   "checksum_v2": -69886.262
+  },
+  "VEG_GroundCover_EN": {
+   "verts_v1": 6528,
+   "verts_v2": 4701,
+   "checksum_v1": 322252.251,
+   "checksum_v2": 229166.553
+  },
+  "VEG_GroundCover_WS": {
+   "verts_v1": 7971,
+   "verts_v2": 7023,
+   "checksum_v1": -292956.452,
+   "checksum_v2": -272470.48
+  },
+  "VEG_GroundCover_ES": {
+   "verts_v1": 8787,
+   "verts_v2": 7164,
+   "checksum_v1": 167342.745,
+   "checksum_v2": 125175.006
+  },
+  "VEG_GroundCover_WN": {
+   "verts_v1": 7383,
+   "verts_v2": 5289,
+   "checksum_v1": -84620.7,
+   "checksum_v2": -63449.642
+  },
+  "ENV_VillageProps": {
+   "verts_v1": 1516,
+   "verts_v2": 1456,
+   "checksum_v1": 9946.435,
+   "checksum_v2": 8646.96
+  }
+ },
+ "missing": [],
+ "roots": {
+  "WATER": {
+   "matrix_identical": true,
+   "descendants_v1": 68,
+   "descendants_v2": 68
+  },
+  "ELEC": {
+   "matrix_identical": true,
+   "descendants_v1": 67,
+   "descendants_v2": 67
+  },
+  "RATION": {
+   "matrix_identical": true,
+   "descendants_v1": 52,
+   "descendants_v2": 52
+  }
+ },
+ "bridges": {
+  "BRIDGE_Main": {
+   "geometry_identical": true,
+   "matrix_identical": true
+  },
+  "BRIDGE_FootUpper": {
+   "geometry_identical": true,
+   "matrix_identical": true
+  },
+  "BRIDGE_FootSouth": {
+   "geometry_identical": true,
+   "matrix_identical": true
+  }
+ },
+ "building_meshes_changed": []
+}

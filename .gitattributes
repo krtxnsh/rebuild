@@ -1,0 +1,5 @@
+# keep binary assets byte-exact
+*.glb   binary
+*.blend binary
+*.png   binary
+*.jpg   binary

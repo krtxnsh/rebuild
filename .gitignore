@@ -1,0 +1,17 @@
+# Blender backups and Python caches
+*.blend1
+*.blend2
+__pycache__/
+*.pyc
+
+# accidental frame-numbered copies of one render (v2_full_hero_c.png0001.png ... 0009.png)
+renders/*.png0*.png
+
+# OS files
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# The reference images you supplied for the build. Left out so they are not published by accident;
+# delete this line if you own them and want them in the repository.
+references/

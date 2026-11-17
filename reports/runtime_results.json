@@ -1,0 +1,15 @@
+{"captured":"2026-11-17, built-in browser pane (hidden), preview/index.html?autocheck=1&bench=1",
+ "env":{"ua":"Chrome/156 (Claude desktop built-in browser), Windows 10/11 x64","gpu":"ANGLE (NVIDIA GeForce RTX 5060 Laptop GPU, D3D11)","dpr":1,"viewport":[1024,768],"antialias":true,"shadows":"PCFSoft 2048, 1 directional","three":"0.160.0","gpuTimerQuery":true},
+ "load":{"ms":182,"errors":0,"nodes":391,"colliders":144,"zones":18,"doors":7,"bulbs":9,"water_materials":["M_Water","M_WaterFall"]},
+ "checks":{"landmark_BLD_ELEC_ROOT":{"manifest":[11.8,0.45,-8.2],"loaded":[11.8,0.45,-8.2],"ok":true},
+   "door_toggle_deg":{"ELEC_Door_Back":100,"ELEC_Door_L":"0 (starts open; toggle-to-open is a no-op by design)","ELEC_Door_R":"0 (same)","RATION_Door_Back":100,"WATER_Door_Back":100,"WATER_Door_L":100,"WATER_Door_R":100},
+   "valve_rotates":true,"scale_beam_tilt_rad":-0.18,"bulb_emissive_off":"all 9 -> 0","water_material_replacement_primitives":5,"roof_cutaway_groups_hidden":[true,true,true],
+   "capsule_route_exterior":{"samples":202,"colliding":0,"y_range_m":[-1.05,1.34]},"capsule_route_interior":{"samples":100,"colliding":0,"y_range_m":[0.20,0.60]}},
+ "bench_forced_sync_renders":{
+   "CAM_01_Village_Hero":{"calls":157,"tris":228160,"cpu_sync_ms_median":3.7,"cpu_sync_ms_p95":8.7,"gpu_ms_median":1.23,"gpu_ms_max":2.65},
+   "CAM_09_Ground_Player":{"calls":86,"calls_no_shadow_cfg":99,"tris":184108,"cpu_sync_ms_median":1.8,"cpu_sync_ms_p95":2.9,"gpu_ms_median":0.186},
+   "CAM_02_Village_TopDown":{"calls":157,"tris":228160,"cpu_sync_ms_median":3.4,"gpu_ms_median":1.237},
+   "CAM_04_Elec_Interior":{"calls":56,"tris":112430,"cpu_sync_ms_median":1.7,"gpu_ms_median":0.274},
+   "CAM_06_Water_Interior":{"calls":40,"tris":109480,"cpu_sync_ms_median":1.9,"gpu_ms_median":0.276},
+   "CAM_08_Ration_Interior":{"calls":67,"tris":147880,"cpu_sync_ms_median":1.2,"gpu_ms_median":0.246}},
+ "not_measured":"30 s requestAnimationFrame route sampling (pane hidden -> rAF paused). Laptop-iGPU and mobile target profiles not tested."}
