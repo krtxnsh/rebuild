@@ -27,6 +27,35 @@ Serve this folder over HTTP (any static server) and open `preview/index.html`. T
 - `?autocheck=1&bench=1` runs the automated checks.
 - Without them, use the buttons: doors, waterwheel, valve, scale, bulbs, water shader swap, roof cutaway, colliders, and
   perf routes (30 s exterior + 30 s interior frame sampling; needs a visible tab).
+## Engineer's Notebook
+Across the three learning modules (`modules/water-purification.html`, `modules/power-palampur.html`,
+`modules/rationing-palampur.html`) the player builds a single **Engineer's Notebook**. Each time a learning
+task is finished the module shows a "Notebook part unlocked" popup and the part is added to the notebook.
+The notebook is shared by all three modules and by the Module Map (`modules/index.html`), which shows each
+module's progress and a button to open the full notebook.
+
+- **Shared code:** `shared/rebuild-notebook.js` is a plain classic script (no dependencies, no build step)
+  that exposes `window.RebuildNotebook`. The modal styles live in `shared/rebuild-shell.css`.
+- **Persistence:** unlocked parts are saved to `localStorage` under the key `rebuild.notebook.v1`
+  (the unlocked part ids plus unlock timestamps). If storage is blocked it falls back to an in-memory copy
+  for the life of the page, so the game never breaks.
+- **Reset:** open any module (or the Module Map) and run `RebuildNotebook.reset()` in the browser console.
+
+The 10 parts:
+
+| # | Module | Part id | Title |
+|---|---|---|---|
+| 1 | Clean Water | `water.sedimentation` | Sedimentation |
+| 2 | Clean Water | `water.decantation` | Decantation |
+| 3 | Clean Water | `water.filtration` | Filtration |
+| 4 | Clean Water | `water.boiling` | Boiling |
+| 5 | Power for Palampur | `power.circuit` | A complete circuit |
+| 6 | Power for Palampur | `power.current` | Current is not used up |
+| 7 | Power for Palampur | `power.conductors` | Conductors & insulators |
+| 8 | Fair Rations | `ration.variable` | A letter stands for a number |
+| 9 | Fair Rations | `ration.fractions` | More pieces, smaller parts |
+| 10 | Fair Rations | `ration.equation` | An equation plans a resource |
+
 ## v2 expansion (current)
 The approved three-building village (v1) has been expanded **incrementally**:
 - eight distinct homes (four designs)
