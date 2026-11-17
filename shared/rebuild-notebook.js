@@ -152,6 +152,7 @@
   /* ---- HTML helpers ---------------------------------------------------- */
   var LOCK_SVG = '<svg class="rnb-lockic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 10V8a6 6 0 0 1 12 0v2h1a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1h1zm2 0h8V8a4 4 0 0 0-8 0v2zm4 4a1.6 1.6 0 0 0-.8 3v2.2h1.6V17a1.6 1.6 0 0 0-.8-3z"/></svg>';
   var BOOK_SVG = '<svg class="rnb-bookic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5C10.3 5.2 8 4.7 5.5 5.1A1 1 0 0 0 4.7 6v11.3a1 1 0 0 0 1.2 1c2-.4 4.1 0 5.6 1.2a1 1 0 0 0 1 0c1.5-1.2 3.6-1.6 5.6-1.2a1 1 0 0 0 1.2-1V6a1 1 0 0 0-.8-1C16 4.7 13.7 5.2 12 6.5zM11 17.6c-1.4-.8-3-1.1-4.5-1V6.9c1.7-.2 3.3.3 4.5 1.3v9.4zm6.5-1c-1.5-.1-3.1.2-4.5 1V8.2c1.2-1 2.8-1.5 4.5-1.3v9.7z"/></svg>';
+  var CHECK_SVG = '<svg class="rnb-checkic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 16.2 5.3 12l-1.4 1.4 5.6 5.6L20.1 7.9l-1.4-1.4z"/></svg>';
 
   function esc(s) {
     return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -205,6 +206,10 @@
   function partCardHtml(part, pos) {
     if (isUnlocked(part.id)) {
       return '<div class="rnb-card rnb-open">' +
+        '<div class="rnb-eyebrow">' +
+          '<span class="rnb-part">Part ' + pos + '</span>' +
+          '<span class="rnb-badge">' + CHECK_SVG + 'Discovered</span>' +
+        '</div>' +
         '<h3 class="rnb-title">' + esc(part.title) + '</h3>' +
         '<p class="rnb-text">' + esc(part.text) + '</p>' +
         '<p class="rnb-note rnb-remember"><b>Remember</b> ' + esc(part.remember) + '</p>' +
@@ -213,19 +218,23 @@
     }
     return '<div class="rnb-card rnb-locked">' +
       '<h3 class="rnb-title">' + LOCK_SVG + 'Part ' + pos + ' · Locked</h3>' +
-      '<p class="rnb-hint">Finish the task in this module to unlock</p>' +
+      '<p class="rnb-hint">Finish the task in this module to unlock this note.</p>' +
       '</div>';
   }
 
   function html(currentModuleKey) {
     var activeKey = MODULE_BY_KEY[currentModuleKey] ? currentModuleKey : MODULES[0].key;
+    var done = count(), all = total();
+    var pct = all ? Math.round(done / all * 100) : 0;
+    var allDone = done >= all && all > 0;
 
     var tabs = MODULES.map(function (m) {
       var on = m.key === activeKey;
-      return '<button type="button" class="rnb-tab' + (on ? ' on' : '') + '" role="tab"' +
+      var full = count(m.key) >= total(m.key);
+      return '<button type="button" class="rnb-tab' + (on ? ' on' : '') + (full ? ' done' : '') + '" role="tab"' +
         ' aria-selected="' + (on ? 'true' : 'false') + '" data-key="' + m.key + '">' +
         '<span class="rnb-tabname">' + esc(m.tab) + '</span>' +
-        '<span class="rnb-tcount">' + count(m.key) + ' / ' + total(m.key) + '</span>' +
+        '<span class="rnb-tcount">' + (full ? CHECK_SVG : '') + count(m.key) + ' / ' + total(m.key) + '</span>' +
         '</button>';
     }).join('');
 
@@ -238,7 +247,12 @@
 
     return '<div class="rnb">' +
       '<h2 class="rnb-head">' + BOOK_SVG + 'Engineer’s Notebook</h2>' +
-      '<p class="rnb-progress">' + count() + ' / ' + total() + ' parts unlocked</p>' +
+      '<p class="rnb-sub">Every science &amp; maths note you unlock in Palampur is saved here. Tap a module tab below to flip through it — your progress is kept even after you close the game.</p>' +
+      '<div class="rnb-bar" role="progressbar" aria-valuemin="0" aria-valuemax="' + all + '" aria-valuenow="' + done + '">' +
+        '<div class="rnb-fill" style="width:' + pct + '%"></div>' +
+        '<span class="rnb-barlabel">' + done + ' / ' + all + ' parts unlocked</span>' +
+      '</div>' +
+      (allDone ? '<p class="rnb-done-banner">' + CHECK_SVG + 'Notebook complete — you rebuilt Palampur with real science!</p>' : '') +
       '<div class="rnb-tabs" role="tablist">' + tabs + '</div>' +
       '<div class="rnb-panels">' + panels + '</div>' +
       '</div>';
