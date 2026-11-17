@@ -53,7 +53,7 @@ export const TeacherOverview: React.FC<TeacherOverviewProps> = ({
         );
 
   const needsAttention = [...dataset.students]
-    .filter((s) => s.status === 'Needs Attention' || s.overallScore < 60)
+    .filter((s) => s.status !== 'On Track' || s.overallScore < 60)
     .sort((a, b) => a.overallScore - b.overallScore)
     .slice(0, 4);
 
@@ -212,6 +212,7 @@ export const TeacherOverview: React.FC<TeacherOverviewProps> = ({
                           [subj]: !prev[subj],
                         }))
                       }
+                      aria-pressed={active}
                       className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border text-xs font-medium transition-colors cursor-pointer ${
                         active
                           ? 'border-[#E9D9C7] bg-[#FFF9F1] text-[#33251F]'
@@ -241,7 +242,7 @@ export const TeacherOverview: React.FC<TeacherOverviewProps> = ({
             <div className="rounded-2xl border border-[#E9D9C7] bg-[#FFFDFA] p-6">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="font-display text-base font-bold text-[#33251F]">
-                  Students Needing Attention
+                  Students to Support
                 </h2>
                 <button
                   type="button"

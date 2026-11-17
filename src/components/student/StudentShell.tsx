@@ -214,6 +214,7 @@ export const StudentShell: React.FC<StudentShellProps> = ({
               type="button"
               onClick={() => setMobileMenuOpen(true)}
               aria-label="Open navigation menu"
+              aria-expanded={mobileMenuOpen}
               className="lg:hidden p-2 rounded-lg border border-[#E9D9C7] bg-[#FFFDFA] text-[#33251F]"
             >
               <Menu className="w-4 h-4" />
@@ -225,8 +226,13 @@ export const StudentShell: React.FC<StudentShellProps> = ({
                 type="search"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Escape') setSearchQuery('');
+                }}
                 placeholder="Search lessons, missions..."
                 aria-label="Search lessons and missions"
+                aria-expanded={searchQuery.length > 0}
+                aria-controls="student-search-results"
                 className="w-full pl-9 pr-8 py-2 rounded-xl border border-[#E9D9C7] bg-[#FFFDFA] text-sm text-[#33251F] placeholder:text-[#75665C] focus:outline-none focus:border-[#E97832]"
               />
               {searchQuery && (
@@ -240,13 +246,19 @@ export const StudentShell: React.FC<StudentShellProps> = ({
                 </button>
               )}
 
-              {searchResults.length > 0 && (
-                <div className="absolute left-0 right-0 top-full mt-1.5 rounded-xl border border-[#E9D9C7] bg-[#FFFDFA] shadow-lg overflow-hidden z-40">
+              {searchQuery.trim() && (
+                <div id="student-search-results" role="listbox" className="absolute left-0 right-0 top-full mt-1.5 rounded-xl border border-[#E9D9C7] bg-[#FFFDFA] shadow-lg overflow-hidden z-40">
+                  {searchResults.length === 0 && (
+                    <div className="px-4 py-3 text-xs text-[#75665C]">
+                      No lessons or missions found. Try a subject like Maths or Science.
+                    </div>
+                  )}
                   {searchResults.map((res) => (
                     <button
                       key={res.id}
                       type="button"
                       onClick={res.onClick}
+                      role="option"
                       className="w-full text-left px-4 py-2.5 hover:bg-[#FFF6E9] border-b last:border-b-0 border-[#E9D9C7] flex items-center justify-between gap-2 cursor-pointer"
                     >
                       <div className="min-w-0">
@@ -273,6 +285,8 @@ export const StudentShell: React.FC<StudentShellProps> = ({
                 if (!notifOpen && unreadCount > 0) onMarkNotificationsRead();
               }}
               aria-label="Notifications"
+              aria-expanded={notifOpen}
+              aria-haspopup="dialog"
               className="relative p-2 rounded-xl border border-[#E9D9C7] bg-[#FFFDFA] hover:bg-[#FFF6E9] text-[#33251F] transition-colors cursor-pointer"
             >
               <Bell className="w-4 h-4" />

@@ -3,11 +3,15 @@ import { motion } from 'motion/react';
 import {
   ArrowRight,
   Award,
+  BarChart3,
   BookOpen,
+  CheckCircle2,
   Compass,
   Flame,
   Star,
+  Target,
   Trophy,
+  TrendingUp,
 } from 'lucide-react';
 import {
   LearningModule,
@@ -41,6 +45,9 @@ export const StudentHome: React.FC<StudentHomeProps> = ({
   const nextBuilding =
     buildings.find((b) => b.progress < 100) ?? buildings[buildings.length - 1];
   const recommendedModules = modules.filter((m) => !m.completed).slice(0, 3);
+  const nextModule = recommendedModules[0];
+  const modulesRemaining = Math.max(0, student.totalModules - student.modulesCompleted);
+  const weeklyDeltaLabel = student.weeklyDelta >= 0 ? `+${student.weeklyDelta}%` : `${student.weeklyDelta}%`;
 
   return (
     <motion.div
@@ -93,6 +100,57 @@ export const StudentHome: React.FC<StudentHomeProps> = ({
         </div>
       </section>
 
+      {/* Learning pulse: a compact at-a-glance summary keeps the next decision obvious. */}
+      <section aria-label="Learning pulse" className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="rounded-2xl border border-[#E9D9C7] bg-[#FFFDFA] px-4 py-3.5 flex items-center gap-3">
+          <div className="w-9 h-9 rounded-lg bg-[#65966A]/15 text-[#65966A] flex items-center justify-center shrink-0">
+            <BarChart3 className="w-4 h-4" />
+          </div>
+          <div>
+            <div className="font-display text-lg font-bold text-[#33251F] tabular-nums">
+              {student.overallScore}%
+            </div>
+            <div className="text-[11px] text-[#75665C]">Current score</div>
+          </div>
+        </div>
+
+        <div className="rounded-2xl border border-[#E9D9C7] bg-[#FFFDFA] px-4 py-3.5 flex items-center gap-3">
+          <div className="w-9 h-9 rounded-lg bg-[#E8AA43]/20 text-[#C85A20] flex items-center justify-center shrink-0">
+            <TrendingUp className="w-4 h-4" />
+          </div>
+          <div>
+            <div className={`font-display text-lg font-bold tabular-nums ${student.weeklyDelta >= 0 ? 'text-[#65966A]' : 'text-[#C94B3F]'}`}>
+              {weeklyDeltaLabel}
+            </div>
+            <div className="text-[11px] text-[#75665C]">This week</div>
+          </div>
+        </div>
+
+        <div className="rounded-2xl border border-[#E9D9C7] bg-[#FFFDFA] px-4 py-3.5 flex items-center gap-3">
+          <div className="w-9 h-9 rounded-lg bg-[#FFF6E9] border border-[#E9D9C7] text-[#C85A20] flex items-center justify-center shrink-0">
+            <CheckCircle2 className="w-4 h-4" />
+          </div>
+          <div>
+            <div className="font-display text-lg font-bold text-[#33251F] tabular-nums">
+              {student.modulesCompleted}/{student.totalModules}
+            </div>
+            <div className="text-[11px] text-[#75665C]">Lessons complete</div>
+          </div>
+        </div>
+
+        <div className="rounded-2xl border border-[#E9D9C7] bg-[#FFFDFA] px-4 py-3.5 flex items-center gap-3">
+          <div className="w-9 h-9 rounded-lg bg-[#E97832]/15 text-[#C85A20] flex items-center justify-center shrink-0">
+            <Target className="w-4 h-4" />
+          </div>
+          <div>
+            <div className="font-display text-lg font-bold text-[#33251F] tabular-nums">
+              {modulesRemaining}
+            </div>
+            <div className="text-[11px] text-[#75665C]">Lessons left</div>
+          </div>
+        </div>
+      </section>
+
       {/* Main Split: 3D Village Progress + Today's Mission */}
       <section className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
         {/* Village Progress Card with Live Interactive 3D Miniature */}
@@ -136,6 +194,12 @@ export const StudentHome: React.FC<StudentHomeProps> = ({
 
             <div
               onClick={() => onNavigate('village')}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') onNavigate('village');
+              }}
+              aria-label="Open the full 3D village view"
               className="sm:col-span-7 h-52 rounded-xl border border-[#E9D9C7] overflow-hidden cursor-pointer relative group"
               title="Drag to orbit or click to explore full 3D village"
             >
@@ -184,6 +248,12 @@ export const StudentHome: React.FC<StudentHomeProps> = ({
                     )}%`,
                   }}
                 />
+              </div>
+              <div className="mt-3 flex items-center justify-between text-[11px] text-[#75665C]">
+                <span>Mission progress</span>
+                <span className="font-mono font-semibold text-[#33251F] tabular-nums">
+                  {Math.min(todayMission.currentCount, todayMission.targetCount)}/{todayMission.targetCount}
+                </span>
               </div>
             </div>
           </div>
@@ -263,9 +333,16 @@ export const StudentHome: React.FC<StudentHomeProps> = ({
       <section className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         <div className="lg:col-span-7 rounded-2xl border border-[#E9D9C7] bg-[#FFFDFA] p-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="font-display text-lg font-bold text-[#33251F]">
-              Continue Learning
-            </h2>
+            <div>
+              <h2 className="font-display text-lg font-bold text-[#33251F]">
+                Continue Learning
+              </h2>
+              {nextModule && (
+                <p className="text-[11px] text-[#C85A20] mt-0.5">
+                  Next best step · {nextModule.estimatedMinutes} min · +{nextModule.xpReward} XP
+                </p>
+              )}
+            </div>
             <button
               type="button"
               onClick={() => onNavigate('learn')}
@@ -304,7 +381,7 @@ export const StudentHome: React.FC<StudentHomeProps> = ({
                   onClick={() => onStartModule(mod.id)}
                   className="px-4 py-2 rounded-lg bg-[#FFF6E9] hover:bg-[#E97832] text-[#33251F] hover:text-[#FFFDFA] border border-[#E9D9C7] hover:border-[#E97832] text-xs font-semibold transition-colors shrink-0 cursor-pointer whitespace-nowrap"
                 >
-                  Continue
+                  {mod.progress > 0 ? 'Continue' : 'Start'}
                 </button>
               </div>
             ))}
