@@ -1,17 +1,28 @@
 (() => {
   'use strict';
-  const path = location.pathname.toLowerCase();
-  const current = path.includes('water') ? 0 : path.includes('power') ? 1 : 2;
+  const chapters = [
+    { id: 'water', file: 'water-purification.html', title: 'Clean Water' },
+    { id: 'power', file: 'power-palampur.html', title: 'Power for Palampur' },
+    { id: 'ration', file: 'rationing-palampur.html', title: 'Fair Rations' },
+  ];
+  const file = location.pathname.toLowerCase().split('/').at(-1);
+  const current = chapters.findIndex(chapter => chapter.file === file);
   const journey = new URLSearchParams(location.search).get('journey');
-  const chapters = ['water', 'power', 'ration'];
-  const modules = [{ name: 'Clean Water' }, { name: 'Power for Palampur' }, { name: 'Fair Rations' }];
-  const nextChapter = chapters[current + 1] || null;
+  const active = current >= 0 && journey === chapters[current].id;
+  const next = active ? chapters[current + 1] : undefined;
+  let leaving = false;
   window.RebuildJourney = {
-    active: Boolean(journey),
-    hasNext: Boolean(nextChapter),
-    nextLabel: nextChapter ? `Walk with Rio to ${modules[current + 1].name}` : 'Journey complete · Return to REBUILD',
-    complete() { location.href = nextChapter ? `../preview/?chapter=${nextChapter}` : '../'; return true; }
+    active,
+    hasNext: Boolean(next),
+    nextLabel: next ? `Walk with Rio to ${next.title}` : 'Journey complete · Return to REBUILD',
+    complete() {
+      if (!active || leaving) return false;
+      leaving = true;
+      location.assign(next ? `../preview/?chapter=${next.id}` : '../');
+      return true;
+    }
   };
+  window.addEventListener('pageshow', () => { leaving = false; });
   function addNavigation() {
     if (document.querySelector('.rebuild-shell-nav')) return;
     const nav = document.createElement('nav'); nav.className = 'rebuild-shell-nav';

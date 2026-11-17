@@ -3,8 +3,12 @@
 <title>REBUILD · Village</title>
 <style>
 :root{--bg:#1d2126;--panel:rgba(20,24,28,.88);--fg:#eef0f2;--mute:#9aa4ad;--acc:#f2b84b}
-html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font:13px/1.35 system-ui,Segoe UI,sans-serif;overflow:hidden;animation:villageIn 1.1s ease both}
-@keyframes villageIn{from{opacity:0;transform:scale(1.015)}to{opacity:1;transform:none}}
+html,body{margin:0;height:100%;background:#d9ebfa;color:var(--fg);font:13px/1.35 system-ui,Segoe UI,sans-serif;overflow:hidden}
+#sceneLoading,#sceneNotice{position:fixed;z-index:35;left:50%;top:50%;transform:translate(-50%,-50%);background:#fff9e8;color:#46351e;border:1px solid #c89c52;border-radius:14px;padding:16px 22px;text-align:center;width:max-content;max-width:calc(100% - 70px);box-shadow:0 6px 22px #523a2833}
+#sceneNotice{top:auto;bottom:24px;transform:translateX(-50%)}
+#sceneNotice button,#sceneNotice a{color:#55330c;font:inherit;margin:4px 6px}
+#sceneNotice p{margin:0 0 8px}
+body[data-phase="loading"] canvas{visibility:hidden}
 #ui{display:none;position:fixed;top:10px;left:10px;width:300px;max-height:calc(100% - 20px);overflow:auto;background:var(--panel);border-radius:10px;padding:10px 12px;box-sizing:border-box}.debug #ui{display:block}
 #ui h1{font-size:14px;margin:0 0 6px}#ui button{margin:2px 2px;padding:5px 8px;border:0;border-radius:6px;background:#2f3943;color:var(--fg);cursor:pointer}
 #ui button.on{background:var(--acc);color:#222}#stats{white-space:pre;font:11px/1.3 ui-monospace,Consolas,monospace;color:var(--mute);margin-top:6px}
@@ -12,38 +16,74 @@ canvas{display:block}
 #rioArrow{position:fixed;left:50%;top:50%;z-index:12;transform:translate(-50%,-100%);border:0;background:none;color:#4a2b00;padding:0;cursor:pointer;filter:drop-shadow(0 7px 10px rgba(77,45,0,.38));transition:opacity .35s ease,filter .2s ease}
 #rioArrow:hover{filter:drop-shadow(0 8px 15px rgba(255,190,20,.72)) brightness(1.06)}
 #rioArrow.out{opacity:0;pointer-events:none}
-#chapterFade{position:fixed;inset:0;z-index:30;pointer-events:none;opacity:0;background:radial-gradient(circle at 50% 42%,#fffdf1 0%,#f1f8ff 56%,#d9ebfa 100%);transition:opacity .68s cubic-bezier(.45,0,.2,1)}
+#chapterFade{position:fixed;inset:0;z-index:30;pointer-events:none;opacity:0;background:#f6ebd4;transition:opacity .42s ease}
 #chapterFade.on{opacity:1}
 .rio-arrow-inner{display:flex;flex-direction:column;align-items:center;gap:3px;animation:rioFloat 1.25s ease-in-out infinite}
 .rio-arrow-inner b{font:800 13px/1.1 "Segoe UI",system-ui,sans-serif;color:#533100;background:linear-gradient(180deg,#fff2a3,#ffc928);border:2px solid #9a5b00;border-radius:999px;padding:6px 11px;white-space:nowrap;box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 0 0 4px rgba(255,200,40,.2),0 0 22px rgba(255,196,22,.72)}
 .rio-arrow-inner svg{width:38px;height:38px;fill:#ffc928;stroke:#7b4800;stroke-width:1.4;stroke-linejoin:round;filter:drop-shadow(0 0 8px rgba(255,197,30,.95))}
 @keyframes rioFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
-@media (prefers-reduced-motion:reduce){.rio-arrow-inner{animation:none}}
+@media (prefers-reduced-motion:reduce){.rio-arrow-inner{animation:none}#chapterFade{transition-duration:.08s}}
 </style>
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
-</head><body>
+</head><body data-phase="loading">
 <div id="ui"><h1>REBUILD · Village</h1>
 <div id="btns"></div><div id="stats">loading...</div></div><pre id="res" hidden></pre><div id="chapterFade" aria-hidden="true"></div>
+<div id="sceneLoading" role="status">Loading the village…</div>
+<div id="sceneNotice" role="status" hidden><p>The village could not load.</p><button type="button" onclick="location.reload()">Try again</button><a href="../modules/" target="_top">Module map</a></div>
+<script>
+  (() => {
+    const loading = document.getElementById('sceneLoading');
+    const notice = document.getElementById('sceneNotice');
+    const embedded = parent !== window && new URLSearchParams(location.search).get('embed') === '1';
+    let settled = false;
+    window.villageReady = (error) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timeout);
+      loading.hidden = true;
+      notice.hidden = !error;
+      if (embedded) parent.postMessage({ type: error ? 'rebuild:load-error' : 'rebuild:ready' }, location.origin);
+    };
+    const timeout = setTimeout(() => window.villageReady(true), 35000);
+  })();
+</script>
 <script type="module">
 import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+import { buildRioRoute, RioWalker, clamp, damp, frameDelta, turnToward } from './rio-route.mjs';
+import { createRioCamera } from './rio-camera.mjs';
 const R = window.__results = { errors: [], load: null, checks: {} };
 window.addEventListener('error', e => R.errors.push(String(e.message)));
 const qs = new URLSearchParams(location.search);
+const embedded = parent !== window && qs.get('embed') === '1';
+const debug = ['debug', 'autocheck', 'motionprobe', 'bench'].some(flag => qs.has(flag));
 if (qs.has('debug')) document.body.classList.add('debug');
 const chapterFromUrl = qs.get('chapter');
 const CHAPTER = ['water', 'power', 'ration'].includes(chapterFromUrl) ? chapterFromUrl : 'water';
 const CHAPTER_DATA = {
-  water: { module: 'water-purification.html', label: 'Walk to Water House', event: 'engineer:atWater' },
-  power: { module: 'power-palampur.html', label: 'Walk to Power House', event: 'engineer:atPower' },
-  ration: { module: 'rationing-palampur.html', label: 'Walk to Ration Shop', event: 'engineer:atRation' }
+  water: { building: 'WATER', module: 'water-purification.html', label: 'Walk to Water House', event: 'engineer:atWater' },
+  power: { building: 'ELEC', module: 'power-palampur.html', label: 'Continue to Power House', event: 'engineer:atPower' },
+  ration: { building: 'RATION', module: 'rationing-palampur.html', label: 'Continue to the Ration Shop', event: 'engineer:atRation' }
 };
 const FILE = qs.get('file') || '../exports/web/village_complete.glb';   // Draco web build; ?file=../exports/village_complete.glb for the uncompressed export
-const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
-const DPR_CAP = matchMedia('(pointer:coarse)').matches ? 1.4 : 1.75;
-renderer.setPixelRatio(Math.min(devicePixelRatio, DPR_CAP));
+let renderer;
+try {
+  renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
+} catch (error) {
+  window.villageReady(true);
+  throw error;
+}
+let presented = !embedded;
+if (embedded) {
+  addEventListener('message', event => {
+    if (event.source === parent && event.origin === location.origin && event.data?.type === 'rebuild:show') presented = true;
+  });
+}
+function pixelRatio() {
+  return Math.min(devicePixelRatio, innerWidth < 600 ? 1.4 : 1.75, Math.sqrt(3200000 / (innerWidth * innerHeight)));
+}
+renderer.setPixelRatio(pixelRatio());
 renderer.setSize(innerWidth, innerHeight);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
@@ -58,15 +98,19 @@ const skyMat = new THREE.ShaderMaterial({ side: THREE.BackSide, depthWrite: fals
   fragmentShader: 'uniform vec3 h; uniform vec3 m; uniform vec3 z; varying vec3 vDir; void main(){ float t = clamp(vDir.y, 0.0, 1.0); vec3 c = mix(h, m, smoothstep(0.0, 0.16, t)); c = mix(c, z, smoothstep(0.16, 0.8, t)); gl_FragColor = vec4(c, 1.0);\n#include <colorspace_fragment>\n}' });
 const skyDome = new THREE.Mesh(new THREE.SphereGeometry(1100, 32, 16), skyMat); skyDome.renderOrder = -1; skyDome.frustumCulled = false; scene.add(skyDome);
 scene.fog = new THREE.Fog(0xdde9f6, 160, 560);
-const cam = new THREE.PerspectiveCamera(50, innerWidth / innerHeight, 0.1, 1500);
+const cam = new THREE.PerspectiveCamera(innerWidth < innerHeight ? 58 : 50, innerWidth / innerHeight, 0.2, 1500);
 cam.position.set(-1.5, 14, 28);
-const ctr = new OrbitControls(cam, renderer.domElement); ctr.target.set(1.2, 3.6, -9); ctr.update();
 scene.add(new THREE.HemisphereLight(0xd8e9ff, 0x748c4c, 0.95));
 const sun = new THREE.DirectionalLight(0xfff0d6, 2.6); sun.position.set(-30, 45, 25);
 sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048);
-Object.assign(sun.shadow.camera, { left: -62, right: 62, top: 62, bottom: -62, near: 1, far: 200 }); sun.shadow.bias = -0.0005;
+sun.shadow.autoUpdate = debug;
+Object.assign(sun.shadow.camera, { left: -62, right: 62, top: 62, bottom: -62, near: 1, far: 200 });
+sun.shadow.bias = -0.00016;
+sun.shadow.normalBias = 0.035;
 const pmrem = new THREE.PMREMGenerator(renderer); const envScene = new THREE.Scene(); envScene.add(new THREE.Mesh(new THREE.SphereGeometry(100, 32, 16), skyMat));
 const envTex = pmrem.fromScene(envScene, 0.02).texture;
+envScene.children[0].geometry.dispose();
+pmrem.dispose();
 scene.add(sun);
 const gl = renderer.getContext();
 const dbg = gl.getExtension('WEBGL_debug_renderer_info');
@@ -74,11 +118,15 @@ R.env = { ua: navigator.userAgent, dpr: renderer.getPixelRatio(), viewport: [inn
   gpu: dbg ? gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) : 'masked', antialias: true, shadows: 'PCFSoft 2048, 1 sun',
   gpuTimer: !!gl.getExtension('EXT_disjoint_timer_query_webgl2') };
 const byName = {}, bySid = {}, colliders = [], zones = [];
-let root, mixer, clock = new THREE.Clock(), waterMats = [], fallMats = [], foamMats = [], clouds = null, bulbMats = [], wheel, valve, beam, doors = [];
+let root, waterMats = [], fallMats = [], foamMats = [], clouds = null, bulbMats = [], wheel, valve, beam, doors = [];
 let waterMapsU = [], waterNrmU = [], fallMapsU = [], stillMats = [], stillMapsU = [], stillNrmU = [], stillMeshes = [];
 const t0 = performance.now();
-const draco = new DRACOLoader().setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/libs/draco/gltf/');
-new GLTFLoader().setDRACOLoader(draco).load(FILE, g => {
+const draco = new DRACOLoader().setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/libs/draco/gltf/').setWorkerLimit(2);
+const manifest = fetch('../metadata/scene_manifest.json').then(response => {
+  if (!response.ok) throw new Error('Scene manifest returned ' + response.status);
+  return response.json();
+});
+Promise.all([new GLTFLoader().setDRACOLoader(draco).loadAsync(FILE), manifest]).then(([g, man]) => {
   root = g.scene; scene.add(root);
   root.traverse(o => {
     byName[o.name] = o; const ex = o.userData || {};
@@ -88,14 +136,14 @@ new GLTFLoader().setDRACOLoader(draco).load(FILE, g => {
       o.castShadow = !/^VEG_GroundCover|Reeds|TERRAIN_FarHills|Water|Fall|Glass|Bulb/.test(n);
       o.receiveShadow = true;
       const ms = Array.isArray(o.material) ? o.material : [o.material];
-      if (ex.cast_shadow === false) o.castShadow = false;
+      if (ex.cast_shadow === false || /^TERRAIN_(Ground|Paths)|^EXP_Paths|^VEG_Trees_Far/.test(n)) o.castShadow = false;
       if (ex.shader_target === 'clouds') { o.castShadow = false; o.receiveShadow = false; clouds = o; }
       ms.forEach(m => {
         if (m.name === 'M_Water' && !waterMats.includes(m)) waterMats.push(m);
         if (m.name === 'M_WaterFall' && !fallMats.includes(m)) fallMats.push(m);
         if (m.name === 'M_Foam' && !foamMats.includes(m)) { foamMats.push(m); m.depthWrite = false; }
         if (m.name === 'M_Bulb') bulbMats.push(m);
-        if (/M_Water/.test(m.name)) { m.envMap = envTex; m.envMapIntensity = 0.9; [m.map, m.normalMap].forEach(t => { if (t) { t.wrapS = t.wrapT = THREE.RepeatWrapping; t.needsUpdate = true; } }); }
+        if (/M_Water/.test(m.name)) { m.envMap = envTex; m.envMapIntensity = 0.72; [m.map, m.normalMap].forEach(t => { if (t) { t.wrapS = t.wrapT = THREE.RepeatWrapping; t.needsUpdate = true; } }); }
       });
     }
     if (ex.collider && ex.half_extents) colliders.push(o);
@@ -134,11 +182,11 @@ new GLTFLoader().setDRACOLoader(draco).load(FILE, g => {
   R.motionDiag.afterFix = { uniqueWaterMaps: waterMapsU.length, uniqueWaterNormals: waterNrmU.length, uniqueFallMaps: fallMapsU.length,
     fallOverlapsWater: fallMapsU.some(t => waterMapsU.includes(t)), stillWaterMaterials: stillMats.length, stillWaterMeshes: stillMeshes,
     stillSharesRiverTextures: stillMapsU.some(t => waterMapsU.includes(t)) || stillNrmU.some(t => waterNrmU.includes(t)) };
-  mixer = new THREE.AnimationMixer(root); R.animations = g.animations.map(a => a.name);
+  R.animations = g.animations.map(a => a.name);
   R.load = { ms: Math.round(performance.now() - t0), nodes: Object.keys(byName).length, colliders: colliders.length, zones: zones.length,
     doors: doors.map(d => d.name), waterMaterials: [...new Set([...waterMats, ...fallMats, ...stillMats, ...foamMats].map(m => m.name))], bulbs: (bySid['ELEC_Bulb'] || []).length };
   // landmark check (manifest is defined in glTF coordinates)
-  fetch('../metadata/scene_manifest.json').then(r => r.json()).then(man => {
+  {
     const e = man.buildings.ELEC, n = byName[e.root_node];
     const p = new THREE.Vector3(); n.getWorldPosition(p);
     R.checks.landmark = { node: e.root_node, manifest: e.assembled_translation, loaded: p.toArray().map(v => +v.toFixed(3)),
@@ -147,12 +195,21 @@ new GLTFLoader().setDRACOLoader(draco).load(FILE, g => {
       return [k, { manifest: e.assembled_translation, loaded: q.toArray().map(v => +v.toFixed(3)), ok: q.distanceTo(new THREE.Vector3(...e.assembled_translation)) < 1e-3 }]; }));
     R.checks.expansion = { houses: Object.values(byName).filter(o => o.userData && o.userData.house_id).length, manifestHouses: (man.expansion || {}).houses ? man.expansion.houses.length : 0,
       farm: !!byName['FARM_ROOT'], clouds: !!clouds, foamMaterials: foamMats.length, waterHasMapAndNormal: waterMats.some(m => !!(m.map && m.normalMap)) };
-    R.manifest = man; buildRoute(man); startEngineer();
+    R.manifest = man;
+    if (debug) buildRoute(man);
+    startEngineer();
+    sun.shadow.needsUpdate = true;
+    skyDome.position.copy(cam.position);
+    renderer.render(scene, cam);
+    window.villageReady();
+    if (debug) setupUI();
     if (qs.get('autocheck')) autocheck();
     if (qs.get('motionprobe')) setTimeout(() => motionProbe(man), 50);
-  });
-  setupUI();
-}, undefined, err => R.errors.push('load: ' + err));
+  }
+}).catch(err => {
+  R.errors.push('load: ' + err);
+  window.villageReady(true);
+}).finally(() => draco.dispose());
 // ---------------------------------------------------------------- smoke-check controls
 function btn(label, fn) { const b = document.createElement('button'); b.textContent = label; b.onclick = () => { const on = fn(); if (on !== undefined) b.classList.toggle('on', on); }; document.getElementById('btns').appendChild(b); return b; }
 let doorsOpen = false, spin = false, bulbsOn = true, flowShader = false, cut = false, showCol = false, colGroup;
@@ -263,7 +320,7 @@ function perfStep(now, dt) {
   }
 }
 function dump() { const { manifest, ...rest } = R; document.getElementById('res').textContent = JSON.stringify(rest); }
-setInterval(dump, 1000);
+if (debug) setInterval(dump, 1000);
 function viewCam(pos, tgt) { cam.position.set(...pos); cam.lookAt(new THREE.Vector3(...tgt)); cam.updateMatrixWorld(); }
 function benchmark() {
   const man = R.manifest, camBy = n => man.cameras.find(c => c.name === n);
@@ -316,12 +373,17 @@ function autocheck() {
 }
 // ---------------------------------------------------------------- v2 runtime effects (single source for live loop + probe)
 function stepEffects(d, now) {
-  waterMapsU.forEach(t => { t.offset.y += d * 0.08; });                                   // river flow (downstream = +offset.y, verified by probe)
-  waterNrmU.forEach(t => { t.offset.y += d * 0.05; t.offset.x += d * 0.015; });           // ripple normals drift at a different rate
-  fallMapsU.forEach(t => { t.offset.y -= d * 0.6; });                                      // falls run downward
-  stillNrmU.forEach(t => { t.offset.set(0.03 * Math.sin(now * 0.00031), 0.03 * Math.cos(now * 0.00023)); });   // still water: undirected ripple wobble, no flow
-  foamMats.forEach(m => { m.opacity = 0.7 * (0.85 + 0.15 * Math.sin(now * 0.0013)); });   // gentle foam pulse
-  if (clouds) clouds.rotation.y += d * 0.004;                                               // slow cloud drift
+  for (const texture of waterMapsU) texture.offset.y += d * 0.08; // downstream (verified by motion probe)
+  for (const texture of waterNrmU) {
+    texture.offset.y += d * 0.05;
+    texture.offset.x += d * 0.015;
+  }
+  for (const texture of fallMapsU) texture.offset.y -= d * 0.6;
+  const rippleX = 0.03 * Math.sin(now * 0.00031), rippleY = 0.03 * Math.cos(now * 0.00023);
+  const foamOpacity = 0.7 * (0.85 + 0.15 * Math.sin(now * 0.0013));
+  for (const texture of stillNrmU) texture.offset.set(rippleX, rippleY);
+  for (const material of foamMats) material.opacity = foamOpacity;
+  if (clouds) clouds.rotation.y += d * 0.004;
 }
 // ---------------------------------------------------------------- deterministic motion probe (works with the pane hidden)
 // Flow-direction check. three.js samples uv' = uv + offset, so when offset.y grows, texture features move toward smaller v
@@ -551,148 +613,246 @@ function makeEngineer(s = {}) {
     A(new THREE.CircleGeometry(.1, 18), h, .15 * G, .56, .44, T).rotation.x = -.45; }
   g.traverse(G => { if (G.isMesh) { G.castShadow = true; G.receiveShadow = true; } });
   g.scale.setScalar(.86);
-  let U = 'idle', L = 0, q = 0, bl = 2;
-  return { root: g, head: T, setMode(G) { U = G; }, talk(G = 2) { q = G; },
-    update(G) { L += G; bl -= G; const k = bl < .12 ? .15 : 1; if (bl < 0) bl = 2 + Math.random() * 3;
-      w.forEach(z => z.scale.y = 1.15 * k);
-      if (q > 0) { q -= G; E.scale.set(1, 1 + Math.abs(Math.sin(L * 14)) * 1.6, 1); T.rotation.x = Math.sin(L * 6) * .05; } else E.scale.set(1, 1, 1);
-      if (U === 'walk') { const z = Math.sin(L * 9); v[0].rotation.x = z * .6; v[1].rotation.x = -z * .6; Ra[0].rotation.x = -z * .5; Ra[1].rotation.x = z * .5; m.position.y = Math.abs(Math.cos(L * 9)) * .07; M.rotation.y = z * .06; }
-      else if (U === 'cheer') { const z = Math.sin(L * 8); Ra[0].rotation.set(0, 0, -2.6 + z * .2); Ra[1].rotation.set(0, 0, 2.6 - z * .2); m.position.y = Math.abs(Math.sin(L * 6)) * .25; v[0].rotation.x = v[1].rotation.x = 0; }
-      else if (U === 'point') { Ra[1].rotation.set(-1.4, 0, .3); Ra[0].rotation.set(0, 0, -.12); m.position.y = Math.sin(L * 2) * .02; v[0].rotation.x = v[1].rotation.x = 0; M.rotation.y = 0; }
-      else { v[0].rotation.x = v[1].rotation.x = 0; Ra[0].rotation.set(Math.sin(L * 1.5) * .05, 0, -.12); Ra[1].rotation.set(-Math.sin(L * 1.5) * .05, 0, .12); m.position.y = Math.sin(L * 2) * .02; M.rotation.y = 0; T.rotation.y = Math.sin(L * .7) * .15; } }
+  const bootOffset = 0.02;
+  let elapsed = 0, stride = 0, gait = 0, gesture = 0;
+  const eyes = w;
+  return {
+    root: g,
+    pose(dt, distance, speed, pointing, grade) {
+      elapsed += dt;
+      stride = (stride + distance * Math.PI * 2 / 1.94) % (Math.PI * 2);
+      gait += (Math.min(1, speed / 1.35) - gait) * damp(9, dt);
+      gesture += (Number(pointing) - gesture) * damp(6, dt);
+      const swing = Math.sin(stride) * gait;
+      const blink = elapsed % 4.6;
+      for (const eye of eyes) eye.scale.y = 1.15 * (1 - 0.85 * Math.max(0, 1 - Math.abs(blink - 4.3) / 0.095));
+      v[0].rotation.x = swing * 0.51;
+      v[1].rotation.x = -swing * 0.51;
+
+      // Use the lower sole corner as the planted foot. On the arch, account
+      // for the route grade so the uphill shoe stays above the deck.
+      let lowest = Infinity;
+      for (const leg of v) {
+        const sin = Math.sin(leg.rotation.x), cos = Math.cos(leg.rotation.x);
+        const centerY = 0.78 - 0.66 * cos - 0.05 * sin;
+        const centerZ = -0.66 * sin + 0.05 * cos;
+      const extent = 0.10 * Math.abs(cos - grade * sin)
+          + 0.19 * Math.abs(sin + grade * cos);
+        lowest = Math.min(lowest, centerY - grade * centerZ - extent);
+      }
+      m.position.y = -lowest + bootOffset;
+      const breath = Math.sin(elapsed * 2.6) * (1 - gait) * 0.025;
+      Ra[0].rotation.set(-swing * 0.42 + breath, 0, -0.12);
+      Ra[1].rotation.set((swing * 0.42 - breath) * (1 - gesture) - 1.35 * gesture, 0, 0.12 + gesture * 0.17);
+      M.rotation.y = swing * 0.075;
+      T.rotation.set(breath - 0.035 * gesture, swing * -0.05 + gesture * 0.08, 0);
+    },
   };
 }
-let engineer = null, engPath = null, engState = 'none', engSeg = 0, engT = 0, engTimer = 0, engArrived = false, rioCue = null, chapterLaunching = false;
-const rioScreen = new THREE.Vector3();
-const ENG_SPEED = 1.9, camPos = new THREE.Vector3(), camLook = new THREE.Vector3(); let camInit = false, overviewT = 0;
-function startEngineer() {
-  if (engineer) return;
-  engineer = makeEngineer(); scene.add(engineer.root);
-  // Use the authored paths in the scene manifest, so Rio follows the roads into each real entrance.
-  const man = R.manifest, V = a => new THREE.Vector3(...a);
-  const nav = man.navigation, P = name => nav.paths.find(path => path.name === name).points.map(V);
-  const spawn = id => V(man.spawn_points.find(point => point.semantic_id === id).world_position);
-  const entrance = id => V(man.entrances.find(point => point.semantic_id === id).world_position);
-  const bridgeWest = V(nav.bridges.BRIDGE_Main.west_end), bridgeEast = V(nav.bridges.BRIDGE_Main.east_end);
-  const powerRoad = P('PATH_Bridge_Elec'), waterRoad = P('PATH_Water_Bridge'), rationRoad = P('PATH_Ration_Bridge');
-  const join = (...sections) => {
-    const points = [];
-    sections.flat().forEach(point => { if (!points.length || points[points.length - 1].distanceTo(point) > .025) points.push(point.clone()); });
-    return points;
-  };
-  const rawPath = CHAPTER === 'power'
-    ? join([entrance('WATER_Entrance'), spawn('SPAWN_WATER_Outside')], waterRoad, [bridgeWest, bridgeEast], powerRoad, [entrance('ELEC_Entrance')])
-    : CHAPTER === 'ration'
-      ? join([entrance('ELEC_Entrance'), spawn('SPAWN_ELEC_Outside')], powerRoad.slice().reverse(), [bridgeWest], rationRoad.slice().reverse(), [entrance('RATION_Entrance')])
-      : join([entrance('ELEC_Entrance'), spawn('SPAWN_ELEC_Outside')], powerRoad.slice().reverse(), [bridgeWest], waterRoad.slice().reverse(), [entrance('WATER_Entrance')]);
-  const bridgeAxis = bridgeEast.clone().sub(bridgeWest).setY(0).normalize();
-  const bridgeCenter = bridgeWest.clone().lerp(bridgeEast,.5);
-  const bridgeHalf = bridgeEast.distanceTo(bridgeWest) * .5;
-  const bridgeBase = (bridgeEast.y + bridgeWest.y) * .5 - .12;
-  const bridgeDeckY = p => {
-    const localX = THREE.MathUtils.clamp(p.clone().sub(bridgeCenter).dot(bridgeAxis), -bridgeHalf, bridgeHalf);
-    return bridgeBase + .12 + 1.3 * (1 - Math.pow(localX / bridgeHalf, 2));
-  };
-  engPath = [];
-  for (let i = 0; i < rawPath.length - 1; i++) {
-    const a = rawPath[i], b = rawPath[i + 1];
-    const bridge = (a.distanceTo(bridgeEast) < .03 && b.distanceTo(bridgeWest) < .03) || (a.distanceTo(bridgeWest) < .03 && b.distanceTo(bridgeEast) < .03);
-    const steps = bridge ? 40 : Math.max(2, Math.ceil(a.distanceTo(b) * 5));
-    for (let j = 0; j < steps; j++) {
-      const t = j / steps, p = a.clone().lerp(b,t);
-      if (bridge) p.y = bridgeDeckY(p);
-      engPath.push(p);
+
+let engineer = null, engState = 'loading', engTimer = 0, rioCue = null;
+let rioRoute, walker, followCamera, contactShadow, destination;
+let moduleRequest;
+const rioScreen = new THREE.Vector3(), ahead = new THREE.Vector3(), behind = new THREE.Vector3();
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const chapterFade = document.getElementById('chapterFade');
+const notice = document.getElementById('sceneNotice');
+renderer.domElement.addEventListener('webglcontextlost', () => {
+  if (engState === 'loading') window.villageReady(true);
+  else {
+    renderer.setAnimationLoop(null);
+    setPhase('unavailable');
+    if (rioCue) rioCue.disabled = true;
+    notice.querySelector('p').textContent = 'The village lost its graphics connection.';
+    notice.hidden = false;
+  }
+});
+
+function roadHeightSampler() {
+  const surfaces = [];
+  for (const id of ['TERRAIN_Ground', 'TERRAIN_Paths']) {
+    for (const surface of bySid[id] || []) {
+      surface.traverse(mesh => {
+        if (mesh.isMesh && mesh.material.name === 'M_Terrain' && !surfaces.includes(mesh)) surfaces.push(mesh);
+      });
     }
   }
-  engPath.push(rawPath[rawPath.length - 1].clone());
-  engineer.root.position.copy(engPath[0]);
-  const d0 = engPath[1].clone().sub(engPath[0]); engineer.root.rotation.y = Math.atan2(d0.x, d0.z);
-  engState = 'overview'; engTimer = 0; engSeg = 0; engT = 0; ctr.enabled = false;
-  rioCue = document.createElement('button'); rioCue.id = 'rioArrow'; rioCue.type = 'button'; rioCue.setAttribute('aria-label', CHAPTER_DATA[CHAPTER].label);
+  const probe = new THREE.Raycaster(new THREE.Vector3(), DOWN, 0, 20);
+  const hits = [];
+  return (x, z, fallback) => {
+    probe.ray.origin.set(x, 9, z);
+    hits.length = 0;
+    probe.intersectObjects(surfaces, false, hits);
+    return hits[0]?.point.y ?? fallback;
+  };
+}
+
+function setPhase(phase) {
+  engState = phase;
+  engTimer = 0;
+  document.body.dataset.phase = phase;
+}
+
+function startEngineer() {
+  const man = R.manifest;
+  root.updateMatrixWorld(true);
+  rioRoute = buildRioRoute(man, CHAPTER, roadHeightSampler());
+  walker = new RioWalker(rioRoute);
+  engineer = makeEngineer();
+  scene.add(engineer.root);
+  rioRoute.sample(0, engineer.root.position);
+  rioRoute.sample(0.3, ahead);
+  engineer.root.rotation.y = Math.atan2(ahead.x - engineer.root.position.x, ahead.z - engineer.root.position.z);
+  const entrance = man.entrances.find(e => e.semantic_id === CHAPTER_DATA[CHAPTER].building + '_Entrance');
+  destination = new THREE.Vector3(...entrance.forward_world_gltf).multiplyScalar(1.55)
+    .add(new THREE.Vector3(...entrance.world_position));
+  const roofBounds = Object.values(man.buildings).map(b => new THREE.Box3().setFromObject(byName[b.groups.Roof]));
+  followCamera = createRioCamera(THREE, cam, roofBounds, reducedMotion);
+
+  const shade = new THREE.ShaderMaterial({
+    transparent: true, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -1,
+    uniforms: { opacity: { value: 0.24 } },
+    vertexShader: 'varying vec2 point; void main(){point=uv*2.0-1.0;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}',
+    fragmentShader: 'varying vec2 point; uniform float opacity; void main(){float edge=1.0-smoothstep(0.06,1.0,length(point));gl_FragColor=vec4(.09,.07,.036,edge*opacity);}',
+  });
+  contactShadow = new THREE.Mesh(new THREE.PlaneGeometry(0.93, 0.72), shade);
+  contactShadow.rotation.order = 'YXZ';
+  scene.add(contactShadow);
+  setPhase('overview');
+
+  rioCue = document.createElement('button');
+  rioCue.id = 'rioArrow';
+  rioCue.type = 'button';
   rioCue.innerHTML = '<span class="rio-arrow-inner"><b>' + CHAPTER_DATA[CHAPTER].label + '</b><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22 4.5 13.5h4.2V3h6.6v10.5h4.2z"/></svg></span>';
   document.body.appendChild(rioCue);
   const followRio = () => {
     if (engState !== 'overview') return;
-    engState = 'intro'; engTimer = 0;
-    if (rioCue) { rioCue.classList.add('out'); const old = rioCue; setTimeout(() => old.remove(), 380); rioCue = null; }
+    setPhase('framing');
+    rioCue.disabled = true;
+    rioCue.classList.add('out');
+    const oldCue = rioCue;
+    setTimeout(() => oldCue.remove(), 380);
+    rioCue = null;
+    preloadModule();
   };
-  rioCue.addEventListener('pointerdown',e => e.stopPropagation());
-  rioCue.addEventListener('click',e => { e.stopPropagation(); followRio(); });
-  let downP = null;
-  renderer.domElement.addEventListener('pointerdown', e => { downP = [e.clientX, e.clientY]; });
-  renderer.domElement.addEventListener('pointerup', e => {
-    if (engState === 'overview' && downP && Math.abs(e.clientX - downP[0]) + Math.abs(e.clientY - downP[1]) < 8) {
-      const px=(rioScreen.x*.5+.5)*innerWidth, py=(-rioScreen.y*.5+.5)*innerHeight;
-      if(Math.hypot(e.clientX-px,e.clientY-py)<110) followRio();
-    }
-    downP = null;
+  rioCue.addEventListener('click', followRio);
+  const down = new THREE.Vector2();
+  let pointerId;
+  renderer.domElement.addEventListener('pointerdown', e => {
+    if (!e.isPrimary) return;
+    pointerId = e.pointerId;
+    down.set(e.clientX, e.clientY);
   });
+  renderer.domElement.addEventListener('pointercancel', () => { pointerId = undefined; });
+  renderer.domElement.addEventListener('pointerup', e => {
+    if (pointerId !== e.pointerId) return;
+    pointerId = undefined;
+    if (engState !== 'overview' || Math.hypot(e.clientX - down.x, e.clientY - down.y) > 9) return;
+    const px = (rioScreen.x * 0.5 + 0.5) * innerWidth;
+    const py = (-rioScreen.y * 0.5 + 0.5) * innerHeight;
+    if (Math.hypot(e.clientX - px, e.clientY - py) < 48) followRio();
+  });
+  stepEngineer(0);
 }
-function updateRioCue(){
-  if(!rioCue||!engineer||engState!=='overview') return;
-  rioScreen.copy(engineer.root.position); rioScreen.y+=3.25; rioScreen.project(cam);
-  if(rioScreen.z<-1||rioScreen.z>1){ rioCue.style.display='none'; return; }
-  rioCue.style.display='block'; rioCue.style.left=((rioScreen.x*.5+.5)*innerWidth)+'px'; rioCue.style.top=((-rioScreen.y*.5+.5)*innerHeight)+'px';
+
+function updateRioCue() {
+  if (!rioCue) return;
+  rioScreen.copy(engineer.root.position);
+  rioScreen.y += 1.9;
+  rioScreen.project(cam);
+  const left = clamp((rioScreen.x * 0.5 + 0.5) * innerWidth, 79, innerWidth - 79);
+  const top = clamp((-rioScreen.y * 0.5 + 0.5) * innerHeight, 85, innerHeight - 20);
+  rioCue.style.left = left + 'px';
+  rioCue.style.top = top + 'px';
 }
-function launchChapter() {
-  if (chapterLaunching) return;
-  chapterLaunching = true;
-  document.getElementById('chapterFade').classList.add('on');
-  setTimeout(() => { location.href = '../modules/' + CHAPTER_DATA[CHAPTER].module + '?journey=' + CHAPTER; }, 680);
+
+const moduleUrl = new URL('../modules/' + CHAPTER_DATA[CHAPTER].module + '?journey=' + CHAPTER, location.href);
+function preloadModule() {
+  // Warm the actual journey URL while Rio is walking. Wait for the body so a
+  // failed request can be retried from the arrival frame.
+  moduleRequest ??= fetch(moduleUrl, { signal: AbortSignal.timeout(12000) })
+    .then(async response => {
+      if (!response.ok) return false;
+      await response.arrayBuffer();
+      return true;
+    }).catch(() => false);
+  return moduleRequest;
 }
+
+function handoff() {
+  setPhase('handoff');
+  if (embedded) parent.postMessage({ type: 'rebuild:module', chapter: CHAPTER }, location.origin);
+  else location.assign(moduleUrl);
+}
+
 function stepEngineer(dt) {
-  if (!engineer) return; dt = Math.min(dt, 0.05); engineer.update(dt); const p = engineer.root.position;   // clamp frame spikes so a throttled tab can't teleport him
-  if (engState === 'intro') { engineer.setMode('idle'); engTimer += dt; if (engTimer > 2.8) engState = 'walk'; }
-  else if (engState === 'walk') { engineer.setMode('walk'); let move = ENG_SPEED * dt;
-    while (move > 0 && engSeg < engPath.length - 1) { const a = engPath[engSeg], b = engPath[engSeg + 1], segLen = a.distanceTo(b) || 1e-3, remain = segLen * (1 - engT);
-      if (move < remain) { engT += move / segLen; move = 0; } else { move -= remain; engSeg++; engT = 0; } }
-    if (engSeg >= engPath.length - 1) { p.copy(engPath[engPath.length - 1]); engState = 'arrive'; engTimer = 0; }
-    else { const a = engPath[engSeg], b = engPath[engSeg + 1]; p.copy(a).lerp(b, engT);
-      const look = engPath[Math.min(engPath.length - 1, engSeg + 3)].clone().sub(p).setY(0);
-      if (look.lengthSq() > 1e-5) {
-        look.normalize();
-        const target = Math.atan2(look.x, look.z);
-        const delta = Math.atan2(Math.sin(target - engineer.root.rotation.y), Math.cos(target - engineer.root.rotation.y));
-        engineer.root.rotation.y += delta * (1 - Math.exp(-10 * dt));
-      } } }
-  else if (engState === 'arrive') { engineer.setMode('point'); engTimer += dt;
-    if (!engArrived) { engArrived = true; try { window.dispatchEvent(new CustomEvent(CHAPTER_DATA[CHAPTER].event, { detail: { x: p.x, y: p.y, z: p.z } })); } catch (e) {} }
-    if (engTimer > 1.6) launchChapter(); }
-  engCamera(dt); updateRioCue();
-}
-function engCamera(dt) {
   const p = engineer.root.position;
-  if (engState === 'overview') {   // village opening: present the whole village with a slow orbit until the user taps
-    overviewT += dt; const ang = 0.5 + overviewT * 0.09;
-    camPos.set(Math.cos(ang) * 36, 17, -4 + Math.sin(ang) * 36); camLook.set(0, 2.5, -4);
-    camInit = true; cam.position.copy(camPos); cam.lookAt(camLook); return;
+  let travelled = 0;
+  engTimer += dt;
+  if (engState === 'framing' && engTimer > (reducedMotion ? 0.15 : 0.83)) setPhase('walking');
+  if (engState === 'walking') {
+    travelled = walker.move(dt);
+    rioRoute.sample(walker.distance, p);
+    if (walker.distance >= rioRoute.length) {
+      setPhase('arrival');
+      window.dispatchEvent(new CustomEvent(CHAPTER_DATA[CHAPTER].event, { detail: { x: p.x, y: p.y, z: p.z } }));
+    }
   }
-  let dp, dl;
-  if (engState === 'intro') { dp = new THREE.Vector3(p.x + 5.5, p.y + 4.0, p.z + 2.2); dl = new THREE.Vector3(-1.5, 2.2, -4.5); }
-  else if (engState === 'walk') {
-    const forward = new THREE.Vector3(Math.sin(engineer.root.rotation.y), 0, Math.cos(engineer.root.rotation.y));
-    dp = p.clone().addScaledVector(forward, -5.4).add(new THREE.Vector3(0, 3.35, 0));
-    dl = p.clone().addScaledVector(forward, 2.1).add(new THREE.Vector3(0, 1.25, 0));
-  } else if (CHAPTER === 'power') { dp = new THREE.Vector3(12.7402, 6.65, 5.2765); dl = new THREE.Vector3(12.0457, 3.05, -8.0279); }
-  else if (CHAPTER === 'ration') { dp = new THREE.Vector3(-3.1947, 6.4, 11.5506); dl = new THREE.Vector3(-13.0773, 1.9, 5.1917); }
-  else { dp = new THREE.Vector3(-17.0511, 7.8, -1.5496); dl = new THREE.Vector3(-9.4019, 2.8, -13.2278); }
-  if (!camInit) { camPos.copy(dp); camLook.copy(dl); camInit = true; }
-  const aa = 1 - Math.pow(0.0022, dt); camPos.lerp(dp, aa); camLook.lerp(dl, aa);
-  cam.position.copy(camPos); cam.lookAt(camLook);
+  if (engState === 'arrival' && engTimer > 1.35) {
+    setPhase('preparing');
+    preloadModule().then(ready => {
+      if (engState !== 'preparing') return;
+      if (ready) {
+        setPhase('transition');
+        chapterFade.classList.add('on');
+      } else {
+        setPhase('retry');
+        moduleRequest = undefined;
+        notice.querySelector('p').textContent = 'The lesson could not load.';
+        const retry = notice.querySelector('button');
+        notice.hidden = false;
+        retry.onclick = () => {
+          notice.hidden = true;
+          setPhase('arrival');
+          engTimer = 1.35;
+        };
+        retry.focus();
+      }
+    });
+  }
+  if (engState === 'transition' && engTimer > (reducedMotion ? 0.08 : 0.44)) handoff();
+
+  rioRoute.sample(Math.max(0, walker.distance - 0.26), behind);
+  rioRoute.sample(Math.min(rioRoute.length, walker.distance + 0.42), ahead);
+  const grade = (ahead.y - behind.y) / Math.max(0.01, Math.hypot(ahead.x - behind.x, ahead.z - behind.z));
+  const arrived = walker.distance >= rioRoute.length;
+  if (travelled > 0 || arrived) {
+    const headingX = arrived ? destination.x - p.x : ahead.x - behind.x;
+    const headingZ = arrived ? destination.z - p.z : ahead.z - behind.z;
+    engineer.root.rotation.y = turnToward(engineer.root.rotation.y, Math.atan2(headingX, headingZ), 4.5, dt);
+  }
+  engineer.pose(dt, travelled, walker.speed, arrived, grade);
+  contactShadow.position.set(p.x, p.y + 0.021, p.z);
+  contactShadow.rotation.set(-Math.PI / 2 - Math.atan(grade), Math.atan2(ahead.x - behind.x, ahead.z - behind.z), 0);
+  followCamera(dt, arrived ? 'arrival' : engState, p, arrived ? destination : ahead);
+  updateRioCue();
 }
 // ---------------------------------------------------------------- loop
-let last = performance.now(), acc = 0, cnt = 0;
+let last = performance.now(), acc = 0, cnt = 0, effectsTime = 0;
 renderer.setAnimationLoop(() => {
   const now = performance.now(), dt = now - last; last = now;
-  const d = clock.getDelta();
+  if (document.hidden || !presented || !engineer) return;
+  const d = frameDelta(dt / 1000);
   if (spin && wheel) wheel.rotateX(d * Math.PI * 2 * 6 / 60);
   // v2 water + sky motion (runtime-only effects; static look matches the Blender material)
-  stepEffects(d, now);
+  effectsTime += d * 1000;
+  if (!reducedMotion || debug) stepEffects(d, effectsTime);
   if (engineer) stepEngineer(d);
   skyDome.position.copy(cam.position);
   if (flowShader && _wt) { _wt.offset.y += d * 0.25; if (_wtFall) _wtFall.offset.y -= d * 0.6; }   // same directions as stepEffects; still water not scrolled
   perfStep(now, dt);
   renderer.render(scene, cam);
+  if (!debug || dt > 250) return;
   acc += dt; cnt++;
   if (acc > 500) { const i = renderer.info.render;
     R.live = { fps: +(1000 * cnt / acc).toFixed(1), calls: i.calls, tris: i.triangles, geometries: renderer.info.memory.geometries, textures: renderer.info.memory.textures };
@@ -701,5 +861,16 @@ renderer.setAnimationLoop(() => {
     const { manifest, ...rest } = R; document.getElementById('res').textContent = JSON.stringify(rest);
     acc = 0; cnt = 0; }
 });
-addEventListener('resize', () => { cam.aspect = innerWidth / innerHeight; cam.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight); R.env.viewport = [innerWidth, innerHeight]; });
+document.addEventListener('visibilitychange', () => { last = performance.now(); });
+addEventListener('pageshow', event => {
+  if (event.persisted && engState === 'handoff') location.reload();
+});
+addEventListener('resize', () => {
+  cam.aspect = innerWidth / innerHeight;
+  cam.fov = innerWidth < innerHeight ? 58 : 50;
+  cam.updateProjectionMatrix();
+  renderer.setPixelRatio(pixelRatio());
+  renderer.setSize(innerWidth, innerHeight);
+  Object.assign(R.env, { viewport: [innerWidth, innerHeight], dpr: renderer.getPixelRatio() });
+});
 </script></body></html>

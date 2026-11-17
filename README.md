@@ -23,6 +23,14 @@ import build_village; build_village.reload_all(); build_village.build_all()
 ```
 
 ## Runtime check
+From the repository root, run `node scripts/serve.mjs` and open
+`http://127.0.0.1:8765/` for the full journey. Node 18 or later is sufficient.
+Use `node --test` to check Rio's routes against the shipped village geometry
+and exercise the lesson handoff callbacks.
+
+On Windows, double-click `launch-rebuild.cmd` to start the local server at
+`http://127.0.0.1:51789/` and open the complete journey automatically.
+
 Serve this folder over HTTP (any static server) and open `preview/index.html`. Two query options are available:
 - `?autocheck=1&bench=1` runs the automated checks.
 - Without them, use the buttons: doors, waterwheel, valve, scale, bulbs, water shader swap, roof cutaway, colliders, and

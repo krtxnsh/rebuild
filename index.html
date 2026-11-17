@@ -1,5 +1,8 @@
+<!doctype html>
+<html lang="en"><head>
 <meta charset="UTF-8">
-<title>REBUILD · Clean Water</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>REBUILD</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
   /* Layout: full-bleed WebGL canvas of a rotating storybook village planet; click to zoom in. Quiet overlay wordmark, hint, and a Back control. Single committed warm-storybook look matched to the Educational Village renders. */
@@ -15,7 +18,7 @@
     font-family:"Nunito","Segoe UI",system-ui,sans-serif; color:var(--ink);
     overflow:hidden;
   }
-  #stage{position:fixed; inset:0; display:block; touch-action:none; cursor:grab;filter:saturate(1.5) contrast(1.12) brightness(1.03)}
+  #stage{position:fixed; inset:0; display:block; touch-action:none; cursor:grab;filter:saturate(1.18) contrast(1.06)}
   #stage.drag{cursor:grabbing}
   #stage.zoom{cursor:default}
   .title-screen{position:fixed;inset:0;z-index:5;display:flex;align-items:center;justify-content:center;pointer-events:none;transition:opacity .75s ease,transform 1.05s cubic-bezier(.2,.8,.2,1)}
@@ -41,26 +44,21 @@
   .chips span{background:linear-gradient(180deg,rgba(255,252,244,.97),rgba(246,230,196,.94));color:var(--ink);font-weight:900;font-size:clamp(11px,1.2vw,15px);padding:.45em .9em;border-radius:99px;box-shadow:0 4px 12px rgba(0,0,0,.3),inset 0 1px 0 #fff;border:1px solid rgba(122,78,45,.25);white-space:nowrap}
   .journey-link{position:fixed;top:calc(18px + env(safe-area-inset-top,0px));right:max(18px,env(safe-area-inset-right,0px));z-index:6;display:inline-flex;align-items:center;min-height:38px;padding:0 .9em;border:2px solid rgba(122,78,45,.28);border-radius:999px;color:var(--ink);background:linear-gradient(180deg,rgba(255,252,244,.97),rgba(246,230,196,.94));box-shadow:0 4px 12px rgba(0,0,0,.22),inset 0 1px #fff;font:900 clamp(11px,1.2vw,14px) Nunito,sans-serif;text-decoration:none;transition:transform .16s ease,filter .16s ease}.journey-link:hover{transform:translateY(-2px);filter:brightness(1.04)}
   @media (max-width:620px){.chips{flex-wrap:wrap;max-width:90vw}.tagline{max-width:88vw}.start-btn{min-width:0}.logo{font-size:clamp(62px,16vw,92px)}}
-  .back{
-    position:fixed; z-index:6; top:calc(16px + env(safe-area-inset-top,0px));
-    right:max(16px,env(safe-area-inset-right,0px));
-    display:none; align-items:center; gap:7px; cursor:pointer; border:0;
-    background:var(--pill); color:var(--pill-fg); backdrop-filter:blur(6px);
-    padding:9px 15px; border-radius:999px; font:inherit; font-size:13.5px; letter-spacing:.02em;
-    box-shadow:0 4px 18px rgba(30,20,10,.3);
-  }
-  .back.show{display:inline-flex}
-  .back:hover{filter:brightness(1.08)}
   .fallback{
     position:fixed; inset:0; display:none; place-items:center; text-align:center; padding:24px;
     z-index:9; background:linear-gradient(180deg,var(--sky-top),var(--sky-warm));
   }
   .fallback div{max-width:380px; color:var(--ink); font-size:15px; line-height:1.5}
-  @media (prefers-reduced-motion:reduce){ .logo span{animation:none}.title-screen{transition:none}.hint{opacity:.85} }
+  #villageFrame{position:fixed;inset:0;width:100%;height:100%;border:0;z-index:10;opacity:0;pointer-events:none;transition:opacity .55s ease;background:#d9ebfa}
+  #villageFrame.open{opacity:1;pointer-events:auto}
+  .journey-open .chips,.journey-open .journey-link{visibility:hidden}
+  #loadStatus{font-weight:850;color:#fff;text-shadow:0 1px 5px #281905;min-height:1.25em}
+  #loadStatus:empty{display:none}
+  @media (prefers-reduced-motion:reduce){.logo span,.start-btn,.start-btn::after,.start-btn.starting{animation:none}.title-screen{transition:none}.hint{opacity:.85}#villageFrame{transition-duration:.12s}}
 </style>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800;900&display=swap">
-
+</head><body>
 <canvas id="stage"></canvas>
 <div class="title-screen" id="titleScreen">
   <div class="title-inner">
@@ -68,13 +66,12 @@
     <p class="tagline">A storm wrecked the village. Use science to bring it back.</p>
     <button class="start-btn" id="startBtn" type="button"><svg class="play-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16l13-8z"/></svg> Tap to Start</button>
     <p class="hint" id="hint"><svg class="sound-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16 9a4 4 0 0 1 0 6M19 6a8 8 0 0 1 0 12"/></svg> Sound on for the best experience</p>
+    <span id="loadStatus" role="status"></span>
   </div>
 </div>
 <div class="chips"><span>STEM - Class 6</span></div>
 <a class="journey-link" href="modules/">Module map</a>
-<button class="back" id="back" aria-label="Back to orbit">&#8592; Back to orbit</button>
-<div id="enter" style="position:fixed;inset:0;background:radial-gradient(circle at 50% 42%,#ffffff,#edf3f5 72%);opacity:0;pointer-events:none;transition:opacity 1.15s cubic-bezier(.2,.8,.2,1);z-index:8"></div>
-<div class="fallback" id="fallback"><div><b>3D not available</b><br>This page needs WebGL. Try a different browser or device.</div></div>
+<div class="fallback" id="fallback"><div><b>3D not available</b><p>The village planet needs WebGL.</p><p><a href="preview/">Try the village</a> · <a href="modules/">Module map</a></p></div></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
@@ -102,7 +99,8 @@
   var renderer;
   try{ renderer = new THREE.WebGLRenderer({canvas:canvas, antialias:true, alpha:false}); }
   catch(e){ document.getElementById('fallback').style.display='grid'; return; }
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1, 1.75));
+  function pixelRatio(){ return Math.min(devicePixelRatio, innerWidth<600?1.4:1.75, Math.sqrt(3200000/(innerWidth*innerHeight))); }
+  renderer.setPixelRatio(pixelRatio());
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -568,15 +566,61 @@
 
   // ---------- interaction: drag to spin, click to zoom ----------
   var reduce=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var autoSpeed=reduce?0.03:0.08;
+  var autoSpeed=reduce?0:0.08;
   var yaw=0.0, pitch=-0.12, dragYaw=0, dragPitch=0, vYaw=0, vPitch=0;
   var dragging=false, lastX=0, lastY=0, downX=0, downY=0, moved=0;
-  var state='orbit'; // orbit | spinning | zooming | zoomed | leaving
+  var state='orbit'; // orbit | spinning | zooming | waiting | village | leaving
   var spinElapsed=0,pendingZoom=null;
   var camTween=null;
   var raycaster=new THREE.Raycaster();
-  var backBtn=document.getElementById('back');
   var hintEl=document.getElementById('hint'), titleEl=document.getElementById('titleScreen'), startBtn=document.getElementById('startBtn');
+  var statusEl=document.getElementById('loadStatus');
+  var frame=null, ready=false, loadTimeout;
+
+  function openVillage(){
+    if(!ready || state!=='waiting' || document.hidden) return;
+    state='village';
+    clearTimeout(loadTimeout);
+    titleEl.classList.add('out');
+    titleEl.inert=true;
+    document.body.classList.add('journey-open');
+    frame.removeAttribute('inert');
+    frame.removeAttribute('aria-hidden');
+    frame.removeAttribute('tabindex');
+    frame.classList.add('open');
+    frame.contentWindow.postMessage({type:'rebuild:show'},location.origin);
+    setTimeout(function(){
+      var geometries=new Set(), materials=new Set();
+      scene.traverse(function(o){
+        if(o.geometry) geometries.add(o.geometry);
+        if(o.material) (Array.isArray(o.material)?o.material:[o.material]).forEach(function(m){materials.add(m);});
+      });
+      geometries.forEach(function(g){g.dispose();});
+      var textures=new Set();
+      materials.forEach(function(m){
+        Object.values(m).forEach(function(v){if(v&&v.isTexture) textures.add(v);});
+        m.dispose();
+      });
+      if(scene.background && scene.background.isTexture) textures.add(scene.background);
+      textures.forEach(function(t){t.dispose();});
+      if(sun.shadow.map) sun.shadow.map.dispose();
+      renderer.dispose();
+      canvas.remove();
+    },reduce?130:580);
+  }
+  window.addEventListener('message', function(e){
+    if(!frame || e.source!==frame.contentWindow || e.origin!==location.origin) return;
+    if(e.data?.type==='rebuild:ready'){
+      ready=true;
+      if(state==='village') frame.contentWindow.postMessage({type:'rebuild:show'},location.origin);
+      else openVillage();
+    }
+    if(e.data?.type==='rebuild:load-error' && state!=='village') zoomOut('The village could not load. Tap Start to try again.');
+    if(e.data?.type==='rebuild:module' && e.data.chapter==='water' && state==='village'){
+      state='handoff';
+      location.assign('modules/water-purification.html?journey=water');
+    }
+  });
 
   function startTween(p1,l1,dur,after){
     camTween={t:0,dur:dur,p0:camera.position.clone(),p1:p1.clone(),l0:lookTarget.clone(),l1:l1.clone(),after:after};
@@ -589,37 +633,51 @@
     var east=new THREE.Vector3().crossVectors(YAXIS,nrm); if(east.lengthSq()<1e-4) east.set(1,0,0); east.normalize();
     var up=new THREE.Vector3().crossVectors(nrm,east).normalize();
     var camPos=nrm.clone().multiplyScalar(R+6.2).add(up.clone().multiplyScalar(2.2));
-    startTween(camPos, hitWorld.clone(), 2.45, function(){
-      state='zoomed';
-      try{ window.dispatchEvent(new CustomEvent('villageplanet:enter',{detail:{x:nrm.x,y:nrm.y,z:nrm.z}})); }catch(e){}
-      var fo=document.getElementById('enter'); if(fo) fo.style.opacity='1';
-      setTimeout(function(){ window.location.href='preview/'; }, 850);
+    startTween(reduce?HOME_POS:camPos, reduce?HOME_LOOK:hitWorld, reduce?.16:1.55, function(){
+      state='waiting';
+      window.dispatchEvent(new CustomEvent('villageplanet:enter',{detail:{x:nrm.x,y:nrm.y,z:nrm.z}}));
+      openVillage();
     });
     canvas.classList.add('zoom');
-    if(hintEl) hintEl.style.opacity='0';
-    if(titleEl) {
-      setTimeout(function(){ titleEl.classList.add('out'); }, 650);
-      setTimeout(function(){ var fo=document.getElementById('enter'); if(fo) fo.style.opacity='1'; }, 1750);
-    }
+    hintEl.style.opacity='0';
   }
   function beginJourney(x,y){
     if(state!=='orbit') return;
     state='spinning'; spinElapsed=0; pendingZoom={x:x,y:y};
+    ready=false;
+    frame=document.createElement('iframe');
+    frame.id='villageFrame';
+    frame.title='REBUILD village';
+    frame.setAttribute('inert','');
+    frame.setAttribute('aria-hidden','true');
+    frame.tabIndex=-1;
+    frame.src='preview/?embed=1';
+    document.body.appendChild(frame);
+    statusEl.textContent='Loading the village…';
+    loadTimeout=setTimeout(function(){ zoomOut('The village took too long to load. Tap Start to try again.'); },40000);
     if(startBtn){ startBtn.disabled=true; startBtn.classList.add('starting'); }
     if(hintEl) hintEl.style.opacity='.58';
   }
-  function zoomOut(){
-    if(state==='orbit') return;
+  function zoomOut(message){
+    if(!frame || state==='village' || state==='handoff') return;
+    clearTimeout(loadTimeout);
+    frame.remove(); frame=null; ready=false; pendingZoom=null;
     state='leaving';
-    startTween(HOME_POS, HOME_LOOK, 1.55, function(){ state='orbit'; canvas.classList.remove('zoom'); var fo=document.getElementById('enter'); if(fo) fo.style.opacity='0'; });
-    backBtn.classList.remove('show');
-    if(titleEl) titleEl.classList.remove('out');
-    if(hintEl) hintEl.style.opacity='';
+    startTween(HOME_POS, HOME_LOOK, reduce?.05:.48, function(){
+      state='orbit';
+      canvas.classList.remove('zoom');
+      startBtn.disabled=false;
+      startBtn.classList.remove('starting');
+    });
+    statusEl.textContent=message || '';
+    hintEl.style.opacity='';
   }
-  backBtn.addEventListener('click', zoomOut);
   if(startBtn) startBtn.addEventListener('click', function(e){ e.stopPropagation(); beginJourney(window.innerWidth/2, window.innerHeight/2); });
   window.addEventListener('keydown', function(e){ if(e.key==='Escape') zoomOut(); });
-  window.VillagePlanet={ zoomOut:zoomOut, isZoomed:function(){return state==='zoomed';} };
+  window.VillagePlanet={ zoomOut:zoomOut, isZoomed:function(){return state==='village' || state==='handoff';} };
+  window.addEventListener('pageshow', function(e){
+    if(e.persisted && (state==='village'||state==='handoff')) location.reload();
+  });
 
   function tryClickZoom(x,y){
     if((state!=='orbit'&&state!=='spinning') || !planetMesh) return;
@@ -635,8 +693,9 @@
   }
 
   canvas.addEventListener('pointerdown', function(e){
+    if(!e.isPrimary || state!=='orbit') return;
     downX=lastX=e.clientX; downY=lastY=e.clientY; moved=0;
-    if(state==='orbit'){ dragging=true; vYaw=0; vPitch=0; canvas.classList.add('drag'); }
+    dragging=true; vYaw=0; vPitch=0; canvas.classList.add('drag');
     canvas.setPointerCapture && canvas.setPointerCapture(e.pointerId);
   });
   canvas.addEventListener('pointermove', function(e){
@@ -649,27 +708,35 @@
     lastX=e.clientX; lastY=e.clientY;
   });
   function pointerUp(e){
-    if(dragging){ dragging=false; canvas.classList.remove('drag'); }
+    if(!e.isPrimary || !dragging) return;
+    dragging=false; canvas.classList.remove('drag');
     if(moved<7 && state==='orbit'){ beginJourney(downX,downY); }
   }
-  window.addEventListener('pointerup', pointerUp); window.addEventListener('pointercancel', function(){ dragging=false; canvas.classList.remove('drag'); });
+  canvas.addEventListener('pointerup', pointerUp); canvas.addEventListener('pointercancel', function(){ dragging=false; canvas.classList.remove('drag'); });
 
   // ---------- animate ----------
-  var clock=new THREE.Clock();
+  var lastFrame=performance.now(), elapsed=0;
+  document.addEventListener('visibilitychange', function(){ lastFrame=performance.now(); openVillage(); });
   function tick(){
-    var dt=Math.min(clock.getDelta(),0.05);
+    if(state==='village'||state==='handoff') return;
+    var now=performance.now(), gap=(now-lastFrame)/1000;
+    lastFrame=now;
+    var dt=document.hidden||gap>.25?0:Math.min(gap,.05);
+    elapsed+=dt;
     if(state==='orbit'||state==='spinning'){
-      if(!dragging){ dragYaw+=vYaw; dragPitch=Math.max(-0.9,Math.min(0.9,dragPitch+vPitch)); vYaw*=0.94; vPitch*=0.94; dragPitch+=(0-dragPitch)*0.012; }
-      yaw+=(state==='spinning'?.68:autoSpeed)*dt;
+      if(!dragging&&!reduce){ var inertia=Math.pow(.94,dt*60); dragYaw+=vYaw*(1-inertia)/.06; dragPitch=Math.max(-.9,Math.min(.9,dragPitch+vPitch*(1-inertia)/.06)); vYaw*=inertia; vPitch*=inertia; dragPitch*=Math.pow(.988,dt*60); }
+      yaw+=(state==='spinning'&&!reduce?.58:autoSpeed)*dt;
       planet.rotation.y=yaw+dragYaw; planet.rotation.x=pitch+dragPitch;
       if(state==='spinning'){
         spinElapsed+=dt;
-        if(spinElapsed>=1.55&&pendingZoom){ var pz=pendingZoom; pendingZoom=null; tryClickZoom(pz.x,pz.y); }
+        if(spinElapsed>=(reduce?.15:1.05)&&pendingZoom){ var pz=pendingZoom; pendingZoom=null; tryClickZoom(pz.x,pz.y); }
       }
     }
-    clouds.rotation.y+=dt*.045; clouds.rotation.x=planet.rotation.x*.34;
-    for(var ci=0;ci<cloudItems.length;ci++){ var cd=cloudItems[ci],pulse=1+Math.sin(clock.elapsedTime*cd.speed+cd.phase)*.012; cd.o.position.copy(cd.base).multiplyScalar(pulse); cd.o.rotation.y+=dt*.025; }
-    for(var bi=0;bi<birdItems.length;bi++){ var bd=birdItems[bi],flap=Math.sin(clock.elapsedTime*8.5+bd.phase); bd.pivot.rotation.y+=dt*bd.speed; bd.bird.position.y=bd.baseY+Math.sin(clock.elapsedTime*1.8+bd.phase)*.26; bd.left.rotation.z=.18+flap*.48; bd.right.rotation.z=-.18-flap*.48; bd.bird.rotation.z=Math.sin(clock.elapsedTime*1.1+bd.phase)*.08; }
+    if(!reduce){
+      clouds.rotation.y+=dt*.034; clouds.rotation.x=planet.rotation.x*.34;
+      for(var ci=0;ci<cloudItems.length;ci++){ var cd=cloudItems[ci],pulse=1+Math.sin(elapsed*cd.speed+cd.phase)*.012; cd.o.position.copy(cd.base).multiplyScalar(pulse); cd.o.rotation.y+=dt*.019; }
+      for(var bi=0;bi<birdItems.length;bi++){ var bd=birdItems[bi],flap=Math.sin(elapsed*8.5+bd.phase); bd.pivot.rotation.y+=dt*bd.speed; bd.bird.position.y=bd.baseY+Math.sin(elapsed*1.8+bd.phase)*.26; bd.left.rotation.z=.18+flap*.48; bd.right.rotation.z=-.18-flap*.48; bd.bird.rotation.z=Math.sin(elapsed*1.1+bd.phase)*.08; }
+    }
     if(camTween){
       camTween.t+=dt; var k=Math.min(1,camTween.t/camTween.dur), e=easeInOut(k);
       camera.position.lerpVectors(camTween.p0,camTween.p1,e);
@@ -677,18 +744,22 @@
       if(k>=1){ var af=camTween.after; camTween=null; if(af) af(); }
     }
     camera.lookAt(lookTarget);
-    for(var i=0;i<spinners.length;i++){ var s=spinners[i]; s.obj.rotation[s.axis]+=dt*s.speed; }
-    for(var m=0;m<smokes.length;m++){ var p=smokes[m], u=p.userData; u.t+=dt*u.sp; var fr=u.t%1; p.position.set(u.base.x+Math.sin(u.t*2)*0.06,u.base.y+fr*0.9,u.base.z); p.scale.setScalar(0.5+fr*1.1); p.material.opacity=Math.max(0,0.5*(1-fr)); }
+    if(!reduce){
+      for(var i=0;i<spinners.length;i++){ var s=spinners[i]; s.obj.rotation[s.axis]+=dt*s.speed; }
+      for(var m=0;m<smokes.length;m++){ var p=smokes[m], u=p.userData; u.t+=dt*u.sp; var fr=u.t%1; p.position.set(u.base.x+Math.sin(u.t*2)*0.06,u.base.y+fr*0.9,u.base.z); p.scale.setScalar(0.5+fr*1.1); p.material.opacity=Math.max(0,0.5*(1-fr)); }
+    }
     renderer.render(scene,camera);
     requestAnimationFrame(tick);
   }
   tick();
 
   window.addEventListener('resize', function(){
+    if(state==='village'||state==='handoff') return;
     camera.aspect=window.innerWidth/window.innerHeight; camera.updateProjectionMatrix();
+    renderer.setPixelRatio(pixelRatio());
     renderer.setSize(window.innerWidth,window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.75));
   });
   setTimeout(function(){ if(hintEl && state==='orbit') hintEl.style.opacity='0.55'; }, 9000);
 })();
 </script>
+</body></html>
