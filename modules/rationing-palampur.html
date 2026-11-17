@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../shared/rebuild-shell.css">
+<script src="../shared/rebuild-notebook.js"></script>
 <script defer src="../shared/rebuild-shell.js"></script>
 <style>
 :root{--ink:#2b2118;--cream:#fff8ea;--cream2:#f6e6c4;--wood:#7a4e2d;--wood2:#5a3720;--green:#4fa52f;--green2:#2f6e1c;--blue:#2a7fc0;--blue2:#185a8c;--red:#c8502f;--gold:#f2c14e;
@@ -557,10 +558,10 @@ function buildUI(audio){
  // toasts / notebook / achievements
  const toasts=A('div','toasts');root.appendChild(toasts);e._toasts=toasts;
  e.notebook=[];
- e.toast=(t,b)=>{e.notebook.push({t,b});audio.play('page');const el=A('div','toast panel',`<span class="ticon">${IC('book')}</span><div><small>Notebook page unlocked</small><b>${t}</b><p>${b}</p></div>`);toasts.appendChild(el);setTimeout(()=>el.classList.add('out'),4400);setTimeout(()=>el.remove(),5000);};
+ e.toast=(t,b,id)=>{const NB=window.RebuildNotebook;if(NB){try{NB.unlock(id);}catch(_){}}e.notebook.push({t,b});audio.play('page');const cnt=NB?`<span class="tcount" style="display:block;margin-top:.2em;font-size:.7em;font-weight:900;color:#b07a14">${NB.count()} / ${NB.total()} parts</span>`:'';const el=A('div','toast panel',`<span class="ticon">${IC('book')}</span><div><small>Notebook part unlocked</small><b>${t}</b><p>${b}</p>${cnt}</div>`);toasts.appendChild(el);setTimeout(()=>el.classList.add('out'),4400);setTimeout(()=>el.remove(),5000);};
  e.achievements=new Set();
  e.achievement=(id,title,sub)=>{if(e.achievements.has(id))return;e.achievements.add(id);audio.play('achieve');e.confetti(50);const el=A('div','toast panel ach',`<span class="ticon trophy">${IC('trophy')}</span><div><small>Achievement unlocked</small><b>${title}</b><p>${sub||''}</p></div>`);toasts.appendChild(el);setTimeout(()=>el.classList.add('out'),3600);setTimeout(()=>el.remove(),4100);};
- e.showNotebook=()=>{const pages=e.notebook.length?e.notebook.map(p=>`<div class="page"><b>${p.t}</b><p>${p.b}</p></div>`).join(''):'<p>No pages yet. Solve the puzzles to discover the maths!</p>';const ach=e.achievements.size?`<p style="margin-top:.6em;font-weight:900;color:var(--green2)">${IC('trophy')} Achievements earned: ${e.achievements.size}</p>`:'';return e.modal(`<h2>${IC('book')} Engineer’s Notebook</h2><div class="pages">${pages}</div>${ach}`,[{label:'Close'}]);};
+ e.showNotebook=()=>{const NB=window.RebuildNotebook;const ach=e.achievements.size?`<p class="rnb-ach">${IC('trophy')} Achievements earned: ${e.achievements.size}</p>`:'';if(NB)return e.modal(NB.html('ration')+ach,[{label:'Close'}]);const parts=e.notebook.length?e.notebook.map(p=>`<div class="page"><b>${p.t}</b><p>${p.b}</p></div>`).join(''):'<p>No parts yet. Solve the puzzles to discover the maths!</p>';return e.modal(`<h2>${IC('book')} Engineer’s Notebook</h2><div class="pages">${parts}</div>${ach}`,[{label:'Close'}]);};
 
  // confetti + sparkle burst
  e.confetti=(n=90)=>{const wrap=A('div','confetti');root.appendChild(wrap);const cols=['#d8402c','#f0b43a','#4fa52f','#2a7fc0','#e8d24a','#e8893a'];for(let i=0;i<n;i++){const p=A('i');p.style.left=rnd(100)+'%';p.style.background=cols[i%cols.length];p.style.animationDelay=rnd(.6)+'s';p.style.animationDuration=rnd(2.4,1.6)+'s';p.style.transform=`rotate(${rnd(360)}deg)`;wrap.appendChild(p);}setTimeout(()=>wrap.remove(),3200);};
@@ -1141,19 +1142,19 @@ function startGame(ie,audio,village){
    ie.tell('144 kg, six families. Find each equal share, then share it out.',0);
    await wait(400);
    await runMissingRation(ie,audio);
-   ie.toast('A letter stands for a number','x is an unknown number. x added six times is 6x, and 6x = 144 gives x = 24 by dividing. Each family gets 24 kg.');
+   ie.toast('A letter stands for a number','x is an unknown number. x added six times is 6x, and 6x = 144 gives x = 24 by dividing. Each family gets 24 kg.','ration.variable');
    ie.achievement('fair','Fair Share!','Every family got an equal 24 kg.');
   }else if(idx===1){
    const p=await ie.predict('Which is bigger — 1/4 or 1/8?',['1/4 is bigger','1/8 is bigger','They are equal']);
    await runFractionCompare(ie,audio);
    if(p.choice===1){await ie.say(['A lovely surprise! Many people guess 1/8 because 8 is bigger than 4. But more pieces means each one is smaller — so 1/4 wins.']);ie.hideDialogue();}
-   ie.toast('More pieces, smaller parts','Fractions are equal parts of a whole. Splitting the same block into more pieces makes each piece smaller, so 1/4 > 1/8. And 1/2 = 2/4 = 4/8.');
+   ie.toast('More pieces, smaller parts','Fractions are equal parts of a whole. Splitting the same block into more pieces makes each piece smaller, so 1/4 > 1/8. And 1/2 = 2/4 = 4/8.','ration.fractions');
    ie.achievement('fraction','Fraction Master!','You compared fractions on the balance.');
   }else{
    ie.tell('210 kg must last five days. Slide to find the daily amount, then run the week.',0);
    await wait(400);
    await runFiveDayChallenge(ie,audio);
-   ie.toast('An equation plans a resource','Using x kg a day for 5 days is 5x. Since 5x = 210, dividing gives x = 42 kg/day — just enough to last the whole week.');
+   ie.toast('An equation plans a resource','Using x kg a day for 5 days is 5x. Since 5x = 210, dividing gives x = 42 kg/day — just enough to last the whole week.','ration.equation');
    ie.achievement('planner','Supply Planner!','You made the grain last exactly five days.');
   }
 
@@ -1193,6 +1194,7 @@ function startGame(ie,audio,village){
   await challengeRemainder(ie,audio);stars++;ie.addXP(40);
   const starHtml=[0,1,2].map(i=>`<svg class="ic ${i<stars?'':'off'}" viewBox="0 0 24 24">${ICONS.star}</svg>`).join('');
   const r=await ie.modal(`<h2>${IC('trophy')} Village Check-up complete!</h2><div class="stars">${starHtml}</div><p>All three challenges done! You brought a fair food plan back to Palampur.</p>
+   ${(()=>{const NB=window.RebuildNotebook;return NB?`<p class="rnb-summary">Notebook: ${NB.count('ration')} / ${NB.total('ration')} parts unlocked in this module · ${NB.count()} / ${NB.total()} overall</p>`:'';})()}
    <div class="pages">
     <div class="page"><b>Unknowns & expressions</b><p>A letter like x stands for a number; x+x+x = 3x.</p></div>
     <div class="page"><b>Simple equations</b><p>6x = 144 gives x = 24; 5x = 210 gives x = 42.</p></div>
