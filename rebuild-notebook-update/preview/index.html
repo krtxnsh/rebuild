@@ -1,0 +1,891 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>REBUILD · Village</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800;900&display=swap">
+<link rel="stylesheet" href="../shared/rebuild-shell.css">
+<script src="../shared/rebuild-notebook.js"></script>
+<style>
+  .nb-fab{position:fixed;right:max(14px,env(safe-area-inset-right,0px));top:calc(14px + env(safe-area-inset-top,0px));z-index:60;display:inline-flex;align-items:center;gap:.45em;min-height:44px;padding:0 15px;border:3px solid #7a4e2d;border-radius:999px;background:linear-gradient(180deg,#fffdf8,#f6e6c4);color:#2b2117;font:900 14px Nunito,system-ui,sans-serif;cursor:pointer;box-shadow:0 6px 16px rgba(20,12,4,.34),inset 0 1px #fff;transition:transform .16s ease,filter .16s ease}
+  .nb-fab:hover{transform:translateY(-2px);filter:brightness(1.04)}
+  .nb-fab .nb-emo{font-size:1.1em;line-height:1}
+  body[data-phase="loading"] .nb-fab{display:none}
+  .nb-ov{position:fixed;inset:0;z-index:120;display:none;align-items:flex-start;justify-content:center;background:rgba(20,12,4,.55);padding:max(16px,env(safe-area-inset-top)) 16px;overflow:auto}
+  .nb-ov.on{display:flex}
+  .nb-card{position:relative;margin:auto;width:min(560px,100%);max-height:86vh;overflow:auto;background:linear-gradient(180deg,#fffdf7,#f6e6c4);border:4px solid #7a4e2d;border-radius:22px;padding:22px;box-shadow:0 18px 40px rgba(20,12,4,.45);font-family:Nunito,system-ui,sans-serif}
+  .nb-close{margin-top:16px;min-height:46px;width:100%;border:3px solid #2f6e1c;border-radius:999px;background:linear-gradient(180deg,#7bd451,#55ad32 52%,#2f6e1c);color:#fff;font:600 18px Fredoka,sans-serif;cursor:pointer}
+:root{--bg:#1d2126;--panel:rgba(20,24,28,.88);--fg:#eef0f2;--mute:#9aa4ad;--acc:#f2b84b}
+html,body{margin:0;height:100%;background:#d9ebfa;color:var(--fg);font:13px/1.35 system-ui,Segoe UI,sans-serif;overflow:hidden}
+#sceneLoading,#sceneNotice{position:fixed;z-index:35;left:50%;top:50%;transform:translate(-50%,-50%);background:#fff9e8;color:#46351e;border:1px solid #c89c52;border-radius:14px;padding:16px 22px;text-align:center;width:max-content;max-width:calc(100% - 70px);box-shadow:0 6px 22px #523a2833}
+#sceneNotice{top:auto;bottom:24px;transform:translateX(-50%)}
+#sceneNotice button,#sceneNotice a{color:#55330c;font:inherit;margin:4px 6px}
+#sceneNotice p{margin:0 0 8px}
+body[data-phase="loading"] canvas{visibility:hidden}
+#ui{display:none;position:fixed;top:10px;left:10px;width:300px;max-height:calc(100% - 20px);overflow:auto;background:var(--panel);border-radius:10px;padding:10px 12px;box-sizing:border-box}.debug #ui{display:block}
+#ui h1{font-size:14px;margin:0 0 6px}#ui button{margin:2px 2px;padding:5px 8px;border:0;border-radius:6px;background:#2f3943;color:var(--fg);cursor:pointer}
+#ui button.on{background:var(--acc);color:#222}#stats{white-space:pre;font:11px/1.3 ui-monospace,Consolas,monospace;color:var(--mute);margin-top:6px}
+canvas{display:block}
+#rioArrow{position:fixed;left:50%;top:50%;z-index:12;transform:translate(-50%,-100%);border:0;background:none;color:#4a2b00;padding:0;cursor:pointer;filter:drop-shadow(0 7px 10px rgba(77,45,0,.38));transition:opacity .35s ease,filter .2s ease}
+#rioArrow:hover{filter:drop-shadow(0 8px 15px rgba(255,190,20,.72)) brightness(1.06)}
+#rioArrow.out{opacity:0;pointer-events:none}
+#chapterFade{position:fixed;inset:0;z-index:30;pointer-events:none;opacity:0;background:#f6ebd4;transition:opacity .42s ease}
+#chapterFade.on{opacity:1}
+.rio-arrow-inner{display:flex;flex-direction:column;align-items:center;gap:3px;animation:rioFloat 1.25s ease-in-out infinite}
+.rio-arrow-inner b{font:800 13px/1.1 "Segoe UI",system-ui,sans-serif;color:#533100;background:linear-gradient(180deg,#fff2a3,#ffc928);border:2px solid #9a5b00;border-radius:999px;padding:6px 11px;white-space:nowrap;box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 0 0 4px rgba(255,200,40,.2),0 0 22px rgba(255,196,22,.72)}
+.rio-arrow-inner svg{width:38px;height:38px;fill:#ffc928;stroke:#7b4800;stroke-width:1.4;stroke-linejoin:round;filter:drop-shadow(0 0 8px rgba(255,197,30,.95))}
+@keyframes rioFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@media (prefers-reduced-motion:reduce){.rio-arrow-inner{animation:none}#chapterFade{transition-duration:.08s}}
+</style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+</head><body data-phase="loading">
+<div id="ui"><h1>REBUILD · Village</h1>
+<div id="btns"></div><div id="stats">loading...</div></div><pre id="res" hidden></pre><div id="chapterFade" aria-hidden="true"></div>
+<div id="sceneLoading" role="status">Loading the village…</div>
+<div id="sceneNotice" role="status" hidden><p>The village could not load.</p><button type="button" onclick="location.reload()">Try again</button><a href="../modules/" target="_top">Module map</a></div>
+<button class="nb-fab" id="nbFab" type="button"><span class="nb-emo">📓</span> Notebook</button>
+<div class="nb-ov" id="nbOv" role="dialog" aria-modal="true" aria-label="Engineer’s Notebook"><div class="nb-card"><div id="nbBody"></div><button class="nb-close" id="nbClose" type="button">Close</button></div></div>
+<script>(function(){var NB=window.RebuildNotebook,ov=document.getElementById('nbOv');var ch=(new URLSearchParams(location.search).get('chapter'))||'water';function open(){if(NB)document.getElementById('nbBody').innerHTML=NB.html(ch);ov.classList.add('on');}function close(){ov.classList.remove('on');}var f=document.getElementById('nbFab');if(f)f.addEventListener('click',open);var c=document.getElementById('nbClose');if(c)c.addEventListener('click',close);ov.addEventListener('click',function(e){if(e.target===ov)close();});document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});})();</script>
+<script>
+  (() => {
+    const loading = document.getElementById('sceneLoading');
+    const notice = document.getElementById('sceneNotice');
+    const embedded = parent !== window && new URLSearchParams(location.search).get('embed') === '1';
+    let settled = false;
+    window.villageReady = (error) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timeout);
+      loading.hidden = true;
+      notice.hidden = !error;
+      if (embedded) parent.postMessage({ type: error ? 'rebuild:load-error' : 'rebuild:ready' }, location.origin);
+    };
+    const timeout = setTimeout(() => window.villageReady(true), 35000);
+  })();
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+import { buildRioRoute, RioWalker, clamp, damp, frameDelta, turnToward } from './rio-route.mjs';
+import { createRioCamera } from './rio-camera.mjs';
+const R = window.__results = { errors: [], load: null, checks: {} };
+window.addEventListener('error', e => R.errors.push(String(e.message)));
+const qs = new URLSearchParams(location.search);
+const embedded = parent !== window && qs.get('embed') === '1';
+const debug = ['debug', 'autocheck', 'motionprobe', 'bench'].some(flag => qs.has(flag));
+if (qs.has('debug')) document.body.classList.add('debug');
+const chapterFromUrl = qs.get('chapter');
+const CHAPTER = ['water', 'power', 'ration'].includes(chapterFromUrl) ? chapterFromUrl : 'water';
+const CHAPTER_DATA = {
+  water: { building: 'WATER', module: 'water-purification.html', label: 'Walk to Water House', event: 'engineer:atWater' },
+  power: { building: 'ELEC', module: 'power-palampur.html', label: 'Continue to Power House', event: 'engineer:atPower' },
+  ration: { building: 'RATION', module: 'rationing-palampur.html', label: 'Continue to the Ration Shop', event: 'engineer:atRation' }
+};
+const FILE = qs.get('file') || '../exports/web/village_complete.glb';   // Draco web build; ?file=../exports/village_complete.glb for the uncompressed export
+let renderer;
+try {
+  renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
+} catch (error) {
+  window.villageReady(true);
+  throw error;
+}
+let presented = !embedded;
+if (embedded) {
+  addEventListener('message', event => {
+    if (event.source === parent && event.origin === location.origin && event.data?.type === 'rebuild:show') presented = true;
+  });
+}
+function pixelRatio() {
+  return Math.min(devicePixelRatio, innerWidth < 600 ? 1.4 : 1.75, Math.sqrt(3200000 / (innerWidth * innerHeight)));
+}
+renderer.setPixelRatio(pixelRatio());
+renderer.setSize(innerWidth, innerHeight);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+document.body.appendChild(renderer.domElement);
+const scene = new THREE.Scene();
+// v2 sky: gradient dome (follows the camera) + soft distance fog + sky-derived environment for water highlights
+const SKY = { h: new THREE.Color('#e8f1fb'), m: new THREE.Color('#9cc3f6'), z: new THREE.Color('#4f8fe8') };
+const skyMat = new THREE.ShaderMaterial({ side: THREE.BackSide, depthWrite: false, fog: false,
+  uniforms: { h: { value: SKY.h }, m: { value: SKY.m }, z: { value: SKY.z } },
+  vertexShader: 'varying vec3 vDir; void main(){ vDir = normalize(position); gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+  fragmentShader: 'uniform vec3 h; uniform vec3 m; uniform vec3 z; varying vec3 vDir; void main(){ float t = clamp(vDir.y, 0.0, 1.0); vec3 c = mix(h, m, smoothstep(0.0, 0.16, t)); c = mix(c, z, smoothstep(0.16, 0.8, t)); gl_FragColor = vec4(c, 1.0);\n#include <colorspace_fragment>\n}' });
+const skyDome = new THREE.Mesh(new THREE.SphereGeometry(1100, 32, 16), skyMat); skyDome.renderOrder = -1; skyDome.frustumCulled = false; scene.add(skyDome);
+scene.fog = new THREE.Fog(0xdde9f6, 160, 560);
+const cam = new THREE.PerspectiveCamera(innerWidth < innerHeight ? 58 : 50, innerWidth / innerHeight, 0.2, 1500);
+cam.position.set(-1.5, 14, 28);
+scene.add(new THREE.HemisphereLight(0xd8e9ff, 0x748c4c, 0.95));
+const sun = new THREE.DirectionalLight(0xfff0d6, 2.6); sun.position.set(-30, 45, 25);
+sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048);
+sun.shadow.autoUpdate = debug;
+Object.assign(sun.shadow.camera, { left: -62, right: 62, top: 62, bottom: -62, near: 1, far: 200 });
+sun.shadow.bias = -0.00016;
+sun.shadow.normalBias = 0.035;
+const pmrem = new THREE.PMREMGenerator(renderer); const envScene = new THREE.Scene(); envScene.add(new THREE.Mesh(new THREE.SphereGeometry(100, 32, 16), skyMat));
+const envTex = pmrem.fromScene(envScene, 0.02).texture;
+envScene.children[0].geometry.dispose();
+pmrem.dispose();
+scene.add(sun);
+const gl = renderer.getContext();
+const dbg = gl.getExtension('WEBGL_debug_renderer_info');
+R.env = { ua: navigator.userAgent, dpr: renderer.getPixelRatio(), viewport: [innerWidth, innerHeight],
+  gpu: dbg ? gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) : 'masked', antialias: true, shadows: 'PCFSoft 2048, 1 sun',
+  gpuTimer: !!gl.getExtension('EXT_disjoint_timer_query_webgl2') };
+const byName = {}, bySid = {}, colliders = [], zones = [];
+let root, waterMats = [], fallMats = [], foamMats = [], clouds = null, bulbMats = [], wheel, valve, beam, doors = [];
+let waterMapsU = [], waterNrmU = [], fallMapsU = [], stillMats = [], stillMapsU = [], stillNrmU = [], stillMeshes = [];
+const t0 = performance.now();
+const draco = new DRACOLoader().setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/libs/draco/gltf/').setWorkerLimit(2);
+const manifest = fetch('../metadata/scene_manifest.json').then(response => {
+  if (!response.ok) throw new Error('Scene manifest returned ' + response.status);
+  return response.json();
+});
+Promise.all([new GLTFLoader().setDRACOLoader(draco).loadAsync(FILE), manifest]).then(([g, man]) => {
+  root = g.scene; scene.add(root);
+  root.traverse(o => {
+    byName[o.name] = o; const ex = o.userData || {};
+    if (ex.semantic_id) (bySid[ex.semantic_id] = bySid[ex.semantic_id] || []).push(o);
+    if (o.isMesh) {
+      const n = o.name;
+      o.castShadow = !/^VEG_GroundCover|Reeds|TERRAIN_FarHills|Water|Fall|Glass|Bulb/.test(n);
+      o.receiveShadow = true;
+      const ms = Array.isArray(o.material) ? o.material : [o.material];
+      if (ex.cast_shadow === false || /^TERRAIN_(Ground|Paths)|^EXP_Paths|^VEG_Trees_Far/.test(n)) o.castShadow = false;
+      if (ex.shader_target === 'clouds') { o.castShadow = false; o.receiveShadow = false; clouds = o; }
+      ms.forEach(m => {
+        if (m.name === 'M_Water' && !waterMats.includes(m)) waterMats.push(m);
+        if (m.name === 'M_WaterFall' && !fallMats.includes(m)) fallMats.push(m);
+        if (m.name === 'M_Foam' && !foamMats.includes(m)) { foamMats.push(m); m.depthWrite = false; }
+        if (m.name === 'M_Bulb') bulbMats.push(m);
+        if (/M_Water/.test(m.name)) { m.envMap = envTex; m.envMapIntensity = 0.72; [m.map, m.normalMap].forEach(t => { if (t) { t.wrapS = t.wrapT = THREE.RepeatWrapping; t.needsUpdate = true; } }); }
+      });
+    }
+    if (ex.collider && ex.half_extents) colliders.push(o);
+    if (ex.zone) zones.push(o);
+    if (ex.animation === 'door') doors.push(o);
+  });
+  wheel = byName['ELEC_WaterWheel']; valve = byName['WATER_MainValve']; beam = byName['RATION_WeighingScale_Beam'];
+  // Still water: only WATER_River has flow-aligned UVs (v runs along the stream). Every other M_Water surface is box-projected,
+  // so scrolling it like the river slid it toward Blender +Y (north) whatever its real flow. Every surface except
+  // shader_target water_flow + flow_axis uv_v gets its own material, with an undirected ripple wobble and no flow (stepEffects).
+  const stillOf = new Map();
+  root.traverse(o => { if (!o.isMesh) return; const ex = targetOf(o);
+    if (ex.shader_target === 'water_flow' && ex.flow_axis === 'uv_v') return;
+    let hit = false;
+    const swap = m => { if (!m || m.name !== 'M_Water') return m; hit = true;
+      if (!stillOf.has(m)) { const s = m.clone(); s.name = 'M_Water_still';
+        if (m.map) { s.map = m.map.clone(); s.map.needsUpdate = true; }
+        if (m.normalMap) { s.normalMap = m.normalMap.clone(); s.normalMap.needsUpdate = true; }
+        stillOf.set(m, s); }
+      return stillOf.get(m); };
+    o.material = Array.isArray(o.material) ? o.material.map(swap) : swap(o.material);
+    if (hit) stillMeshes.push(o.name); });
+  stillMats = [...stillOf.values()];
+  stillMapsU = [...new Set(stillMats.map(m => m.map).filter(Boolean))];
+  stillNrmU = [...new Set(stillMats.map(m => m.normalMap).filter(Boolean))];
+  // Texture de-coupling: GLTFLoader caches textures per glTF texture index, so every M_Water copy (vertex-colour
+  // variants) shares ONE THREE.Texture and M_WaterFall can share it too.  Record the sharing, give the falls their
+  // own clone, and scroll each texture exactly once per frame (stepEffects).
+  R.motionDiag = { waterMaterialInstances: waterMats.length, uniqueWaterMaps: new Set(waterMats.map(m => m.map).filter(Boolean)).size,
+    fallMaterialInstances: fallMats.length, fallSharesWaterMap: fallMats.some(f => f.map && waterMats.some(w => w.map === f.map)) };
+  const fallClones = new Map();
+  fallMats.forEach(m => { if (m.map) { if (!fallClones.has(m.map)) { const c = m.map.clone(); c.needsUpdate = true; fallClones.set(m.map, c); } m.map = fallClones.get(m.map); } });
+  waterMapsU = [...new Set(waterMats.map(m => m.map).filter(Boolean))];
+  waterNrmU = [...new Set(waterMats.map(m => m.normalMap).filter(Boolean))];
+  fallMapsU = [...new Set(fallMats.map(m => m.map).filter(Boolean))];
+  R.motionDiag.afterFix = { uniqueWaterMaps: waterMapsU.length, uniqueWaterNormals: waterNrmU.length, uniqueFallMaps: fallMapsU.length,
+    fallOverlapsWater: fallMapsU.some(t => waterMapsU.includes(t)), stillWaterMaterials: stillMats.length, stillWaterMeshes: stillMeshes,
+    stillSharesRiverTextures: stillMapsU.some(t => waterMapsU.includes(t)) || stillNrmU.some(t => waterNrmU.includes(t)) };
+  R.animations = g.animations.map(a => a.name);
+  R.load = { ms: Math.round(performance.now() - t0), nodes: Object.keys(byName).length, colliders: colliders.length, zones: zones.length,
+    doors: doors.map(d => d.name), waterMaterials: [...new Set([...waterMats, ...fallMats, ...stillMats, ...foamMats].map(m => m.name))], bulbs: (bySid['ELEC_Bulb'] || []).length };
+  // landmark check (manifest is defined in glTF coordinates)
+  {
+    const e = man.buildings.ELEC, n = byName[e.root_node];
+    const p = new THREE.Vector3(); n.getWorldPosition(p);
+    R.checks.landmark = { node: e.root_node, manifest: e.assembled_translation, loaded: p.toArray().map(v => +v.toFixed(3)),
+      ok: p.distanceTo(new THREE.Vector3(...e.assembled_translation)) < 1e-3 };
+    R.checks.landmarks = Object.fromEntries(['ELEC', 'WATER', 'RATION'].map(k => { const e = man.buildings[k], n = byName[e.root_node]; const q = n.getWorldPosition(new THREE.Vector3());
+      return [k, { manifest: e.assembled_translation, loaded: q.toArray().map(v => +v.toFixed(3)), ok: q.distanceTo(new THREE.Vector3(...e.assembled_translation)) < 1e-3 }]; }));
+    R.checks.expansion = { houses: Object.values(byName).filter(o => o.userData && o.userData.house_id).length, manifestHouses: (man.expansion || {}).houses ? man.expansion.houses.length : 0,
+      farm: !!byName['FARM_ROOT'], clouds: !!clouds, foamMaterials: foamMats.length, waterHasMapAndNormal: waterMats.some(m => !!(m.map && m.normalMap)) };
+    R.manifest = man;
+    if (debug) buildRoute(man);
+    startEngineer();
+    sun.shadow.needsUpdate = true;
+    skyDome.position.copy(cam.position);
+    renderer.render(scene, cam);
+    window.villageReady();
+    if (debug) setupUI();
+    if (qs.get('autocheck')) autocheck();
+    if (qs.get('motionprobe')) setTimeout(() => motionProbe(man), 50);
+  }
+}).catch(err => {
+  R.errors.push('load: ' + err);
+  window.villageReady(true);
+}).finally(() => draco.dispose());
+// ---------------------------------------------------------------- smoke-check controls
+function btn(label, fn) { const b = document.createElement('button'); b.textContent = label; b.onclick = () => { const on = fn(); if (on !== undefined) b.classList.toggle('on', on); }; document.getElementById('btns').appendChild(b); return b; }
+let doorsOpen = false, spin = false, bulbsOn = true, flowShader = false, cut = false, showCol = false, colGroup;
+function setupUI() {
+  const Y = new THREE.Vector3(0, 1, 0);
+  doors.forEach(d => { const u = d.userData, sw = THREE.MathUtils.degToRad(u.open_yaw_deg - u.closed_yaw_deg);
+    u._closed = d.quaternion.clone().multiply(new THREE.Quaternion().setFromAxisAngle(Y, u.initial === 'open' ? -sw : 0));
+    u._open = u._closed.clone().multiply(new THREE.Quaternion().setFromAxisAngle(Y, sw)); });
+  btn('Doors open/close', () => { doorsOpen = !doorsOpen; doors.forEach(d => d.quaternion.copy(doorsOpen ? d.userData._open : d.userData._closed));
+    R.checks.doors = doors.map(d => [d.name, doorsOpen ? 'open' : 'closed']); return doorsOpen; });
+  btn('Waterwheel spin', () => { spin = !spin; R.checks.wheelSpin = spin; return spin; });
+  btn('Valve +90°', () => { valve.rotateY(Math.PI / 2); R.checks.valve = valve.rotation.toArray().slice(0, 3).map(v => +v.toFixed(3)); });
+  btn('Scale tilt', () => { beam.rotation.z = beam.rotation.z ? 0 : -0.18; R.checks.scale = +beam.rotation.z.toFixed(3); });
+  btn('Bulbs on/off', () => { bulbsOn = !bulbsOn; bulbMats.forEach(m => m.emissiveIntensity = bulbsOn ? 1 : 0); R.checks.bulbs = bulbsOn; return bulbsOn; });
+  btn('Water shader swap', () => { flowShader = !flowShader; swapWater(flowShader); return flowShader; });
+  btn('Roof cutaway', () => { cut = !cut; ['ELEC', 'WATER', 'RATION'].forEach(k => { byName[k + '_Roof_Group'].visible = !cut; }); return cut; });
+  btn('Show colliders', () => { showCol = !showCol; if (!colGroup) makeColliders(); colGroup.visible = showCol; return showCol; });
+  btn('Run perf routes', () => runPerf());
+}
+const waterOrig = new Map();
+function swapWater(on) {
+  root.traverse(o => { if (!o.isMesh) return; const ms = Array.isArray(o.material) ? o.material : [o.material];
+    ms.forEach((m, i) => { if (!/M_Water/.test(m.name)) return;
+      if (on) { const nm = m.clone(); nm.color = new THREE.Color(0x3b9cc4); nm.map = swapTexFor(m.name); nm.transparent = true; nm.opacity = 0.82; waterOrig.set(nm, m); set(o, i, nm); }
+      else if (waterOrig.has(m)) set(o, i, waterOrig.get(m)); }); });
+  R.checks.waterSwap = on;
+  function set(o, i, m) { if (Array.isArray(o.material)) o.material[i] = m; else o.material = m; }
+}
+let _wt; function waterTex() { if (_wt) return _wt; const c = document.createElement('canvas'); c.width = c.height = 128; const x = c.getContext('2d');
+  x.fillStyle = '#8fd0ea'; x.fillRect(0, 0, 128, 128); x.strokeStyle = 'rgba(255,255,255,.55)'; x.lineWidth = 2;
+  for (let i = 0; i < 9; i++) { x.beginPath(); const y = i * 14 + 4; x.moveTo(0, y); for (let k = 0; k <= 128; k += 16) x.lineTo(k, y + Math.sin(k / 12 + i) * 3); x.stroke(); }
+  _wt = new THREE.CanvasTexture(c); _wt.wrapS = _wt.wrapT = THREE.RepeatWrapping; _wt.colorSpace = THREE.SRGBColorSpace; return _wt; }
+// demo swap: one texture per motion kind, so the swap keeps the real directions (river downstream, falls down, still water still)
+let _wtFall, _wtStill; function swapTexFor(name) { const b = waterTex();
+  if (name === 'M_WaterFall') { if (!_wtFall) { _wtFall = b.clone(); _wtFall.needsUpdate = true; } return _wtFall; }
+  if (name === 'M_Water_still') { if (!_wtStill) { _wtStill = b.clone(); _wtStill.needsUpdate = true; } return _wtStill; }
+  return b; }
+function makeColliders() { colGroup = new THREE.Group(); scene.add(colGroup);
+  const geo = new THREE.BoxGeometry(2, 2, 2), mat = new THREE.MeshBasicMaterial({ color: 0xff3366, wireframe: true });
+  colliders.forEach(c => { const m = new THREE.Mesh(geo, mat); c.updateWorldMatrix(true, false); m.matrixAutoUpdate = false; m.matrix.copy(c.matrixWorld); colGroup.add(m); }); }
+// ---------------------------------------------------------------- capsule route + collision sampling
+let route = null, capsule;
+function buildRoute(man) {
+  const V = a => new THREE.Vector3(...a);
+  const sp = man.spawn_points.find(s => s.semantic_id === 'SPAWN_Player_Main');
+  const ent = id => man.entrances.find(e => e.semantic_id === id);
+  const nav = man.navigation, P = n => nav.paths.find(p => p.name === n).points.map(V);
+  const br = nav.bridges.BRIDGE_Main, bW = V(br.west_end), bE = V(br.east_end);
+  const inside = (e, d) => V(e.world_position).addScaledVector(V(e.forward_world_gltf), d);
+  const eE = ent('ELEC_Entrance'), eW = ent('WATER_Entrance'), eR = ent('RATION_Entrance');
+  const toE = [...P('PATH_Ration_Bridge'), bE, ...P('PATH_Bridge_Elec')];
+  route = {
+    exterior: [[V(eR.world_position), ...toE, V(eE.world_position)], [...P('PATH_Water_Bridge'), bW]],
+    interior: [[V(eE.world_position), inside(eE, 2.0), inside(eE, 4.4), inside(eE, 2.0), V(eE.world_position)],
+               [V(eW.world_position), inside(eW, 2.0), inside(eW, 3.8), inside(eW, 2.0), V(eW.world_position)],
+               [V(eR.world_position), inside(eR, 1.6), inside(eR, 3.2), inside(eR, 1.6), V(eR.world_position)]],
+    expansion: nav.paths.filter(p => p.name.startsWith('XPATH_')).map(p => p.points.map(V)),
+  };
+  capsule = new THREE.Mesh(new THREE.CapsuleGeometry(0.3, 0.8, 4, 10), new THREE.MeshStandardMaterial({ color: 0xff5533 }));
+  capsule.castShadow = true; scene.add(capsule); capsule.visible = false;
+}
+const ray = new THREE.Raycaster(); const DOWN = new THREE.Vector3(0, -1, 0);
+const walkable = o => /^(TERRAIN_Ground|TERRAIN_Paths|EXP_Paths|BRIDGE_|.*_ExteriorStatic$|.*_Shell$)/.test(o.name);
+let walkMeshes; function groundY(x, z, yPrev) { walkMeshes = walkMeshes || (() => { const a = []; root.traverse(o => { if (o.isMesh && walkable(o)) a.push(o); }); return a; })();
+  ray.set(new THREE.Vector3(x, yPrev + 1.5, z), DOWN); ray.far = 8; const h = ray.intersectObjects(walkMeshes, false)[0]; return h ? h.point.y : yPrev; }
+const _inv = new THREE.Matrix4(), _p = new THREE.Vector3();
+function hitColliders(p, r) { const hits = [];
+  for (const c of colliders) { if (/Floor|Ramp|Deck|RiverEdge/.test(c.name)) continue;
+    c.updateWorldMatrix(true, false); _inv.copy(c.matrixWorld).invert(); const he = c.userData.half_extents; // blender order x,y,z -> gltf x,z,y
+    for (const dy of [0.3, 0.7, 1.1]) { _p.set(p.x, p.y + dy, p.z).applyMatrix4(_inv);
+      const hx = he[0], hy = he[2], hz = he[1];
+      if (Math.abs(_p.x) * hx < hx + r * 0.999 - 1e-6 && Math.abs(_p.y) * hy < hy && Math.abs(_p.z) * hz < hz + r * 0.999) { hits.push(c.name); break; } } }
+  return hits; }
+function sampleRoute(pts, step = 0.25) { const out = []; let y = pts[0].y;
+  for (let i = 0; i < pts.length - 1; i++) { const a = pts[i], b = pts[i + 1], n = Math.max(1, Math.ceil(a.distanceTo(b) / step));
+    for (let k = 0; k < n; k++) { const p = a.clone().lerp(b, k / n); y = groundY(p.x, p.z, y); p.y = y; out.push(p); } } return out; }
+// ---------------------------------------------------------------- perf routes (frame-time sampling)
+let perfState = null;
+function runPerf() {
+  if (!route) return;
+  const ext = route.exterior.flatMap(r => sampleRoute(r)), int = route.interior.flatMap(r => sampleRoute(r));
+  const coll = (pts) => { const bad = {}; let n = 0; pts.forEach(p => { const h = hitColliders(p, 0.3); if (h.length) { n++; h.forEach(x => bad[x] = (bad[x] || 0) + 1); } }); return { samples: pts.length, colliding: n, by: bad }; };
+  R.checks.capsuleRouteExterior = coll(ext); R.checks.capsuleRouteInterior = coll(int);
+  capsule.visible = true;
+  perfState = { phase: 'warmup', t: performance.now(), pts: ext, set: 'exterior', frames: [], calls: [], tris: [], results: {} };
+}
+function perfStep(now, dt) {
+  const s = perfState; if (!s) return;
+  const el = (now - s.t) / 1000;
+  const dur = s.phase === 'warmup' ? 3 : 30;
+  const u = Math.min(el / dur, 1), idx = Math.min(s.pts.length - 1, Math.floor(u * (s.pts.length - 1)));
+  const p = s.pts[idx], q = s.pts[Math.min(idx + 4, s.pts.length - 1)];
+  capsule.position.set(p.x, p.y + 0.7, p.z);
+  const dir = q.clone().sub(p).setY(0); if (dir.lengthSq() < 1e-4) dir.set(0, 0, -1); dir.normalize();
+  const inside = s.set === 'interior';
+  cam.position.copy(p).addScaledVector(dir, inside ? -1.6 : -4.5).add(new THREE.Vector3(0, inside ? 1.7 : 2.6, 0));
+  cam.lookAt(p.x + dir.x * 3, p.y + 1.2, p.z + dir.z * 3);
+  if (s.phase !== 'warmup') { s.frames.push(dt); s.calls.push(renderer.info.render.calls); s.tris.push(renderer.info.render.triangles); }
+  if (el >= dur) {
+    if (s.phase === 'warmup') { s.phase = 'sample'; s.t = now; return; }
+    const f = s.frames.slice().sort((a, b) => a - b), avg = f.reduce((a, b) => a + b, 0) / f.length;
+    s.results[s.set] = { seconds: 30, frames: f.length, avg_ms: +avg.toFixed(2), avg_fps: +(1000 / avg).toFixed(1), p95_ms: +f[Math.floor(f.length * .95)].toFixed(2),
+      p99_ms: +f[Math.floor(f.length * .99)].toFixed(2), max_ms: +f[f.length - 1].toFixed(2), slow_frames_over_33ms: f.filter(x => x > 33.4).length,
+      draw_calls_avg: Math.round(s.calls.reduce((a, b) => a + b, 0) / s.calls.length), draw_calls_max: Math.max(...s.calls),
+      triangles_avg: Math.round(s.tris.reduce((a, b) => a + b, 0) / s.tris.length), triangles_max: Math.max(...s.tris), timing: 'CPU-side requestAnimationFrame deltas (not GPU time)' };
+    if (s.set === 'exterior') { s.set = 'interior'; s.pts = route.interior.flatMap(r => sampleRoute(r)); s.phase = 'warmup'; s.t = now; s.frames = []; s.calls = []; s.tris = []; }
+    else { R.perf = s.results; perfState = null; capsule.visible = false; }
+  }
+}
+function dump() { const { manifest, ...rest } = R; document.getElementById('res').textContent = JSON.stringify(rest); }
+if (debug) setInterval(dump, 1000);
+function viewCam(pos, tgt) { cam.position.set(...pos); cam.lookAt(new THREE.Vector3(...tgt)); cam.updateMatrixWorld(); }
+function benchmark() {
+  const man = R.manifest, camBy = n => man.cameras.find(c => c.name === n);
+  const views = ['CAM_01_Village_Hero', 'CAM_09_Ground_Player', 'CAM_11_Player_Sky', 'CAM_10_Farm_View', 'CAM_02_Village_TopDown', 'CAM_04_Elec_Interior', 'CAM_06_Water_Interior', 'CAM_08_Ration_Interior'].filter(v => man.cameras.some(c => c.name === v));
+  const px = new Uint8Array(4), ext = gl.getExtension('EXT_disjoint_timer_query_webgl2');
+  const out = {};
+  for (const v of views) {
+    const c = camBy(v); cam.fov = 2 * THREE.MathUtils.radToDeg(Math.atan(18 / c.focal_length_mm / cam.aspect * (cam.aspect))); cam.fov = THREE.MathUtils.radToDeg(2 * Math.atan(36 / 2 / c.focal_length_mm / cam.aspect)); cam.updateProjectionMatrix();
+    viewCam(c.position, c.target);
+    for (let i = 0; i < 10; i++) renderer.render(scene, cam);
+    const times = []; let calls = 0, tris = 0; const qs = [];
+    for (let i = 0; i < 60; i++) {
+      let q = null; if (ext && i % 4 === 0) { q = gl.createQuery(); gl.beginQuery(ext.TIME_ELAPSED_EXT, q); }
+      const t = performance.now(); renderer.render(scene, cam);
+      if (q) { gl.endQuery(ext.TIME_ELAPSED_EXT); qs.push(q); }
+      gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px); times.push(performance.now() - t);
+      calls = renderer.info.render.calls; tris = renderer.info.render.triangles;
+    }
+    times.sort((a, b) => a - b);
+    out[v] = { draw_calls_incl_shadow: calls, triangles_incl_shadow: tris, frame_ms_median_sync: +times[30].toFixed(2), frame_ms_p95_sync: +times[57].toFixed(2), _q: qs };
+  }
+  // shadow-free call counts for reference
+  renderer.shadowMap.enabled = false; scene.traverse(o => { if (o.material) (Array.isArray(o.material) ? o.material : [o.material]).forEach(m => m.needsUpdate = true); });
+  for (const v of views) { const c = camBy(v); viewCam(c.position, c.target); renderer.render(scene, cam); out[v].draw_calls_no_shadow = renderer.info.render.calls; out[v].triangles_no_shadow = renderer.info.render.triangles; }
+  renderer.shadowMap.enabled = true; scene.traverse(o => { if (o.material) (Array.isArray(o.material) ? o.material : [o.material]).forEach(m => m.needsUpdate = true); });
+  const poll = () => { let pending = false;
+    for (const v of views) { const o = out[v]; if (!o._q) continue; const ms = [];
+      for (const q of o._q) { if (!gl.getQueryParameter(q, gl.QUERY_RESULT_AVAILABLE)) { pending = true; break; } ms.push(gl.getQueryParameter(q, gl.QUERY_RESULT) / 1e6); }
+      if (!pending && ms.length) { ms.sort((a, b) => a - b); o.gpu_ms_median = +ms[Math.floor(ms.length / 2)].toFixed(3); o.gpu_ms_max = +ms[ms.length - 1].toFixed(3); delete o._q; } }
+    if (gl.getParameter(ext ? ext.GPU_DISJOINT_EXT : 0)) R.bench_gpu_disjoint = true;
+    if (pending) setTimeout(poll, 50); else { R.bench = out; dump(); } };
+  if (ext) poll(); else { Object.values(out).forEach(o => delete o._q); R.bench = out; dump(); }
+}
+function autocheck() {
+  const B = document.querySelectorAll('#btns button'); const click = t => [...B].find(b => b.textContent.startsWith(t)).click();
+  const d0 = doors.map(d => d.quaternion.clone()); click('Doors'); const d1 = doors.map(d => d.quaternion.clone()); click('Doors');
+  R.checks.doorToggleAngleDeg = Object.fromEntries(doors.map((d, i) => [d.name, +THREE.MathUtils.radToDeg(d0[i].angleTo(d1[i])).toFixed(1)]));
+  const v0 = valve.quaternion.clone(); click('Valve'); R.checks.valveRotated = 1 - Math.abs(v0.dot(valve.quaternion)) > 1e-3;
+  click('Scale'); R.checks.scaleBeamZ = beam.rotation.z; click('Scale');
+  click('Bulbs'); R.checks.bulbsOffIntensity = bulbMats.map(m => m.emissiveIntensity); click('Bulbs');
+  const w0 = wheel.quaternion.clone(); wheel.rotateX(0.5); R.checks.wheelPivotOnAxle = (() => { const p = new THREE.Vector3(); wheel.getWorldPosition(p); return p.toArray().map(v => +v.toFixed(3)); })(); wheel.quaternion.copy(w0);
+  click('Water shader'); let n = 0; root.traverse(o => { if (o.isMesh) (Array.isArray(o.material) ? o.material : [o.material]).forEach(m => { if (m.map && (m.map === _wt || m.map === _wtFall || m.map === _wtStill)) n++; }); }); R.checks.waterSwappedPrimitives = n; click('Water shader');
+  click('Roof'); R.checks.roofHidden = ['ELEC', 'WATER', 'RATION'].map(k => byName[k + '_Roof_Group'].visible === false); click('Roof');
+  const ext = route.exterior.flatMap(r => sampleRoute(r)), int = route.interior.flatMap(r => sampleRoute(r));
+  const coll = (pts) => { const bad = {}; let n = 0; pts.forEach(p => { const h = hitColliders(p, 0.3); if (h.length) { n++; h.forEach(x => bad[x] = (bad[x] || 0) + 1); } }); return { samples: pts.length, colliding: n, by: bad, yRange: [Math.min(...pts.map(p => p.y)).toFixed(2), Math.max(...pts.map(p => p.y)).toFixed(2)] }; };
+  R.checks.capsuleRouteExterior = coll(ext); R.checks.capsuleRouteInterior = coll(int);
+  R.checks.capsuleRouteExpansion = coll(route.expansion.flatMap(r => sampleRoute(r)));
+  R.checks.autocheckDone = true; dump();
+  if (qs.get('bench')) setTimeout(benchmark, 100);
+}
+// ---------------------------------------------------------------- v2 runtime effects (single source for live loop + probe)
+function stepEffects(d, now) {
+  for (const texture of waterMapsU) texture.offset.y += d * 0.08; // downstream (verified by motion probe)
+  for (const texture of waterNrmU) {
+    texture.offset.y += d * 0.05;
+    texture.offset.x += d * 0.015;
+  }
+  for (const texture of fallMapsU) texture.offset.y -= d * 0.6;
+  const rippleX = 0.03 * Math.sin(now * 0.00031), rippleY = 0.03 * Math.cos(now * 0.00023);
+  const foamOpacity = 0.7 * (0.85 + 0.15 * Math.sin(now * 0.0013));
+  for (const texture of stillNrmU) texture.offset.set(rippleX, rippleY);
+  for (const material of foamMats) material.opacity = foamOpacity;
+  if (clouds) clouds.rotation.y += d * 0.004;
+}
+// ---------------------------------------------------------------- deterministic motion probe (works with the pane hidden)
+// Flow-direction check. three.js samples uv' = uv + offset, so when offset.y grows, texture features move toward smaller v
+// (river: sign -1); when it shrinks, they move toward larger v (falls: sign +1). Per triangle, the surface gradient of v gives the
+// direction the features move. It is compared with the real flow: steepest descent on sloped sheets, and on the flat river the
+// STREAM centre line from layout.py (listed upstream -> downstream).
+function targetOf(o) { return (o.userData && o.userData.shader_target) ? o.userData : ((o.parent && o.parent.userData) || {}); }
+const STREAM_3 = [[20, 82], [11, 62], [13.5, 47], [8.6, 35], [6.2, 26], [4.6, 18], [2.2, 10], [0.9, 3], [0.5, -4], [-1.8, -12],
+  [-1.0, -22], [1.6, -33], [2.2, -50], [0.0, -72]].map(([x, y]) => new THREE.Vector3(x, 0, -y));   // Blender (x, y) -> three.js (x, z = -y)
+function downstreamAt(p) { let best = Infinity, dir = null;
+  for (let i = 0; i < STREAM_3.length - 1; i++) { const a = STREAM_3[i], ab = STREAM_3[i + 1].clone().sub(a);
+    const s = Math.min(1, Math.max(0, ((p.x - a.x) * ab.x + (p.z - a.z) * ab.z) / ab.lengthSq()));
+    const dx = a.x + ab.x * s - p.x, dz = a.z + ab.z * s - p.z;
+    if (dx * dx + dz * dz < best) { best = dx * dx + dz * dz; dir = ab.normalize(); } }
+  return dir; }
+function downhillAt(p, n) { const s = new THREE.Vector3(0, -1, 0).addScaledVector(n, n.y); return s.lengthSq() < 0.0025 ? null : s.normalize(); }   // null: within ~3 deg of level
+function flowCheck(node, sign, flowAt) {
+  const g = node.geometry, pos = g.attributes.position, uv = g.attributes.uv, idx = g.index; node.updateWorldMatrix(true, false);
+  const a = new THREE.Vector3(), b = new THREE.Vector3(), c = new THREE.Vector3(), e1 = new THREE.Vector3(), e2 = new THREE.Vector3(), m = new THREE.Vector3(), n = new THREE.Vector3(), res = new THREE.Vector3();
+  const acc = { along: 0, sideways: 0, against: 0, level: 0 }, offFlow = []; let total = 0, cosSum = 0, wSum = 0;
+  const tri = idx ? idx.count / 3 : pos.count / 3;
+  for (let t = 0; t < tri; t++) {
+    const i0 = idx ? idx.getX(3 * t) : 3 * t, i1 = idx ? idx.getX(3 * t + 1) : 3 * t + 1, i2 = idx ? idx.getX(3 * t + 2) : 3 * t + 2;
+    a.fromBufferAttribute(pos, i0).applyMatrix4(node.matrixWorld); b.fromBufferAttribute(pos, i1).applyMatrix4(node.matrixWorld); c.fromBufferAttribute(pos, i2).applyMatrix4(node.matrixWorld);
+    e1.subVectors(b, a); e2.subVectors(c, a);
+    const g11 = e1.dot(e1), g12 = e1.dot(e2), g22 = e2.dot(e2), det = g11 * g22 - g12 * g12; if (det < 1e-12) continue;
+    const area = Math.sqrt(det) / 2, d1 = uv.getY(i1) - uv.getY(i0), d2 = uv.getY(i2) - uv.getY(i0);
+    m.copy(e1).multiplyScalar((d1 * g22 - d2 * g12) / det).addScaledVector(e2, (d2 * g11 - d1 * g12) / det);   // surface gradient of v
+    if (m.lengthSq() < 1e-12) continue;
+    m.normalize().multiplyScalar(sign); total += area; res.addScaledVector(m, area);
+    if (!flowAt) continue;
+    n.crossVectors(e1, e2).normalize();
+    const ctr = a.clone().add(b).add(c).divideScalar(3), f = flowAt(ctr, n);
+    if (!f) { acc.level += area; continue; }
+    const cs = m.dot(f); cosSum += cs * area; wSum += area;
+    if (cs > 0.7) acc.along += area;
+    else { acc[cs < -0.7 ? 'against' : 'sideways'] += area; offFlow.push([+ctr.x.toFixed(2), +(-ctr.z).toFixed(2), +ctr.y.toFixed(2), +cs.toFixed(2), +area.toFixed(4)]); }
+  }
+  const T = total || 1, r = k => +(acc[k] / T).toFixed(3), md = res.clone().divideScalar(T), mdn = md.lengthSq() > 0 ? md.clone().normalize() : md;
+  const out = { area_m2: +total.toFixed(3), motionDir_blender: [mdn.x, -mdn.z, mdn.y].map(v => +v.toFixed(3)), consistency: +md.length().toFixed(3) };
+  if (flowAt) { offFlow.sort((p, q) => q[4] - p[4]);
+    Object.assign(out, { along: r('along'), sideways: r('sideways'), against: r('against'), level: r('level'), meanCos: +(cosSum / Math.max(wSum, 1e-9)).toFixed(3),
+      largestOffFlow_blenderXYZ_cos_area: offFlow.slice(0, 6) }); }
+  return out;
+}
+function motionProbe(man) {
+  const out = R.motion = { diag: R.motionDiag, mode: 'fixed-step simulation of stepEffects() + real renders (pane hidden => no rAF)' };
+  const cd = man.cameras.find(c => c.name === 'CAM_11_Player_Sky') || man.cameras[0];
+  cam.fov = THREE.MathUtils.radToDeg(2 * Math.atan(36 / 2 / cd.focal_length_mm / cam.aspect)); cam.updateProjectionMatrix();
+  cam.position.set(...cd.position); cam.lookAt(new THREE.Vector3(...cd.target)); cam.updateMatrixWorld(); skyDome.position.copy(cam.position);
+  const river = byName['WATER_River'];
+  const W = renderer.domElement.width, H = renderer.domElement.height, gl2 = renderer.getContext();
+  const toPix = p => { const v = p.clone().project(cam); return [Math.round((v.x * 0.5 + 0.5) * W), Math.round((v.y * 0.5 + 0.5) * H), v.z]; };
+  // regions: river surface ahead of the camera, a cloud, and a static brick wall (control)
+  const pick = (node, filter) => { const pos = node.geometry.attributes.position, wp = new THREE.Vector3(), hits = [];
+    node.updateWorldMatrix(true, false);
+    for (let i = 0; i < pos.count; i += 3) { wp.fromBufferAttribute(pos, i).applyMatrix4(node.matrixWorld); const q = toPix(wp); if (q[2] < 1 && q[0] > 40 && q[0] < W - 40 && q[1] > 30 && q[1] < H - 30 && filter(wp, q)) hits.push(q); }
+    hits.sort((a, b) => a[0] - b[0] || a[1] - b[1]); return hits.length ? hits[Math.floor(hits.length / 2)] : null; };
+  const camPos = cam.position.clone();
+  const reg = {
+    river: river && (() => {   // a river point whose first raycast hit is the water itself (not reeds/banks), with a clear 80x44 px window
+      const pos = river.geometry.attributes.position, wp = new THREE.Vector3(), rc0 = new THREE.Raycaster(); river.updateWorldMatrix(true, false);
+      const cands = [];
+      for (let i = 0; i < pos.count; i += 2) { wp.fromBufferAttribute(pos, i).applyMatrix4(river.matrixWorld); const d = wp.distanceTo(camPos);
+        if (d < 8 || d > 40) continue; const q = toPix(wp); if (q[2] >= 1 || q[0] < 80 || q[0] > W - 80 || q[1] < 60 || q[1] > H - 60) continue; cands.push([d, q]); }
+      cands.sort((a, b) => a[0] - b[0]);
+      for (const [d, q] of cands) { let ok = true;
+        for (const [dx, dy] of [[0, 0], [-36, -18], [36, -18], [-36, 18], [36, 18]]) { rc0.setFromCamera(new THREE.Vector2((q[0] + dx) / W * 2 - 1, (q[1] + dy) / H * 2 - 1), cam);
+          const h = rc0.intersectObjects(root.children, true).filter(x => x.object.visible)[0]; if (!h || h.object.name !== 'WATER_River') { ok = false; break; } }
+        if (ok) return q; }
+      return null; })(),
+    cloud: clouds && (() => {   // a cloud point that is the first raycast hit (not hidden behind roofs or trees)
+      const pos = clouds.geometry.attributes.position, wp = new THREE.Vector3(), rc0 = new THREE.Raycaster(); clouds.updateWorldMatrix(true, false);
+      for (let i = 0; i < pos.count; i += 5) { wp.fromBufferAttribute(pos, i).applyMatrix4(clouds.matrixWorld); const q = toPix(wp);
+        if (q[2] >= 1 || q[0] < 90 || q[0] > W - 90 || q[1] < H * 0.55 || q[1] > H - 50) continue;
+        let ok = true;
+        for (const [dx, dy] of [[0, 0], [-60, -26], [60, -26], [-60, 26], [60, 26], [0, -26], [0, 26]]) {
+          rc0.setFromCamera(new THREE.Vector2((q[0] + dx) / W * 2 - 1, (q[1] + dy) / H * 2 - 1), cam);
+          const h = rc0.intersectObjects(root.children, true).filter(x => x.object.visible)[0];
+          if ((dx === 0 && dy === 0) ? !(h && h.object.name === 'EXP_Sky_Clouds') : (h && h.object.name !== 'EXP_Sky_Clouds')) { ok = false; break; } }
+        if (ok) return q; }
+      return null; })(),
+    staticWall: byName['ELEC_ExteriorStatic'] && (() => { const b = new THREE.Box3().setFromObject(byName['ELEC_ExteriorStatic']); const c = b.getCenter(new THREE.Vector3()); c.y = 2.2; return toPix(c); })(),
+  };
+  out.regions_px_bottomLeft = reg;
+  // what is actually under each probe region (first raycast hit)
+  const rc = new THREE.Raycaster();
+  out.regionHits = Object.fromEntries(Object.entries(reg).map(([k, c]) => { if (!c) return [k, null];
+    rc.setFromCamera(new THREE.Vector2(c[0] / W * 2 - 1, c[1] / H * 2 - 1), cam);
+    const h = rc.intersectObjects(root.children, true).filter(x => x.object.visible)[0];
+    return [k, h ? { object: h.object.name, material: (Array.isArray(h.object.material) ? h.object.material[h.face.materialIndex] : h.object.material).name, dist: +h.distance.toFixed(2) } : 'sky'];
+  }));
+  // per-triangle flow-direction check on every water mesh (flowCheck above)
+  const waterNodes = []; root.traverse(o => { if (!o.isMesh) return; const ms = Array.isArray(o.material) ? o.material : [o.material];
+    const nm = ms.map(m => m && m.name).find(x => x === 'M_Water' || x === 'M_WaterFall' || x === 'M_Water_still'); if (nm) waterNodes.push([o, nm]); });
+  out.flowCheck = Object.fromEntries(waterNodes.map(([o, nm]) => { const ex = targetOf(o), base = { material: nm, shader_target: ex.shader_target || null, flow_axis: ex.flow_axis || null };
+    if (nm === 'M_WaterFall') return [o.name, { ...base, scrolled: 'map offset.y -0.6/s', reference: 'steepest descent', ...flowCheck(o, +1, downhillAt) }];
+    if (nm === 'M_Water') return [o.name, { ...base, scrolled: 'map offset.y +0.08/s', reference: 'STREAM centre line', ...flowCheck(o, -1, downstreamAt) }];
+    const f = flowCheck(o, -1, null);   // still water: not scrolled now; report how it drifted before the fix (scrolled like the river)
+    return [o.name, { ...base, scrolled: false, area_m2: f.area_m2, preFixDrift_blender: f.motionDir_blender, preFixDriftConsistency: f.consistency }]; }));
+  const read = () => { const buf = new Uint8Array(W * H * 4); gl2.readPixels(0, 0, W, H, gl2.RGBA, gl2.UNSIGNED_BYTE, buf); return buf; };
+  const diff = (a, b, c, hw, hh) => { if (!c) return null; let s = 0, n = 0;
+    for (let y = Math.max(0, c[1] - hh); y < Math.min(H, c[1] + hh); y++) for (let x = Math.max(0, c[0] - hw); x < Math.min(W, c[0] + hw); x++) { const i = (y * W + x) * 4; s += Math.abs(a[i] - b[i]) + Math.abs(a[i + 1] - b[i + 1]) + Math.abs(a[i + 2] - b[i + 2]); n += 3; }
+    return +(s / n).toFixed(3); };
+  const off = () => ({ riverMap: waterMapsU.map(t => +t.offset.y.toFixed(4)), riverNormal: waterNrmU.map(t => [+t.offset.x.toFixed(4), +t.offset.y.toFixed(4)]),
+    falls: fallMapsU.map(t => +t.offset.y.toFixed(4)), stillMap: stillMapsU.map(t => +t.offset.y.toFixed(4)), stillNormal: stillNrmU.map(t => [+t.offset.x.toFixed(4), +t.offset.y.toFixed(4)]), cloudRotY: clouds ? +clouds.rotation.y.toFixed(5) : null });
+  let tSim = performance.now();
+  const shots = [];
+  const frame = () => { renderer.render(scene, cam); const px = read(); shots.push(renderer.domElement.toDataURL('image/png')); return px; };
+  // GPU ground-truth masks: render with the target hidden vs shown; changed pixels belong to the target
+  const maskWin = (node, hw, hh) => { if (!node) return null;
+    node.visible = false; renderer.render(scene, cam); const a = read(); node.visible = true; renderer.render(scene, cam); const b = read();
+    const step = 8, cols = Math.floor(W / step), rows = Math.floor(H / step), cnt = new Float32Array(cols * rows);
+    for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) { const i = ((r * step) * W + c * step) * 4;
+      cnt[r * cols + c] = (Math.abs(a[i] - b[i]) + Math.abs(a[i + 1] - b[i + 1]) + Math.abs(a[i + 2] - b[i + 2])) > 30 ? 1 : 0; }
+    let best = null; const wr = Math.ceil(hh / step), wc = Math.ceil(hw / step), full = 4 * wr * wc;
+    const pref = (x, y) => Math.hypot(x - W * 0.5, y - H * 0.3) / W;   // prefer mid-distance, central windows among the best-covered
+    for (let r = wr; r < rows - wr; r += 2) for (let c = wc; c < cols - wc; c += 2) { let s = 0;
+      for (let y = -wr; y < wr; y++) for (let x = -wc; x < wc; x++) s += cnt[(r + y) * cols + (c + x)];
+      const score = Math.min(s / full, 0.95) - 0.05 * pref(c * step, r * step);
+      if (!best || score > best[3]) best = [s, c * step, r * step, score]; }
+    return best ? { center: [best[1], best[2]], coverage: +(best[0] / (4 * wr * wc)).toFixed(3) } : null; };
+  const gtCloud = maskWin(clouds, 60, 26), gtRiver = maskWin(byName['WATER_River'], 40, 22);
+  out.groundTruthWindows = { cloud: gtCloud, river: gtRiver };
+  if (gtCloud) reg.cloud = gtCloud.center; if (gtRiver) reg.river = gtRiver.center;
+  // static control: the nearest window (to the ELEC wall point) whose every pixel is static geometry, proven with GPU
+  // masks: hiding the animated meshes (water, falls, foam, clouds) changes none of its pixels, and hiding the static
+  // meshes changes all of them (so no sky shows through, where drifting clouds could appear later)
+  const animated = []; root.traverse(o => { if (!o.isMesh) return; const ms = Array.isArray(o.material) ? o.material : [o.material];
+    if (o === clouds || ms.some(m => m && /^M_(Water|Foam)/.test(m.name))) animated.push(o); });
+  animated.forEach(o => { o.visible = false; }); renderer.render(scene, cam); const sa = read();
+  animated.forEach(o => { o.visible = true; }); renderer.render(scene, cam); const sb = read();
+  const statics = []; root.traverse(o => { if (o.isMesh && o.visible && !animated.includes(o)) statics.push(o); });
+  statics.forEach(o => { o.visible = false; }); renderer.render(scene, cam); const sc = read(); statics.forEach(o => { o.visible = true; });
+  const animAt = (x, y) => { const i = (y * W + x) * 4; return Math.abs(sa[i] - sb[i]) + Math.abs(sa[i + 1] - sb[i + 1]) + Math.abs(sa[i + 2] - sb[i + 2]) > 6; };
+  const coveredAt = (x, y) => { const i = (y * W + x) * 4; return Math.abs(sb[i] - sc[i]) + Math.abs(sb[i + 1] - sc[i + 1]) + Math.abs(sb[i + 2] - sc[i + 2]) > 6; };
+  const staticWin = (c0, hw, hh) => {
+    for (let r = 0; r <= 480; r += 8) for (let a = 0; a < (r ? 16 : 1); a++) {
+      const cx = Math.round(c0[0] + r * Math.cos(a * Math.PI / 8)), cy = Math.round(c0[1] + r * Math.sin(a * Math.PI / 8));
+      if (cx - hw < 0 || cy - hh < 0 || cx + hw >= W || cy + hh >= H) continue;
+      let bad = false; for (let y = cy - hh; y < cy + hh && !bad; y++) for (let x = cx - hw; x < cx + hw; x++) if (animAt(x, y) || !coveredAt(x, y)) { bad = true; break; }
+      if (bad) continue;
+      rc.setFromCamera(new THREE.Vector2(cx / W * 2 - 1, cy / H * 2 - 1), cam);
+      const h = rc.intersectObjects(root.children, true).filter(x => x.object.visible)[0];
+      if (h && h.distance < 60) return { center: [cx, cy], firstHit: h.object.name, dist: +h.distance.toFixed(2), animatedMeshes: animated.length, animatedPixelsInWindow: 0, nonStaticPixelsInWindow: 0 };
+    }
+    return null; };
+  const sw = reg.staticWall && staticWin(reg.staticWall, 16, 16);
+  out.staticControl = sw; reg.staticWall = sw ? sw.center : null;
+  const before = off(); const f0 = frame();
+  const foam = [];
+  for (let i = 0; i < 60; i++) { tSim += 1000 / 30; stepEffects(1 / 30, tSim); if (foamMats[0]) foam.push(foamMats[0].opacity); }
+  const after2s = off(); const f1 = frame();
+  for (let i = 0; i < 900; i++) { tSim += 1000 / 30; stepEffects(1 / 30, tSim); if (foamMats[0] && i % 10 === 0) foam.push(foamMats[0].opacity); }
+  const after32s = off(); const f2 = frame();
+  out.offsets = { t0: before, t2s: after2s, t32s: after32s };
+  out.expectedPer2s = { river: 0.16, normal_y: 0.1, normal_x: 0.03, falls: -1.2, cloudRotY: 0.008, stillMap: 0, stillNormal: 'bounded wobble |offset| <= 0.03, no net drift' };
+  out.foamOpacity = foam.length ? { min: +Math.min(...foam).toFixed(3), max: +Math.max(...foam).toFixed(3) } : null;
+  out.pixelDiff_0_to_2s = { river: diff(f0, f1, reg.river, 40, 22), cloud: diff(f0, f1, reg.cloud, 60, 26), staticWall: diff(f0, f1, reg.staticWall, 16, 16) };
+  out.pixelDiff_0_to_32s = { river: diff(f0, f2, reg.river, 40, 22), cloud: diff(f0, f2, reg.cloud, 60, 26), staticWall: diff(f0, f2, reg.staticWall, 16, 16) };
+  const samp = (buf, c) => c ? [0, 1, 2, 3].map(k => buf[(c[1] * W + c[0]) * 4 + k]) : null;
+  // mapping diagnostics: project landmarks, raycast at their pixels, sample colours
+  const lm = {};
+  ['WATER_StorageTank', 'ELEC_WaterWheel', 'BRIDGE_Main', 'WATER_Roof'].forEach(n => { const o = byName[n]; if (!o) return;
+    const c = new THREE.Box3().setFromObject(o).getCenter(new THREE.Vector3()); const q = toPix(c);
+    rc.setFromCamera(new THREE.Vector2(q[0] / W * 2 - 1, q[1] / H * 2 - 1), cam);
+    const hs = rc.intersectObjects(root.children, true).filter(x => x.object.visible).slice(0, 2).map(h => h.object.name + '@' + h.distance.toFixed(1));
+    lm[n] = { px: q.slice(0, 2), distToCenter: +c.distanceTo(cam.position).toFixed(1), firstHits: hs, rgb: samp(f0, q) }; });
+  out.landmarks = lm;
+  out.camState = { pos: cam.position.toArray().map(v => +v.toFixed(2)), fov: +cam.fov.toFixed(2), aspect: +cam.aspect.toFixed(3), canvasAspect: +(W / H).toFixed(3),
+    css: [renderer.domElement.clientWidth, renderer.domElement.clientHeight], inner: [innerWidth, innerHeight] };
+  out.riverPixel = { t0: samp(f0, reg.river), t2s: samp(f1, reg.river), t32s: samp(f2, reg.river) };
+  out.canvas = [W, H, renderer.getPixelRatio()];
+  // before/after crop panel for screenshots
+  const panel = document.createElement('div');
+  panel.style.cssText = 'position:fixed;right:8px;top:8px;background:rgba(20,24,28,.9);padding:8px;border-radius:8px;color:#eee;font:11px system-ui;z-index:9;display:grid;grid-template-columns:repeat(3,auto);gap:6px';
+  const crop = (src, c, hw, hh, label) => { const wrap = document.createElement('div'); const cv = document.createElement('canvas'); cv.width = hw * 4; cv.height = hh * 4; cv.style.cssText = 'width:' + hw * 2 + 'px;height:' + hh * 2 + 'px;display:block';
+    const im = new Image(); im.onload = () => cv.getContext('2d').drawImage(im, c[0] - hw * 2, (H - c[1]) - hh * 2, hw * 4, hh * 4, 0, 0, hw * 4, hh * 4); im.src = src;
+    const t = document.createElement('div'); t.textContent = label; wrap.append(t, cv); panel.append(wrap); };
+  if (reg.river) { crop(shots[0], reg.river, 60, 34, 'river t=0'); crop(shots[1], reg.river, 60, 34, 'river t=2s'); crop(shots[2], reg.river, 60, 34, 'river t=32s'); }
+  if (reg.cloud) { crop(shots[0], reg.cloud, 60, 34, 'cloud t=0'); crop(shots[1], reg.cloud, 60, 34, 'cloud t=2s'); crop(shots[2], reg.cloud, 60, 34, 'cloud t=32s'); }
+  document.body.append(panel);
+  out.done = true; dump();
+}
+// ---------------------------------------------------------------- engineer "Rio" walk-in
+function makeEngineer(s = {}) {
+  const t = (G, k = {}) => new THREE.MeshStandardMaterial({ color: G, roughness: .8, ...k });
+  const e = t(s.skin || '#e8b48a'), n = t(s.hair || '#2a1c14'), i = t(s.jacket || '#7a4a2a'),
+    r = t(s.jacketD || '#5e3820'), o = t(s.shirt || '#e9dcc2'), a = t(s.pants || '#4e4232'),
+    l = t('#3a2618'), c = t('#2f2a26'), u = t('#9a7a4a', { metalness: .6, roughness: .35 }),
+    h = t('#8fd0e8', { roughness: .1, metalness: .3, emissive: '#2a5a6a', emissiveIntensity: .3 }),
+    d = t('#ffffff'), f = t('#1a1410'), p = t('#8a5a32'), x = t('#4a2f1c');
+  const g = new THREE.Group(), m = new THREE.Group(); g.add(m);
+  const A = (G, k, ht = 0, nt = 0, rt = 0, mt = m) => { const H = new THREE.Mesh(G, k); H.position.set(ht, nt, rt); H.castShadow = true; mt.add(H); return H; };
+  const v = [];
+  for (const G of [-1, 1]) { const k = new THREE.Group(); k.position.set(.17 * G, .78, 0); m.add(k);
+    A(new THREE.CapsuleGeometry(.13, .42, 6, 12), a, 0, -.3, 0, k);
+    A(new THREE.BoxGeometry(.26, .2, .38), l, 0, -.66, .05, k); v.push(k); }
+  const M = new THREE.Group(); M.position.y = .8; m.add(M);
+  A(new THREE.CapsuleGeometry(.33, .42, 8, 16), i, 0, .36, 0, M).scale.set(1, 1, .82);
+  A(new THREE.BoxGeometry(.24, .5, .1), o, 0, .42, .27, M);
+  A(new THREE.BoxGeometry(.72, .1, .56), x, 0, .12, 0, M);
+  A(new THREE.BoxGeometry(.16, .12, .06), u, 0, .12, .29, M);
+  A(new THREE.BoxGeometry(.2, .22, .1), r, -.2, .26, .26, M);
+  A(new THREE.BoxGeometry(.56, .62, .3), p, 0, .42, -.36, M);
+  A(new THREE.BoxGeometry(.5, .18, .06), x, 0, .62, -.53, M);
+  A(new THREE.CylinderGeometry(.1, .1, .5, 12), t('#c9b28a'), 0, .78, -.36, M).rotation.z = Math.PI / 2;
+  for (const G of [-1, 1]) A(new THREE.BoxGeometry(.07, .62, .06), x, .18 * G, .45, .27, M);
+  const Ra = [];
+  for (const G of [-1, 1]) { const k = new THREE.Group(); k.position.set(.42 * G, .68, 0); M.add(k);
+    A(new THREE.CapsuleGeometry(.11, .4, 6, 12), i, 0, -.28, 0, k);
+    A(new THREE.SphereGeometry(.12, 14, 12), c, 0, -.6, 0, k); k.rotation.z = .12 * G; Ra.push(k); }
+  const T = new THREE.Group(); T.position.y = 1.55; m.add(T);
+  A(new THREE.SphereGeometry(.44, 32, 24), e, 0, .3, 0, T).scale.set(1, .98, .95);
+  for (const G of [-1, 1]) A(new THREE.SphereGeometry(.1, 14, 12), e, .43 * G, .26, 0, T);
+  A(new THREE.SphereGeometry(.46, 28, 20, 0, Math.PI * 2, 0, Math.PI * .55), n, 0, .33, -.02, T).scale.set(1.02, 1, 1.02);
+  const S = [[0, .72, .1, .2], [.2, .68, .18, .17], [-.22, .66, .15, .17], [.1, .62, .32, .15], [-.12, .62, .33, .15], [.3, .55, .05, .16], [-.32, .55, 0, .16], [0, .6, -.3, .2]];
+  for (const [G, k, ht, nt] of S) A(new THREE.ConeGeometry(nt, nt * 2.2, 8), n, G, k, ht, T).rotation.set(ht * 1.6 - .3, 0, -G * 2);
+  const w = [];
+  for (const G of [-1, 1]) { const k = A(new THREE.SphereGeometry(.07, 14, 12), f, .15 * G, .27, .39, T); k.scale.set(.85, 1.15, .6);
+    A(new THREE.SphereGeometry(.022, 8, 6), d, .15 * G + .02, .3, .43, T); w.push(k);
+    A(new THREE.BoxGeometry(.13, .03, .03), n, .15 * G, .39, .4, T).rotation.z = -.15 * G; }
+  const E = A(new THREE.TorusGeometry(.06, .015, 8, 14, Math.PI), t('#6b2a20'), 0, .13, .41, T); E.rotation.z = Math.PI;
+  for (const G of [-1, 1]) A(new THREE.SphereGeometry(.05, 10, 8), t('#f09a8a'), .27 * G, .17, .35, T).scale.set(1, .6, .4);
+  A(new THREE.TorusGeometry(.45, .04, 8, 32), x, 0, .47, 0, T).rotation.x = Math.PI / 2 - .25;
+  for (const G of [-1, 1]) { A(new THREE.CylinderGeometry(.13, .13, .12, 18), u, .15 * G, .53, .38, T).rotation.x = Math.PI / 2 - .45;
+    A(new THREE.CircleGeometry(.1, 18), h, .15 * G, .56, .44, T).rotation.x = -.45; }
+  g.traverse(G => { if (G.isMesh) { G.castShadow = true; G.receiveShadow = true; } });
+  g.scale.setScalar(.86);
+  const bootOffset = 0.02;
+  let elapsed = 0, stride = 0, gait = 0, gesture = 0;
+  const eyes = w;
+  return {
+    root: g,
+    pose(dt, distance, speed, pointing, grade) {
+      elapsed += dt;
+      stride = (stride + distance * Math.PI * 2 / 1.94) % (Math.PI * 2);
+      gait += (Math.min(1, speed / 1.35) - gait) * damp(9, dt);
+      gesture += (Number(pointing) - gesture) * damp(6, dt);
+      const swing = Math.sin(stride) * gait;
+      const blink = elapsed % 4.6;
+      for (const eye of eyes) eye.scale.y = 1.15 * (1 - 0.85 * Math.max(0, 1 - Math.abs(blink - 4.3) / 0.095));
+      v[0].rotation.x = swing * 0.51;
+      v[1].rotation.x = -swing * 0.51;
+
+      // Use the lower sole corner as the planted foot. On the arch, account
+      // for the route grade so the uphill shoe stays above the deck.
+      let lowest = Infinity;
+      for (const leg of v) {
+        const sin = Math.sin(leg.rotation.x), cos = Math.cos(leg.rotation.x);
+        const centerY = 0.78 - 0.66 * cos - 0.05 * sin;
+        const centerZ = -0.66 * sin + 0.05 * cos;
+      const extent = 0.10 * Math.abs(cos - grade * sin)
+          + 0.19 * Math.abs(sin + grade * cos);
+        lowest = Math.min(lowest, centerY - grade * centerZ - extent);
+      }
+      m.position.y = -lowest + bootOffset;
+      const breath = Math.sin(elapsed * 2.6) * (1 - gait) * 0.025;
+      Ra[0].rotation.set(-swing * 0.42 + breath, 0, -0.12);
+      Ra[1].rotation.set((swing * 0.42 - breath) * (1 - gesture) - 1.35 * gesture, 0, 0.12 + gesture * 0.17);
+      M.rotation.y = swing * 0.075;
+      T.rotation.set(breath - 0.035 * gesture, swing * -0.05 + gesture * 0.08, 0);
+    },
+  };
+}
+
+let engineer = null, engState = 'loading', engTimer = 0, rioCue = null;
+let rioRoute, walker, followCamera, contactShadow, destination;
+let moduleRequest;
+const rioScreen = new THREE.Vector3(), ahead = new THREE.Vector3(), behind = new THREE.Vector3();
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const chapterFade = document.getElementById('chapterFade');
+const notice = document.getElementById('sceneNotice');
+renderer.domElement.addEventListener('webglcontextlost', () => {
+  if (engState === 'loading') window.villageReady(true);
+  else {
+    renderer.setAnimationLoop(null);
+    setPhase('unavailable');
+    if (rioCue) rioCue.disabled = true;
+    notice.querySelector('p').textContent = 'The village lost its graphics connection.';
+    notice.hidden = false;
+  }
+});
+
+function roadHeightSampler() {
+  const surfaces = [];
+  for (const id of ['TERRAIN_Ground', 'TERRAIN_Paths']) {
+    for (const surface of bySid[id] || []) {
+      surface.traverse(mesh => {
+        if (mesh.isMesh && mesh.material.name === 'M_Terrain' && !surfaces.includes(mesh)) surfaces.push(mesh);
+      });
+    }
+  }
+  const probe = new THREE.Raycaster(new THREE.Vector3(), DOWN, 0, 20);
+  const hits = [];
+  return (x, z, fallback) => {
+    probe.ray.origin.set(x, 9, z);
+    hits.length = 0;
+    probe.intersectObjects(surfaces, false, hits);
+    return hits[0]?.point.y ?? fallback;
+  };
+}
+
+function setPhase(phase) {
+  engState = phase;
+  engTimer = 0;
+  document.body.dataset.phase = phase;
+}
+
+function startEngineer() {
+  const man = R.manifest;
+  root.updateMatrixWorld(true);
+  rioRoute = buildRioRoute(man, CHAPTER, roadHeightSampler());
+  walker = new RioWalker(rioRoute);
+  engineer = makeEngineer();
+  scene.add(engineer.root);
+  rioRoute.sample(0, engineer.root.position);
+  rioRoute.sample(0.3, ahead);
+  engineer.root.rotation.y = Math.atan2(ahead.x - engineer.root.position.x, ahead.z - engineer.root.position.z);
+  const entrance = man.entrances.find(e => e.semantic_id === CHAPTER_DATA[CHAPTER].building + '_Entrance');
+  destination = new THREE.Vector3(...entrance.forward_world_gltf).multiplyScalar(1.55)
+    .add(new THREE.Vector3(...entrance.world_position));
+  const roofBounds = Object.values(man.buildings).map(b => new THREE.Box3().setFromObject(byName[b.groups.Roof]));
+  followCamera = createRioCamera(THREE, cam, roofBounds, reducedMotion);
+
+  const shade = new THREE.ShaderMaterial({
+    transparent: true, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -1,
+    uniforms: { opacity: { value: 0.24 } },
+    vertexShader: 'varying vec2 point; void main(){point=uv*2.0-1.0;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}',
+    fragmentShader: 'varying vec2 point; uniform float opacity; void main(){float edge=1.0-smoothstep(0.06,1.0,length(point));gl_FragColor=vec4(.09,.07,.036,edge*opacity);}',
+  });
+  contactShadow = new THREE.Mesh(new THREE.PlaneGeometry(0.93, 0.72), shade);
+  contactShadow.rotation.order = 'YXZ';
+  scene.add(contactShadow);
+  setPhase('overview');
+
+  rioCue = document.createElement('button');
+  rioCue.id = 'rioArrow';
+  rioCue.type = 'button';
+  rioCue.innerHTML = '<span class="rio-arrow-inner"><b>' + CHAPTER_DATA[CHAPTER].label + '</b><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22 4.5 13.5h4.2V3h6.6v10.5h4.2z"/></svg></span>';
+  document.body.appendChild(rioCue);
+  const followRio = () => {
+    if (engState !== 'overview') return;
+    setPhase('framing');
+    rioCue.disabled = true;
+    rioCue.classList.add('out');
+    const oldCue = rioCue;
+    setTimeout(() => oldCue.remove(), 380);
+    rioCue = null;
+    preloadModule();
+  };
+  rioCue.addEventListener('click', followRio);
+  const down = new THREE.Vector2();
+  let pointerId;
+  renderer.domElement.addEventListener('pointerdown', e => {
+    if (!e.isPrimary) return;
+    pointerId = e.pointerId;
+    down.set(e.clientX, e.clientY);
+  });
+  renderer.domElement.addEventListener('pointercancel', () => { pointerId = undefined; });
+  renderer.domElement.addEventListener('pointerup', e => {
+    if (pointerId !== e.pointerId) return;
+    pointerId = undefined;
+    if (engState !== 'overview' || Math.hypot(e.clientX - down.x, e.clientY - down.y) > 9) return;
+    const px = (rioScreen.x * 0.5 + 0.5) * innerWidth;
+    const py = (-rioScreen.y * 0.5 + 0.5) * innerHeight;
+    if (Math.hypot(e.clientX - px, e.clientY - py) < 48) followRio();
+  });
+  stepEngineer(0);
+}
+
+function updateRioCue() {
+  if (!rioCue) return;
+  rioScreen.copy(engineer.root.position);
+  rioScreen.y += 1.9;
+  rioScreen.project(cam);
+  const left = clamp((rioScreen.x * 0.5 + 0.5) * innerWidth, 79, innerWidth - 79);
+  const top = clamp((-rioScreen.y * 0.5 + 0.5) * innerHeight, 85, innerHeight - 20);
+  rioCue.style.left = left + 'px';
+  rioCue.style.top = top + 'px';
+}
+
+const moduleUrl = new URL('../modules/' + CHAPTER_DATA[CHAPTER].module + '?journey=' + CHAPTER, location.href);
+function preloadModule() {
+  // Warm the actual journey URL while Rio is walking. Wait for the body so a
+  // failed request can be retried from the arrival frame.
+  moduleRequest ??= fetch(moduleUrl, { signal: AbortSignal.timeout(12000) })
+    .then(async response => {
+      if (!response.ok) return false;
+      await response.arrayBuffer();
+      return true;
+    }).catch(() => false);
+  return moduleRequest;
+}
+
+function handoff() {
+  setPhase('handoff');
+  if (embedded) parent.postMessage({ type: 'rebuild:module', chapter: CHAPTER }, location.origin);
+  else location.assign(moduleUrl);
+}
+
+function stepEngineer(dt) {
+  const p = engineer.root.position;
+  let travelled = 0;
+  engTimer += dt;
+  if (engState === 'framing' && engTimer > (reducedMotion ? 0.15 : 0.83)) setPhase('walking');
+  if (engState === 'walking') {
+    travelled = walker.move(dt);
+    rioRoute.sample(walker.distance, p);
+    if (walker.distance >= rioRoute.length) {
+      setPhase('arrival');
+      window.dispatchEvent(new CustomEvent(CHAPTER_DATA[CHAPTER].event, { detail: { x: p.x, y: p.y, z: p.z } }));
+    }
+  }
+  if (engState === 'arrival' && engTimer > 1.35) {
+    setPhase('preparing');
+    preloadModule().then(ready => {
+      if (engState !== 'preparing') return;
+      if (ready) {
+        setPhase('transition');
+        chapterFade.classList.add('on');
+      } else {
+        setPhase('retry');
+        moduleRequest = undefined;
+        notice.querySelector('p').textContent = 'The lesson could not load.';
+        const retry = notice.querySelector('button');
+        notice.hidden = false;
+        retry.onclick = () => {
+          notice.hidden = true;
+          setPhase('arrival');
+          engTimer = 1.35;
+        };
+        retry.focus();
+      }
+    });
+  }
+  if (engState === 'transition' && engTimer > (reducedMotion ? 0.08 : 0.44)) handoff();
+
+  rioRoute.sample(Math.max(0, walker.distance - 0.26), behind);
+  rioRoute.sample(Math.min(rioRoute.length, walker.distance + 0.42), ahead);
+  const grade = (ahead.y - behind.y) / Math.max(0.01, Math.hypot(ahead.x - behind.x, ahead.z - behind.z));
+  const arrived = walker.distance >= rioRoute.length;
+  if (travelled > 0 || arrived) {
+    const headingX = arrived ? destination.x - p.x : ahead.x - behind.x;
+    const headingZ = arrived ? destination.z - p.z : ahead.z - behind.z;
+    engineer.root.rotation.y = turnToward(engineer.root.rotation.y, Math.atan2(headingX, headingZ), 4.5, dt);
+  }
+  engineer.pose(dt, travelled, walker.speed, arrived, grade);
+  contactShadow.position.set(p.x, p.y + 0.021, p.z);
+  contactShadow.rotation.set(-Math.PI / 2 - Math.atan(grade), Math.atan2(ahead.x - behind.x, ahead.z - behind.z), 0);
+  followCamera(dt, arrived ? 'arrival' : engState, p, arrived ? destination : ahead);
+  updateRioCue();
+}
+// ---------------------------------------------------------------- loop
+let last = performance.now(), acc = 0, cnt = 0, effectsTime = 0;
+renderer.setAnimationLoop(() => {
+  const now = performance.now(), dt = now - last; last = now;
+  if (document.hidden || !presented || !engineer) return;
+  const d = frameDelta(dt / 1000);
+  if (spin && wheel) wheel.rotateX(d * Math.PI * 2 * 6 / 60);
+  // v2 water + sky motion (runtime-only effects; static look matches the Blender material)
+  effectsTime += d * 1000;
+  if (!reducedMotion || debug) stepEffects(d, effectsTime);
+  if (engineer) stepEngineer(d);
+  skyDome.position.copy(cam.position);
+  if (flowShader && _wt) { _wt.offset.y += d * 0.25; if (_wtFall) _wtFall.offset.y -= d * 0.6; }   // same directions as stepEffects; still water not scrolled
+  perfStep(now, dt);
+  renderer.render(scene, cam);
+  if (!debug || dt > 250) return;
+  acc += dt; cnt++;
+  if (acc > 500) { const i = renderer.info.render;
+    R.live = { fps: +(1000 * cnt / acc).toFixed(1), calls: i.calls, tris: i.triangles, geometries: renderer.info.memory.geometries, textures: renderer.info.memory.textures };
+    document.getElementById('stats').textContent = `fps ${R.live.fps}  calls ${i.calls}\ntris ${i.triangles}\ngeo ${R.live.geometries} tex ${R.live.textures}\n` +
+      (R.load ? `load ${R.load.ms} ms, nodes ${R.load.nodes}, colliders ${R.load.colliders}\n` : '') + (R.perf ? 'perf done' : (perfState ? 'perf: ' + perfState.set + ' ' + perfState.phase : '')) + (R.errors.length ? '\nerrors: ' + R.errors.length : '');
+    const { manifest, ...rest } = R; document.getElementById('res').textContent = JSON.stringify(rest);
+    acc = 0; cnt = 0; }
+});
+document.addEventListener('visibilitychange', () => { last = performance.now(); });
+addEventListener('pageshow', event => {
+  if (event.persisted && engState === 'handoff') location.reload();
+});
+addEventListener('resize', () => {
+  cam.aspect = innerWidth / innerHeight;
+  cam.fov = innerWidth < innerHeight ? 58 : 50;
+  cam.updateProjectionMatrix();
+  renderer.setPixelRatio(pixelRatio());
+  renderer.setSize(innerWidth, innerHeight);
+  Object.assign(R.env, { viewport: [innerWidth, innerHeight], dpr: renderer.getPixelRatio() });
+});
+</script></body></html>

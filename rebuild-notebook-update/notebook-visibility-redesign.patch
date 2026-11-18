@@ -1,0 +1,175 @@
+diff --git a/index.html b/index.html
+index 30de8d8..e1fb63e 100644
+--- a/index.html
++++ b/index.html
+@@ -58,6 +58,18 @@
+ </style>
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800;900&display=swap">
++<link rel="stylesheet" href="shared/rebuild-shell.css">
++<script src="shared/rebuild-notebook.js"></script>
++<style>
++  .nb-fab{position:fixed;left:max(18px,env(safe-area-inset-left,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:7;display:inline-flex;align-items:center;gap:.5em;min-height:46px;padding:0 18px;border:3px solid #7a4e2d;border-radius:999px;background:linear-gradient(180deg,#fffdf8,#f6e6c4);color:#2b2117;font:900 15px Nunito,sans-serif;cursor:pointer;box-shadow:0 6px 16px rgba(20,12,4,.3),inset 0 1px #fff;transition:transform .16s ease,filter .16s ease}
++  .nb-fab:hover{transform:translateY(-2px);filter:brightness(1.04)}
++  .nb-fab .nb-emo{font-size:1.15em;line-height:1}
++  .journey-open .nb-fab{visibility:hidden}
++  .nb-ov{position:fixed;inset:0;z-index:100;display:none;align-items:flex-start;justify-content:center;background:rgba(20,12,4,.5);padding:max(16px,env(safe-area-inset-top)) 16px;overflow:auto}
++  .nb-ov.on{display:flex}
++  .nb-card{position:relative;margin:auto;width:min(560px,100%);max-height:86vh;overflow:auto;background:linear-gradient(180deg,#fffdf7,#f6e6c4);border:4px solid #7a4e2d;border-radius:22px;padding:22px;box-shadow:0 18px 40px rgba(20,12,4,.4)}
++  .nb-close{margin-top:16px;min-height:46px;width:100%;border:3px solid #2f6e1c;border-radius:999px;background:linear-gradient(180deg,#7bd451,#55ad32 52%,#2f6e1c);color:#fff;font:600 18px Fredoka,sans-serif;cursor:pointer}
++</style>
+ </head><body>
+ <canvas id="stage"></canvas>
+ <div class="title-screen" id="titleScreen">
+@@ -71,7 +83,10 @@
+ </div>
+ <div class="chips"><span>STEM - Class 6</span></div>
+ <a class="journey-link" href="modules/">Module map</a>
++<button class="nb-fab" id="nbFab" type="button"><span class="nb-emo">📓</span> Engineer’s Notebook</button>
++<div class="nb-ov" id="nbOv" role="dialog" aria-modal="true" aria-label="Engineer’s Notebook"><div class="nb-card"><div id="nbBody"></div><button class="nb-close" id="nbClose" type="button">Close</button></div></div>
+ <div class="fallback" id="fallback"><div><b>3D not available</b><p>The village planet needs WebGL.</p><p><a href="preview/">Try the village</a> · <a href="modules/">Module map</a></p></div></div>
++<script>(function(){var NB=window.RebuildNotebook,ov=document.getElementById('nbOv');function open(){if(NB)document.getElementById('nbBody').innerHTML=NB.html('water');ov.classList.add('on');}function close(){ov.classList.remove('on');}var f=document.getElementById('nbFab');if(f)f.addEventListener('click',open);var c=document.getElementById('nbClose');if(c)c.addEventListener('click',close);ov.addEventListener('click',function(e){if(e.target===ov)close();});document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});})();</script>
+ 
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+ <script>
+diff --git a/preview/index.html b/preview/index.html
+index 176c1ad..33d85f2 100644
+--- a/preview/index.html
++++ b/preview/index.html
+@@ -1,7 +1,19 @@
+ <!doctype html>
+ <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+ <title>REBUILD · Village</title>
++<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
++<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800;900&display=swap">
++<link rel="stylesheet" href="../shared/rebuild-shell.css">
++<script src="../shared/rebuild-notebook.js"></script>
+ <style>
++  .nb-fab{position:fixed;right:max(14px,env(safe-area-inset-right,0px));top:calc(14px + env(safe-area-inset-top,0px));z-index:60;display:inline-flex;align-items:center;gap:.45em;min-height:44px;padding:0 15px;border:3px solid #7a4e2d;border-radius:999px;background:linear-gradient(180deg,#fffdf8,#f6e6c4);color:#2b2117;font:900 14px Nunito,system-ui,sans-serif;cursor:pointer;box-shadow:0 6px 16px rgba(20,12,4,.34),inset 0 1px #fff;transition:transform .16s ease,filter .16s ease}
++  .nb-fab:hover{transform:translateY(-2px);filter:brightness(1.04)}
++  .nb-fab .nb-emo{font-size:1.1em;line-height:1}
++  body[data-phase="loading"] .nb-fab{display:none}
++  .nb-ov{position:fixed;inset:0;z-index:120;display:none;align-items:flex-start;justify-content:center;background:rgba(20,12,4,.55);padding:max(16px,env(safe-area-inset-top)) 16px;overflow:auto}
++  .nb-ov.on{display:flex}
++  .nb-card{position:relative;margin:auto;width:min(560px,100%);max-height:86vh;overflow:auto;background:linear-gradient(180deg,#fffdf7,#f6e6c4);border:4px solid #7a4e2d;border-radius:22px;padding:22px;box-shadow:0 18px 40px rgba(20,12,4,.45);font-family:Nunito,system-ui,sans-serif}
++  .nb-close{margin-top:16px;min-height:46px;width:100%;border:3px solid #2f6e1c;border-radius:999px;background:linear-gradient(180deg,#7bd451,#55ad32 52%,#2f6e1c);color:#fff;font:600 18px Fredoka,sans-serif;cursor:pointer}
+ :root{--bg:#1d2126;--panel:rgba(20,24,28,.88);--fg:#eef0f2;--mute:#9aa4ad;--acc:#f2b84b}
+ html,body{margin:0;height:100%;background:#d9ebfa;color:var(--fg);font:13px/1.35 system-ui,Segoe UI,sans-serif;overflow:hidden}
+ #sceneLoading,#sceneNotice{position:fixed;z-index:35;left:50%;top:50%;transform:translate(-50%,-50%);background:#fff9e8;color:#46351e;border:1px solid #c89c52;border-radius:14px;padding:16px 22px;text-align:center;width:max-content;max-width:calc(100% - 70px);box-shadow:0 6px 22px #523a2833}
+@@ -30,6 +42,9 @@ canvas{display:block}
+ <div id="btns"></div><div id="stats">loading...</div></div><pre id="res" hidden></pre><div id="chapterFade" aria-hidden="true"></div>
+ <div id="sceneLoading" role="status">Loading the village…</div>
+ <div id="sceneNotice" role="status" hidden><p>The village could not load.</p><button type="button" onclick="location.reload()">Try again</button><a href="../modules/" target="_top">Module map</a></div>
++<button class="nb-fab" id="nbFab" type="button"><span class="nb-emo">📓</span> Notebook</button>
++<div class="nb-ov" id="nbOv" role="dialog" aria-modal="true" aria-label="Engineer’s Notebook"><div class="nb-card"><div id="nbBody"></div><button class="nb-close" id="nbClose" type="button">Close</button></div></div>
++<script>(function(){var NB=window.RebuildNotebook,ov=document.getElementById('nbOv');var ch=(new URLSearchParams(location.search).get('chapter'))||'water';function open(){if(NB)document.getElementById('nbBody').innerHTML=NB.html(ch);ov.classList.add('on');}function close(){ov.classList.remove('on');}var f=document.getElementById('nbFab');if(f)f.addEventListener('click',open);var c=document.getElementById('nbClose');if(c)c.addEventListener('click',close);ov.addEventListener('click',function(e){if(e.target===ov)close();});document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});})();</script>
+ <script>
+   (() => {
+     const loading = document.getElementById('sceneLoading');
+diff --git a/shared/rebuild-notebook.js b/shared/rebuild-notebook.js
+index 0ad57ec..bba5109 100644
+--- a/shared/rebuild-notebook.js
++++ b/shared/rebuild-notebook.js
+@@ -152,6 +152,7 @@
+   /* ---- HTML helpers ---------------------------------------------------- */
+   var LOCK_SVG = '<svg class="rnb-lockic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 10V8a6 6 0 0 1 12 0v2h1a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1h1zm2 0h8V8a4 4 0 0 0-8 0v2zm4 4a1.6 1.6 0 0 0-.8 3v2.2h1.6V17a1.6 1.6 0 0 0-.8-3z"/></svg>';
+   var BOOK_SVG = '<svg class="rnb-bookic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5C10.3 5.2 8 4.7 5.5 5.1A1 1 0 0 0 4.7 6v11.3a1 1 0 0 0 1.2 1c2-.4 4.1 0 5.6 1.2a1 1 0 0 0 1 0c1.5-1.2 3.6-1.6 5.6-1.2a1 1 0 0 0 1.2-1V6a1 1 0 0 0-.8-1C16 4.7 13.7 5.2 12 6.5zM11 17.6c-1.4-.8-3-1.1-4.5-1V6.9c1.7-.2 3.3.3 4.5 1.3v9.4zm6.5-1c-1.5-.1-3.1.2-4.5 1V8.2c1.2-1 2.8-1.5 4.5-1.3v9.7z"/></svg>';
++  var CHECK_SVG = '<svg class="rnb-checkic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 16.2 5.3 12l-1.4 1.4 5.6 5.6L20.1 7.9l-1.4-1.4z"/></svg>';
+ 
+   function esc(s) {
+     return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+@@ -205,6 +206,10 @@
+   function partCardHtml(part, pos) {
+     if (isUnlocked(part.id)) {
+       return '<div class="rnb-card rnb-open">' +
++        '<div class="rnb-eyebrow">' +
++          '<span class="rnb-part">Part ' + pos + '</span>' +
++          '<span class="rnb-badge">' + CHECK_SVG + 'Discovered</span>' +
++        '</div>' +
+         '<h3 class="rnb-title">' + esc(part.title) + '</h3>' +
+         '<p class="rnb-text">' + esc(part.text) + '</p>' +
+         '<p class="rnb-note rnb-remember"><b>Remember</b> ' + esc(part.remember) + '</p>' +
+@@ -213,19 +218,23 @@
+     }
+     return '<div class="rnb-card rnb-locked">' +
+       '<h3 class="rnb-title">' + LOCK_SVG + 'Part ' + pos + ' · Locked</h3>' +
+-      '<p class="rnb-hint">Finish the task in this module to unlock</p>' +
++      '<p class="rnb-hint">Finish the task in this module to unlock this note.</p>' +
+       '</div>';
+   }
+ 
+   function html(currentModuleKey) {
+     var activeKey = MODULE_BY_KEY[currentModuleKey] ? currentModuleKey : MODULES[0].key;
++    var done = count(), all = total();
++    var pct = all ? Math.round(done / all * 100) : 0;
++    var allDone = done >= all && all > 0;
+ 
+     var tabs = MODULES.map(function (m) {
+       var on = m.key === activeKey;
+-      return '<button type="button" class="rnb-tab' + (on ? ' on' : '') + '" role="tab"' +
++      var full = count(m.key) >= total(m.key);
++      return '<button type="button" class="rnb-tab' + (on ? ' on' : '') + (full ? ' done' : '') + '" role="tab"' +
+         ' aria-selected="' + (on ? 'true' : 'false') + '" data-key="' + m.key + '">' +
+         '<span class="rnb-tabname">' + esc(m.tab) + '</span>' +
+-        '<span class="rnb-tcount">' + count(m.key) + ' / ' + total(m.key) + '</span>' +
++        '<span class="rnb-tcount">' + (full ? CHECK_SVG : '') + count(m.key) + ' / ' + total(m.key) + '</span>' +
+         '</button>';
+     }).join('');
+ 
+@@ -238,7 +247,12 @@
+ 
+     return '<div class="rnb">' +
+       '<h2 class="rnb-head">' + BOOK_SVG + 'Engineer’s Notebook</h2>' +
+-      '<p class="rnb-progress">' + count() + ' / ' + total() + ' parts unlocked</p>' +
++      '<p class="rnb-sub">Every science &amp; maths note you unlock in Palampur is saved here. Tap a module tab below to flip through it — your progress is kept even after you close the game.</p>' +
++      '<div class="rnb-bar" role="progressbar" aria-valuemin="0" aria-valuemax="' + all + '" aria-valuenow="' + done + '">' +
++        '<div class="rnb-fill" style="width:' + pct + '%"></div>' +
++        '<span class="rnb-barlabel">' + done + ' / ' + all + ' parts unlocked</span>' +
++      '</div>' +
++      (allDone ? '<p class="rnb-done-banner">' + CHECK_SVG + 'Notebook complete — you rebuilt Palampur with real science!</p>' : '') +
+       '<div class="rnb-tabs" role="tablist">' + tabs + '</div>' +
+       '<div class="rnb-panels">' + panels + '</div>' +
+       '</div>';
+diff --git a/shared/rebuild-shell.css b/shared/rebuild-shell.css
+index 2f44290..3596e30 100644
+--- a/shared/rebuild-shell.css
++++ b/shared/rebuild-shell.css
+@@ -6,6 +6,17 @@
+ .rnb-head{display:flex;align-items:center;justify-content:center;gap:.4em;margin:0 0 .25em;font-family:Fredoka,sans-serif;font-weight:600;font-size:clamp(20px,5vw,28px);text-align:center;color:var(--rnb-ink)}
+ .rnb-bookic{width:1.1em;height:1.1em;fill:var(--rnb-wood);flex-shrink:0}
+ .rnb-progress{margin:0 0 .8em;text-align:center;font-weight:900;color:var(--rnb-green)}
++.rnb-sub{margin:0 auto .9em;max-width:42em;text-align:center;font-weight:700;font-size:.92em;line-height:1.45;color:#6b5a44}
++.rnb-bar{position:relative;height:26px;margin:0 0 .9em;border:2px solid var(--rnb-wood);border-radius:999px;background:repeating-linear-gradient(135deg,#f3ede0,#f3ede0 8px,#efe7d6 8px,#efe7d6 16px);overflow:hidden;box-shadow:inset 0 2px 4px rgba(122,78,45,.18)}
++.rnb-fill{height:100%;border-radius:999px;background:linear-gradient(180deg,#8fe06a,var(--rnb-green) 60%,#2f6e1c);box-shadow:inset 0 2px 0 rgba(255,255,255,.4);transition:width .5s cubic-bezier(.2,.8,.2,1)}
++.rnb-barlabel{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:900 13px Nunito,sans-serif;color:#2b2118;text-shadow:0 1px 0 rgba(255,255,255,.55)}
++.rnb-done-banner{display:flex;align-items:center;justify-content:center;gap:.4em;margin:0 0 .9em;padding:.5em .7em;border-radius:14px;background:rgba(79,165,47,.16);border:2px solid rgba(79,165,47,.4);font-weight:900;color:#2f6e1c;text-align:center;line-height:1.3}
++.rnb-checkic{width:1.05em;height:1.05em;fill:currentColor;flex-shrink:0}
++.rnb-tab.done{border-color:#2f6e1c}
++.rnb-tab.done .rnb-tcount{color:#fff;background:var(--rnb-green);display:inline-flex;align-items:center;gap:.15em}
++.rnb-eyebrow{display:flex;align-items:center;justify-content:space-between;gap:.5em;margin-bottom:.15em}
++.rnb-part{font:900 11px Nunito,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--rnb-wood);opacity:.8}
++.rnb-badge{display:inline-flex;align-items:center;gap:.25em;padding:.1em .55em;border-radius:999px;background:rgba(79,165,47,.16);color:#2f6e1c;font:900 11px Nunito,sans-serif}
+ .rnb-tabs{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:12px}
+ .rnb-tab{flex:1 1 auto;min-width:0;min-height:44px;padding:6px 10px;display:flex;flex-direction:column;align-items:center;gap:2px;border:2px solid var(--rnb-wood);border-radius:14px;background:linear-gradient(180deg,#fffdf8,#f4e4c2);color:var(--rnb-ink);font:800 12px/1.15 Nunito,sans-serif;cursor:pointer;transition:transform .14s ease,filter .14s ease}
+ .rnb-tab .rnb-tabname{font-weight:900}
+@@ -17,7 +28,7 @@
+ .rnb-panel{display:none;flex-direction:column;gap:10px}
+ .rnb-panel.on{display:flex}
+ .rnb-card{border:2px solid #e3d3b5;border-radius:16px;padding:.7em .85em;background:#fff}
+-.rnb-card.rnb-open{background:var(--rnb-cream)}
++.rnb-card.rnb-open{background:var(--rnb-cream);border-color:#e0c98f;box-shadow:0 3px 10px rgba(122,78,45,.14)}
+ .rnb-title{margin:0 0 .25em;display:flex;align-items:center;gap:.4em;font-family:Fredoka,sans-serif;font-weight:600;font-size:clamp(16px,4vw,19px);color:var(--rnb-wood);line-height:1.15}
+ .rnb-text{margin:.1em 0 .5em;font-weight:700;line-height:1.4}
+ .rnb-note{margin:.3em 0 0;font-size:.9em;line-height:1.4;font-weight:700;border-radius:12px;padding:.4em .6em}
+@@ -32,3 +43,11 @@
+ .rnb-summary{margin:.5em auto;max-width:36em;font-weight:900;line-height:1.4;color:var(--rebuild-green,#2f6e1c)}
+ @media(max-width:400px){.rnb-tab{flex:1 1 30%;font-size:11px}.rnb-tab .rnb-tabname{font-size:11px}}
+ @media(prefers-reduced-motion:reduce){.rnb-tab{transition:none}}
++
++/* ===== In-game HUD notebook button: make it noticeable so students don't miss it ===== */
++/* Attention ring + "Notebook" label on the HUD book button (class "ibtn notebook" in each module). */
++.ibtn.notebook{animation:rnb-hud-pulse 2.4s ease-in-out infinite}
++.ibtn.notebook::after{content:"Notebook";position:absolute;top:calc(100% + 4px);left:50%;transform:translateX(-50%);padding:1px 7px;border-radius:999px;background:var(--rebuild-gold,#f2c14e);color:#3a2a08;font:900 10px/1.4 Nunito,system-ui,sans-serif;letter-spacing:.02em;white-space:nowrap;box-shadow:0 3px 7px rgba(20,12,4,.3);pointer-events:none}
++.ibtn.notebook:hover{animation:none}
++@keyframes rnb-hud-pulse{0%,100%{box-shadow:0 6px 14px rgba(0,0,0,.28),inset 0 2px 0 var(--rim),inset 0 0 0 2px var(--goldrim),0 0 0 0 rgba(242,193,78,.55)}50%{box-shadow:0 6px 14px rgba(0,0,0,.28),inset 0 2px 0 var(--rim),inset 0 0 0 2px var(--goldrim),0 0 0 8px rgba(242,193,78,0)}}
++@media(prefers-reduced-motion:reduce){.ibtn.notebook{animation:none}}
