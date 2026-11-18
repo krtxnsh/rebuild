@@ -10,15 +10,22 @@
   const journey = new URLSearchParams(location.search).get('journey');
   const active = current >= 0 && journey === chapters[current].id;
   const next = active ? chapters[current + 1] : undefined;
+  const telemetry = window.RebuildTelemetry;
   let leaving = false;
   window.RebuildJourney = {
     active,
     hasNext: Boolean(next),
-    nextLabel: next ? `Walk with Rio to ${next.title}` : 'Journey complete · Return to REBUILD',
+    nextLabel: next ? `Walk with Rio to ${next.title}` : telemetry?.embedded ? 'Journey complete · Review progress' : 'Journey complete · Return to REBUILD',
     complete() {
       if (!active || leaving) return false;
       leaving = true;
-      location.assign(next ? `../preview/?chapter=${next.id}` : '../');
+      if (telemetry?.embedded) {
+        if (next) location.assign(`../preview/?chapter=${next.id}&embed=1`);
+        else {
+          telemetry.send({ type: 'REBUILD_JOURNEY_COMPLETED' });
+          location.assign('./?embed=1');
+        }
+      } else location.assign(next ? `../preview/?chapter=${next.id}` : '../');
       return true;
     }
   };
@@ -27,7 +34,7 @@
     if (document.querySelector('.rebuild-shell-nav')) return;
     const nav = document.createElement('nav'); nav.className = 'rebuild-shell-nav';
     nav.setAttribute('aria-label', 'REBUILD journey navigation');
-    const map = document.createElement('a'); map.href = './'; map.textContent = '☰ Module map';
+    const map = document.createElement('a'); map.href = telemetry?.embedded ? './?embed=1' : './'; map.textContent = '☰ Module map';
     nav.append(map); document.body.append(nav);
   }
   document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', addNavigation, { once: true }) : addNavigation();

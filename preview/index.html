@@ -1,10 +1,10 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>REBUILD · Village</title>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800;900&display=swap">
 <link rel="stylesheet" href="../shared/rebuild-shell.css">
-<script src="../shared/rebuild-notebook.js"></script>
+<link rel="stylesheet" href="../shared/game-fonts.css">
+<script vite-ignore src="../shared/rebuild-telemetry.js"></script>
+<script vite-ignore src="../shared/rebuild-notebook.js"></script>
 <style>
   .nb-fab{position:fixed;right:max(14px,env(safe-area-inset-right,0px));top:calc(14px + env(safe-area-inset-top,0px));z-index:60;display:inline-flex;align-items:center;gap:.45em;min-height:44px;padding:0 15px;border:3px solid #7a4e2d;border-radius:999px;background:linear-gradient(180deg,#fffdf8,#f6e6c4);color:#2b2117;font:900 14px Nunito,system-ui,sans-serif;cursor:pointer;box-shadow:0 6px 16px rgba(20,12,4,.34),inset 0 1px #fff;transition:transform .16s ease,filter .16s ease}
   .nb-fab:hover{transform:translateY(-2px);filter:brightness(1.04)}
@@ -36,12 +36,11 @@ canvas{display:block}
 @keyframes rioFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
 @media (prefers-reduced-motion:reduce){.rio-arrow-inner{animation:none}#chapterFade{transition-duration:.08s}}
 </style>
-<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
 </head><body data-phase="loading">
 <div id="ui"><h1>REBUILD · Village</h1>
 <div id="btns"></div><div id="stats">loading...</div></div><pre id="res" hidden></pre><div id="chapterFade" aria-hidden="true"></div>
 <div id="sceneLoading" role="status">Loading the village…</div>
-<div id="sceneNotice" role="status" hidden><p>The village could not load.</p><button type="button" onclick="location.reload()">Try again</button><a href="../modules/" target="_top">Module map</a></div>
+<div id="sceneNotice" role="status" hidden><p>The village could not load.</p><button type="button" onclick="location.reload()">Try again</button><a href="../modules/">Module map</a></div>
 <button class="nb-fab" id="nbFab" type="button"><span class="nb-emo">📓</span> Notebook</button>
 <div class="nb-ov" id="nbOv" role="dialog" aria-modal="true" aria-label="Engineer’s Notebook"><div class="nb-card"><div id="nbBody"></div><button class="nb-close" id="nbClose" type="button">Close</button></div></div>
 <script>(function(){var NB=window.RebuildNotebook,ov=document.getElementById('nbOv');var ch=(new URLSearchParams(location.search).get('chapter'))||'water';function open(){if(NB)document.getElementById('nbBody').innerHTML=NB.html(ch);ov.classList.add('on');}function close(){ov.classList.remove('on');}var f=document.getElementById('nbFab');if(f)f.addEventListener('click',open);var c=document.getElementById('nbClose');if(c)c.addEventListener('click',close);ov.addEventListener('click',function(e){if(e.target===ov)close();});document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});})();</script>
@@ -92,11 +91,14 @@ try {
 let presented = !embedded;
 if (embedded) {
   addEventListener('message', event => {
-    if (event.source === parent && event.origin === location.origin && event.data?.type === 'rebuild:show') presented = true;
+    if (event.source !== parent || event.origin !== location.origin) return;
+    if (event.data?.type === 'REBUILD_INIT') {
+      presented = true;
+    } else if (event.data?.type === 'rebuild:show') presented = true;
   });
 }
 function pixelRatio() {
-  return Math.min(devicePixelRatio, innerWidth < 600 ? 1.4 : 1.75, Math.sqrt(3200000 / (innerWidth * innerHeight)));
+  return Math.min(devicePixelRatio, 1.5, Math.sqrt(3200000 / (innerWidth * innerHeight)));
 }
 renderer.setPixelRatio(pixelRatio());
 renderer.setSize(innerWidth, innerHeight);
@@ -136,7 +138,7 @@ const byName = {}, bySid = {}, colliders = [], zones = [];
 let root, waterMats = [], fallMats = [], foamMats = [], clouds = null, bulbMats = [], wheel, valve, beam, doors = [];
 let waterMapsU = [], waterNrmU = [], fallMapsU = [], stillMats = [], stillMapsU = [], stillNrmU = [], stillMeshes = [];
 const t0 = performance.now();
-const draco = new DRACOLoader().setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/libs/draco/gltf/').setWorkerLimit(2);
+const draco = new DRACOLoader().setDecoderPath(new URL('../vendor/draco/', location.href).href).setWorkerLimit(2);
 const manifest = fetch('../metadata/scene_manifest.json').then(response => {
   if (!response.ok) throw new Error('Scene manifest returned ' + response.status);
   return response.json();
@@ -782,6 +784,7 @@ function updateRioCue() {
 }
 
 const moduleUrl = new URL('../modules/' + CHAPTER_DATA[CHAPTER].module + '?journey=' + CHAPTER, location.href);
+if (embedded) moduleUrl.searchParams.set('embed', '1');
 function preloadModule() {
   // Warm the actual journey URL while Rio is walking. Wait for the body so a
   // failed request can be retried from the arrival frame.
@@ -796,8 +799,7 @@ function preloadModule() {
 
 function handoff() {
   setPhase('handoff');
-  if (embedded) parent.postMessage({ type: 'rebuild:module', chapter: CHAPTER }, location.origin);
-  else location.assign(moduleUrl);
+  location.assign(moduleUrl);
 }
 
 function stepEngineer(dt) {

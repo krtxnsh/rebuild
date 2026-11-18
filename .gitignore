@@ -15,3 +15,6 @@ Desktop.ini
 # The reference images you supplied for the build. Left out so they are not published by accident;
 # delete this line if you own them and want them in the repository.
 references/
+# Unified app build
+node_modules/
+dist/

@@ -228,7 +228,7 @@ All modules map directly to the **NCERT Class 6 Curiosity Science and Mathematic
 
 ```
 ┌─────────────────────────┐
-│       index.html        │  Storybook 3D rotating village planet
+│       index.html        │  Role selection and classroom onboarding
 │  (Village Planet Hero)  │  Click / Tap to begin Rio's journey
 └───────────┬─────────────┘
             │
@@ -367,7 +367,7 @@ The 3D environment was generated procedurally in **Blender 5.3** using Python (`
 
 ```
 rebuild/
-├── index.html                   # Storybook 3D miniature village planet & title screen
+├── index.html                   # React entry point for student and teacher roles
 ├── launch-rebuild.cmd           # One-click Windows launcher for local HTTP server & browser
 ├── village-planet.html          # Standalone village planet viewer
 │
@@ -422,29 +422,37 @@ rebuild/
 
 ---
 
-## 🚀 Quick Start & Running Locally
+## Run the unified app
 
-Because REBUILD uses WebGL shaders, Draco WASM decoders, and ES modules, it must be served over HTTP (not opened via `file://`).
+Use Node.js 22.18+ or 24+. Install dependencies once, then build the static application.
 
-### Option 1: Windows One-Click
-Double-click `launch-rebuild.cmd` in the repository root. It starts the local HTTP server and opens `http://127.0.0.1:51789/` in your default browser.
-
-### Option 2: Node.js Static Server
-Using Node.js (v18+ recommended):
-```bash
-node scripts/serve.mjs
+```sh
+npm ci
+npm run dev     # Vite development server
+npm test        # Automated tests
+npm run build   # Type-check and produce dist/
+npm start       # Serve dist/ on http://127.0.0.1:51789/
 ```
-Open `http://127.0.0.1:8765/` to start at the 3D title screen.
 
-### Option 3: Python Built-in Server
-Using standard Python 3:
-```bash
-python -m http.server 8765
-```
-Then visit:
-- **Game Intro & Storybook Planet**: `http://localhost:8765/`
-- **3D Village Preview**: `http://localhost:8765/preview/`
-- **Module Map & Notebook**: `http://localhost:8765/modules/`
+On Windows, double-click `launch-rebuild.cmd` after building. A prebuilt copy of `dist/` can run on a disconnected computer with Node.js and the included launcher, without installing npm packages. Serve the files over HTTP on localhost or over HTTPS. The production build also supports subdirectory hosting such as GitHub Pages.
+
+### Classroom workflow
+
+1. **Student:** Choose “I’m a student”, enter a name and roll number, and select a local classroom if available. Using the same name and roll number restores that profile’s notebook and completed missions in the same browser.
+2. **Teacher:** Choose “I’m a teacher” and enter a name and class or section. The dashboard opens with that class’s real records. The sample class is available from the class selector.
+3. **One device:** Open the student and teacher views in separate tabs of the same browser profile. Choose the matching classroom when starting the student session. The dashboard updates from the storage events as the game records work. Use **Scan Student Work → Add work from this device** to import work completed before the classroom was linked.
+4. **Separate devices:** On the student laptop, open **Save / Export Progress**. On the teacher device, open **Scan Student Work** and start the camera. Scan every page shown for that export. The scanner also accepts a QR photo through its file picker. Repeated or overlapping exports merge by event ID, and each misconception and mission is counted at most once per student.
+5. **Offline setup:** Open the HTTPS deployment once on the teacher phone and wait for **Ready offline** before going to an air-gapped classroom. If using an installed web app, open it and confirm the same status there. The service worker keeps the dashboard, game, model, fonts, Draco decoder and QR tools available offline. Camera scanning requires browser permission and a secure context (HTTPS or localhost). QR transfer itself uses no network.
+
+### Telemetry and storage
+
+The same-origin game iframe announces when a game document is ready. The parent checks the origin and frame, then sends the active student and notebook unlocks. Game messages carry stable event IDs, module IDs, and timestamps. The app records prediction selections, CRI taps, confirmed predictions, confirmed misconceptions (an identified choice with CRI 3), notebook unlocks, and completions.
+
+The app stores student work and class records in the browser. The class selected at scan time owns the imported record. A profile is identified by the normalized name and roll number within the class. A QR code contains the student’s name, roll number, and progress. Show it to the intended teacher. To use the app between school days, keep the same browser profile and origin.
+
+Built-in ImageGen created the art in `src/assets/palampur-sunrise.jpg`.
+
+> Wide landscape background raster for the REBUILD Palampur STEM game's role selection. Atmospheric Himalayan foothills in Himachal Pradesh at sunrise. Sophisticated hand-painted children's storybook landscape, lightly textured gouache with restrained grain, honey amber and warm cream sky (#FDF6E2) in the upper and central 65% with broad pale negative space to place a dark heading and cards over it. Lower 35% is panoramic layers of misty Himalayan mountain ridges in warm terracotta (#B24020), russet and muted ochre with a few sage olive hillside planes, slate roof stone Himalayan village and slender pine silhouettes toward the lower left and right edges. Gentle peach dawn glow, a small soft muted sun left of center, distant jagged ridges. Stylized, human, premium editorial illustration, calm, subtly textured, no foreground people, no lettering, no interface, no frame or watermark. Wide 3:2 landscape.
 
 ### URL Query Parameters (`preview/index.html`)
 
@@ -453,7 +461,7 @@ The 3D preview supports several helpful developer flags:
 - `?debug`: Opens the runtime debug UI (camera angles, performance stats, cutaway views, and animation triggers).
 - `?autocheck=1&bench=1`: Runs automated asset validation and collects exterior/interior 60-second frame benchmarks.
 - `?motionprobe=1`: Validates runtime water normal scroll and cloud drift vectors.
-- `?file=../exports/village_complete.glb`: Loads the uncompressed GLB rather than the Draco web build.
+- `?file=../exports/village_complete.glb`: Loads the uncompressed GLB during Vite development.
 
 ---
 
@@ -463,7 +471,7 @@ The project includes unit and geometric integration tests using the native Node.
 
 Run all tests:
 ```bash
-node --test tests/*.test.mjs
+npm test
 ```
 
 ### What the test suite verifies:
@@ -471,7 +479,8 @@ node --test tests/*.test.mjs
 - **Obstacle Clearance**: Verifies that Rio's navigation coordinates maintain safe clearance from all obstacle bounding boxes in `collision_manifest.json`.
 - **Continuity**: Confirms that departure coordinates for subsequent chapters match previous arrival points with zero drift.
 - **Walker Physics**: Tests acceleration, deceleration, turn rates across $\pm\pi$, and tab background-suspension resilience.
-- **Module Handoffs**: Tests `onDone` callbacks and postMessage transitions across all learning modules.
+- **Module Handoffs**: Verifies chapter routing across all learning modules.
+- **Unified Progress**: Tests the iframe handshake, telemetry validation, QR encoding and pixel decoding, multi-page imports, and class isolation.
 
 ---
 

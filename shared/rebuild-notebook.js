@@ -9,6 +9,7 @@
   'use strict';
 
   var STORAGE_KEY = 'rebuild.notebook.v1';
+  var telemetry = window.RebuildTelemetry;
 
   /* ---- Fixed data: 3 modules, 10 parts -------------------------------- */
   var MODULES = [
@@ -125,6 +126,7 @@
   var state = { unlocked: {} };
 
   (function loadState() {
+    if (telemetry && telemetry.embedded) return;
     try {
       var raw = window.localStorage.getItem(STORAGE_KEY);
       if (raw) {
@@ -142,6 +144,7 @@
   })();
 
   function persist() {
+    if (telemetry && telemetry.embedded) return;
     try {
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify({ v: 1, unlocked: state.unlocked }));
     } catch (e) {
@@ -170,6 +173,7 @@
     }
     if (isUnlocked(id)) return false;
     state.unlocked[id] = Date.now();
+    if (telemetry) telemetry.emit('NOTEBOOK_PART_UNLOCKED', { partId: id });
     persist();
     return true;
   }
@@ -283,6 +287,11 @@
   window.RebuildNotebook = {
     STORAGE_KEY: STORAGE_KEY,
     unlock: unlock,
+    hydrate: function (ids) {
+      ids.forEach(function (id) {
+        if (PART_INDEX[id] && !isUnlocked(id)) state.unlocked[id] = Date.now();
+      });
+    },
     isUnlocked: isUnlocked,
     count: count,
     total: total,
