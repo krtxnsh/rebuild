@@ -1,18 +1,21 @@
 import React, { useMemo, useState } from 'react';
 import { MotionConfig } from 'motion/react';
-import { CheckCircle2, X } from 'lucide-react';
+import { Camera, CheckCircle2, X } from 'lucide-react';
 import {
   Achievement,
   AppRole,
   Assignment,
   ClassDataset,
   ConceptInsight,
+  Lang,
   LearningModule,
   Mission,
   NotificationItem,
   StudentNavTab,
   StudentRecord,
+  StudentTelemetrySnapshot,
   TeacherNavTab,
+  TelemetryEvent,
   VillageBuilding,
 } from './types/palampur';
 import {
@@ -55,6 +58,26 @@ import {
   TeacherVillageView,
 } from './components/teacher/TeacherOperationalViews';
 import { AuthModal, AuthSuccessPayload } from './components/auth/AuthModal';
+import { GameExperience } from './components/game/GameExperience';
+import { ScanStudentModal } from './components/teacher/ScanStudentModal';
+import {
+  applyEvent,
+  foldSnapshot,
+  labelForChapter,
+  subjectForChapter,
+} from './lib/telemetryApply';
+
+const LANG_KEY = 'rebuild.lang';
+const STUDENT_KEY = 'rebuild.student';
+
+function readNotebookParts(): string[] {
+  try {
+    const nb = JSON.parse(localStorage.getItem('rebuild.notebook.v1') || 'null');
+    return nb && nb.unlocked ? Object.keys(nb.unlocked) : [];
+  } catch {
+    return [];
+  }
+}
 
 export default function App() {
   const [role, setRole] = useState<AppRole>('landing');
@@ -62,6 +85,17 @@ export default function App() {
   const [loggedInStudentId, setLoggedInStudentId] = useState<string>('stu-1');
   const [studentTab, setStudentTab] = useState<StudentNavTab>('home');
   const [teacherTab, setTeacherTab] = useState<TeacherNavTab>('overview');
+
+  // Unified experience: language, immersive 3D game, and offline QR scanning.
+  const [lang, setLang] = useState<Lang>(() => {
+    try {
+      return localStorage.getItem(LANG_KEY) === 'kn' ? 'kn' : 'en';
+    } catch {
+      return 'en';
+    }
+  });
+  const [playing, setPlaying] = useState(false);
+  const [scanOpen, setScanOpen] = useState(false);
 
   const [buildings, setBuildings] = useState<VillageBuilding[]>(INITIAL_VILLAGE_BUILDINGS);
   const [modules, setModules] = useState<LearningModule[]>(LEARNING_MODULES);
@@ -365,7 +399,21 @@ export default function App() {
     );
   };
 
+  const persistStudentIdentity = (name: string, rollNo: string) => {
+    try {
+      localStorage.setItem(STUDENT_KEY, JSON.stringify({ name, rollNo }));
+    } catch {
+      /* ignore */
+    }
+  };
+
   const handleAuthSuccess = (payload: AuthSuccessPayload) => {
+    setLang(payload.lang);
+    try {
+      localStorage.setItem(LANG_KEY, payload.lang);
+    } catch {
+      /* ignore */
+    }
     if (payload.role === 'student') {
       if (payload.newStudent) {
         const newId = `stu-${Date.now()}`;
@@ -416,16 +464,19 @@ export default function App() {
           };
         });
         setLoggedInStudentId(newId);
+        persistStudentIdentity(created.name, created.rollNo);
         showToast(`Welcome to Palampur, ${created.name}! (${created.rollNo})`);
       } else if (payload.studentId) {
         setLoggedInStudentId(payload.studentId);
         const signedStu = class6AData.students.find((s) => s.id === payload.studentId);
         if (signedStu) {
+          persistStudentIdentity(signedStu.name, signedStu.rollNo);
           showToast(`Signed in as ${signedStu.name} (${signedStu.rollNo})`);
         }
       }
       setStudentTab('home');
       setRole('student');
+      setPlaying(true); // Enter Palampur -> 3D sphere -> game first
     } else {
       if (payload.teacherInfo) {
         const info = payload.teacherInfo;
@@ -443,6 +494,7 @@ export default function App() {
       setTeacherTab('overview');
       setInspectedStudentId(null);
       setRole('teacher');
+      setPlaying(false);
     }
     setAuthModalRole(null);
     window.scrollTo({ top: 0, behavior: 'auto' });
@@ -450,9 +502,133 @@ export default function App() {
 
   const handleSignOut = () => {
     setRole('landing');
+    setPlaying(false);
     setInspectedStudentId(null);
     showToast('Signed out of Rebuild — Palampur.');
     window.scrollTo({ top: 0, behavior: 'auto' });
+  };
+
+  // --- Live telemetry from the 3D game -> dashboard --------------------------
+  const handleTelemetry = (evt: TelemetryEvent) => {
+    setClass6AData((prev) => {
+      const students = prev.students.map((s) => {
+        if (s.id !== loggedInStudentId) return s;
+        const folded = applyEvent(
+          { conceptStates: s.conceptStates, activeMisconceptions: s.activeMisconceptions },
+          evt,
+        );
+        let recentActivity = s.recentActivity;
+        if (evt.event === 'MODULE_COMPLETED' || evt.event === 'VILLAGE_ARRIVED') {
+          const title =
+            evt.event === 'MODULE_COMPLETED'
+              ? `Completed ${labelForChapter(evt.chapter)}`
+              : `Reached the ${labelForChapter(evt.chapter)} house`;
+          recentActivity = [
+            {
+              id: `tel-${evt.timestamp}`,
+              title,
+              subject: subjectForChapter(evt.chapter),
+              scorePct: evt.event === 'MODULE_COMPLETED' ? 100 : 70,
+              xpEarned: 0,
+              timestamp: 'Just now',
+            },
+            ...s.recentActivity.slice(0, 4),
+          ];
+        }
+        return {
+          ...s,
+          conceptStates: folded.conceptStates,
+          activeMisconceptions: folded.activeMisconceptions,
+          recentActivity,
+          activeThisWeek: true,
+        };
+      });
+      return { ...prev, students, conceptInsights: buildConceptInsights(students) };
+    });
+  };
+
+  // --- Offline QR import (teacher scans a student's screen) ------------------
+  const handleImportSnapshot = (snap: StudentTelemetrySnapshot) => {
+    setClass6AData((prev) => {
+      const roll = snap.student.rollNo.trim().toLowerCase();
+      const name = snap.student.name.trim().toLowerCase();
+      const idx = prev.students.findIndex(
+        (s) =>
+          (roll && s.rollNo.toLowerCase() === roll) ||
+          (name && s.name.toLowerCase() === name),
+      );
+
+      let students: StudentRecord[];
+      if (idx >= 0) {
+        const target = prev.students[idx];
+        const folded = foldSnapshot(
+          { conceptStates: target.conceptStates, activeMisconceptions: target.activeMisconceptions },
+          snap,
+        );
+        students = prev.students.map((s, i) =>
+          i === idx
+            ? {
+                ...s,
+                conceptStates: folded.conceptStates,
+                activeMisconceptions: folded.activeMisconceptions,
+                modulesCompleted: Math.max(
+                  s.modulesCompleted,
+                  snap.events.filter((e) => e.event === 'MODULE_COMPLETED').length,
+                ),
+                activeThisWeek: true,
+              }
+            : s,
+        );
+      } else {
+        const folded = foldSnapshot(
+          {
+            conceptStates: {
+              'concept-water-safety': 'unseen',
+              'concept-electricity': 'unseen',
+              'concept-fractions': 'unseen',
+              'concept-photosynthesis': 'unseen',
+            },
+            activeMisconceptions: [],
+          },
+          snap,
+        );
+        const newStudent: StudentRecord = {
+          id: `stu-scan-${Date.now()}`,
+          name: snap.student.name || 'Scanned Student',
+          rollNo: snap.student.rollNo || `PLM-${200 + prev.students.length}`,
+          avatarVariant: prev.students.length % 6,
+          level: 1,
+          xp: 100 + snap.notebookParts.length * 20,
+          streakDays: 1,
+          overallScore: 70,
+          weeklyDelta: 0,
+          completionRate: Math.min(100, snap.notebookParts.length * 10),
+          activeThisWeek: true,
+          status: 'On Track',
+          subjects: { Maths: 70, Science: 70, English: 72, EVS: 70 },
+          modulesCompleted: snap.events.filter((e) => e.event === 'MODULE_COMPLETED').length,
+          totalModules: 6,
+          conceptStates: folded.conceptStates,
+          activeMisconceptions: folded.activeMisconceptions,
+          recentActivity: [
+            {
+              id: `scan-${Date.now()}`,
+              title: 'Imported from offline QR sync',
+              subject: 'Science',
+              scorePct: 100,
+              xpEarned: 0,
+              timestamp: 'Just now',
+            },
+          ],
+          weeklySeries: [60, 62, 64, 66, 68, 69, 70],
+          monthlySeries: [58, 62, 65, 68, 70],
+          badgesUnlocked: [],
+        };
+        students = [newStudent, ...prev.students];
+      }
+      return { ...prev, students, conceptInsights: buildConceptInsights(students) };
+    });
+    showToast(`Imported ${snap.student.name || 'student'} from offline QR sync.`);
   };
 
   return (
@@ -547,6 +723,18 @@ export default function App() {
             />
           )}
         </StudentShell>
+      )}
+
+      {/* Immersive 3D game: sphere -> village walk -> module. Overlays the dashboard. */}
+      {role === 'student' && playing && (
+        <GameExperience
+          student={{ name: currentStudent.name, rollNo: currentStudent.rollNo }}
+          lang={lang}
+          chapter="water"
+          notebookParts={readNotebookParts()}
+          onExit={() => setPlaying(false)}
+          onTelemetry={handleTelemetry}
+        />
       )}
 
       {role === 'teacher' && (
@@ -699,6 +887,21 @@ export default function App() {
           onClose={() => setAuthModalRole(null)}
           onSuccess={handleAuthSuccess}
         />
+      )}
+
+      {/* Offline QR sync: teacher scans a student's screen to import their work */}
+      {role === 'teacher' && (
+        <button
+          type="button"
+          onClick={() => setScanOpen(true)}
+          className="fixed bottom-5 left-5 z-40 inline-flex items-center gap-2 rounded-xl bg-[#33251F] hover:bg-[#4A372E] text-[#FFF9F1] px-4 py-3 shadow-lg text-xs font-semibold no-print cursor-pointer"
+        >
+          <Camera className="w-4 h-4 text-[#E97832]" />
+          <span>Scan Student Work</span>
+        </button>
+      )}
+      {scanOpen && (
+        <ScanStudentModal onClose={() => setScanOpen(false)} onImport={handleImportSnapshot} />
       )}
 
       {/* Subtle Action Feedback Toast */}

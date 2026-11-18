@@ -29,6 +29,27 @@ export default defineConfig(() => {
           }
         },
       },
+      {
+        // Dev only: Vite's SPA fallback would serve the React index.html for
+        // directory URLs like /game/ or /game/preview/. Rewrite them to the
+        // static index.html so the vendored game serves exactly as it does on
+        // GitHub Pages, which resolves directory indexes natively.
+        name: 'serve-game-directory-index',
+        apply: 'serve',
+        configureServer(server) {
+          server.middlewares.use((req, _res, next) => {
+            if (req.url) {
+              const qIdx = req.url.indexOf('?');
+              const reqPath = qIdx >= 0 ? req.url.slice(0, qIdx) : req.url;
+              const query = qIdx >= 0 ? req.url.slice(qIdx) : '';
+              if (reqPath.startsWith('/game/') && reqPath.endsWith('/')) {
+                req.url = reqPath + 'index.html' + query;
+              }
+            }
+            next();
+          });
+        },
+      },
     ],
     resolve: {
       alias: {

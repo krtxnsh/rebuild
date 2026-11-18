@@ -6,3 +6,9 @@ coverage/
 *.log
 .env*
 !.env.example
+
+# local-only: reference photos, Blender autosave backups, render frames, Python caches
+references/
+*.blend1
+renders/
+__pycache__/

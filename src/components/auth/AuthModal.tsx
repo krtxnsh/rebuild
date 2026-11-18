@@ -8,16 +8,21 @@ import {
   EyeOff,
   GraduationCap,
   KeyRound,
+  Languages,
   Lock,
   Mail,
   UserPlus,
   X,
 } from 'lucide-react';
-import { StudentRecord } from '../../types/palampur';
+import { Lang, StudentRecord } from '../../types/palampur';
 import { PalampurLogo, PersonAvatar } from '../common/BrandMark';
+import { unlockAudio } from '../../lib/audioUnlock';
+
+const LANG_KEY = 'rebuild.lang';
 
 export interface AuthSuccessPayload {
   role: 'student' | 'teacher';
+  lang: Lang;
   studentId?: string;
   newStudent?: {
     name: string;
@@ -46,6 +51,24 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 }) => {
   const [role, setRole] = useState<'student' | 'teacher'>(initialRole);
   const [mode, setMode] = useState<'login' | 'register'>('login');
+  const [lang, setLang] = useState<Lang>(() => {
+    try {
+      return localStorage.getItem(LANG_KEY) === 'kn' ? 'kn' : 'en';
+    } catch {
+      return 'en';
+    }
+  });
+
+  // Inject language + audio-unlock side effects into every success path.
+  const emitSuccess = (payload: Omit<AuthSuccessPayload, 'lang'>) => {
+    try {
+      localStorage.setItem(LANG_KEY, lang);
+    } catch {
+      /* ignore */
+    }
+    if (payload.role === 'student') unlockAudio();
+    onSuccess({ ...payload, lang });
+  };
 
   // Login fields
   const [identifier, setIdentifier] = useState(
@@ -107,7 +130,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           );
           return;
         }
-        onSuccess({ role: 'student', studentId: matched.id });
+        emitSuccess({ role: 'student', studentId: matched.id });
       } else {
         if (fullName.trim().length < 2) {
           setErrorMsg('Please enter your full name.');
@@ -121,7 +144,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           setErrorMsg('Invalid class join code. Use PALAMPUR-6A for Grade 6 Section A.');
           return;
         }
-        onSuccess({
+        emitSuccess({
           role: 'student',
           newStudent: {
             name: fullName.trim(),
@@ -149,7 +172,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           );
           return;
         }
-        onSuccess({
+        emitSuccess({
           role: 'teacher',
           teacherInfo: {
             name: query.includes('sharma') || query === 'tch-01' ? 'Mrs. Sharma' : identifier.split('@')[0],
@@ -166,7 +189,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           setErrorMsg('Please enter a valid school email address.');
           return;
         }
-        onSuccess({
+        emitSuccess({
           role: 'teacher',
           teacherInfo: {
             name: fullName.trim(),
@@ -179,11 +202,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   };
 
   const quickLoginStudent = (stu: StudentRecord) => {
-    onSuccess({ role: 'student', studentId: stu.id });
+    emitSuccess({ role: 'student', studentId: stu.id });
   };
 
   const quickLoginTeacher = () => {
-    onSuccess({
+    emitSuccess({
       role: 'teacher',
       teacherInfo: {
         name: 'Mrs. Sharma',
@@ -442,6 +465,46 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               </div>
             </div>
 
+            {role === 'student' && (
+              <div>
+                <label className="block text-xs font-semibold text-[#33251F] mb-1.5">
+                  <span className="inline-flex items-center gap-1.5">
+                    <Languages className="w-3.5 h-3.5 text-[#C85A20]" /> Choose your language
+                  </span>
+                </label>
+                <div className="grid grid-cols-2 gap-2.5" role="radiogroup" aria-label="Language">
+                  {(
+                    [
+                      { id: 'en', flag: '🇬🇧', label: 'English' },
+                      { id: 'kn', flag: '🇮🇳', label: 'ಕನ್ನಡ' },
+                    ] as { id: Lang; flag: string; label: string }[]
+                  ).map((opt) => {
+                    const active = lang === opt.id;
+                    return (
+                      <button
+                        key={opt.id}
+                        type="button"
+                        role="radio"
+                        aria-checked={active}
+                        onClick={() => setLang(opt.id)}
+                        className={`flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl border text-sm font-semibold transition-colors cursor-pointer ${
+                          active
+                            ? 'border-[#E97832] bg-[#E97832]/10 text-[#33251F]'
+                            : 'border-[#E9D9C7] bg-[#FFF9F1] text-[#75665C] hover:text-[#33251F]'
+                        }`}
+                      >
+                        <span className="text-base leading-none">{opt.flag}</span>
+                        <span>{opt.label}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+                <p className="mt-1.5 text-[11px] text-[#75665C]">
+                  Rio narrates the village in your language — switch anytime with the EN · ಕನ್ನಡ button.
+                </p>
+              </div>
+            )}
+
             <button
               type="submit"
               className={`w-full inline-flex items-center justify-center gap-2 py-3 px-5 rounded-xl font-semibold text-sm transition-colors cursor-pointer ${
@@ -451,12 +514,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               }`}
             >
               <span>
-                {mode === 'login'
-                  ? role === 'student'
-                    ? 'Sign In as Student'
-                    : 'Sign In as Teacher'
-                  : role === 'student'
-                    ? 'Create Student Account'
+                {role === 'student'
+                  ? 'Enter Palampur'
+                  : mode === 'login'
+                    ? 'Sign In as Teacher'
                     : 'Create Teacher Account'}
               </span>
               <ArrowRight className="w-4 h-4" />

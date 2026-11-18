@@ -1,0 +1,473 @@
+{
+  "meta": {
+    "game": "Rebuild",
+    "languages": ["en", "kn"],
+    "languageNames": { "en": "English", "kn": "ಕನ್ನಡ" },
+    "modules": ["water", "power", "ration"]
+  },
+
+  "water": {
+    "say": {
+      "water_intro_1": {
+        "en": "This is the water house yard. People here need clean water, fast.",
+        "kn": "ಇದು ನೀರಿನ ಮನೆಯ ಅಂಗಳ. ಇಲ್ಲಿ ಜನರಿಗೆ ಬೇಗನೆ ಶುದ್ಧ ನೀರು ಬೇಕು."
+      },
+      "water_intro_2": {
+        "en": "First, we need water from the river. Tap the bucket!",
+        "kn": "ಮೊದಲು, ನಮಗೆ ನದಿಯಿಂದ ನೀರು ಬೇಕು. ಬಕೆಟ್ ಅನ್ನು ಟ್ಯಾಪ್ ಮಾಡಿ!"
+      },
+      "water_muddy_1": {
+        "en": "Yuck, muddy water! Nobody can drink this.",
+        "kn": "ಛೆ, ಕೆಸರು ನೀರು! ಇದನ್ನು ಯಾರೂ ಕುಡಿಯಲು ಸಾಧ್ಯವಿಲ್ಲ."
+      },
+      "water_muddy_2": {
+        "en": "Let’s leave it still for a while and watch what happens. Hold the button to wait.",
+        "kn": "ಸ್ವಲ್ಪ ಹೊತ್ತು ಸುಮ್ಮನೆ ಇಡೋಣ, ಏನಾಗುತ್ತೆ ನೋಡೋಣ. ಕಾಯಲು ಬಟನ್ ಒತ್ತಿ ಹಿಡಿಯಿರಿ."
+      },
+      "water_sedimentation_1": {
+        "en": "See? The heavy mud sank to the bottom. That’s called sedimentation!",
+        "kn": "ನೋಡಿ? ಭಾರವಾದ ಮಣ್ಣು ತಳಕ್ಕೆ ಕುಳಿತಿದೆ. ಇದಕ್ಕೆ ಅವಸಾದನೆ ಎನ್ನುತ್ತಾರೆ!"
+      },
+      "water_sedimentation_2": {
+        "en": "The water on top is clearer, but it’s still not clean. Time to build a filter.",
+        "kn": "ಮೇಲಿನ ನೀರು ತಿಳಿಯಾಗಿದೆ, ಆದರೆ ಇನ್ನೂ ಶುದ್ಧವಾಗಿಲ್ಲ. ಫಿಲ್ಟರ್ ಮಾಡುವ ಸಮಯ."
+      },
+      "water_filter_intro_1": {
+        "en": "Here are five sacks and one empty drum.",
+        "kn": "ಇಲ್ಲಿ ಐದು ಚೀಲಗಳು ಮತ್ತು ಒಂದು ಖಾಲಿ ಡ್ರಮ್ ಇದೆ."
+      },
+      "water_filter_intro_2": {
+        "en": "Tap a sack to look at it up close. The first sack you add goes to the BOTTOM of the drum. Choose the order you think works best!",
+        "kn": "ಚೀಲವನ್ನು ಟ್ಯಾಪ್ ಮಾಡಿ ಹತ್ತಿರದಿಂದ ನೋಡಿ. ನೀವು ಮೊದಲು ಹಾಕುವ ಚೀಲ ಡ್ರಮ್‌ನ ಅಡಿಭಾಗಕ್ಕೆ ಹೋಗುತ್ತದೆ. ಯಾವ ಕ್ರಮ ಉತ್ತಮ ಎಂದು ಆಯ್ಕೆ ಮಾಡಿ!"
+      },
+      "water_filter_success": {
+        "en": "Crystal clear! Each layer caught smaller dirt than the one above it.",
+        "kn": "ಸ್ಫಟಿಕದಷ್ಟು ಸ್ವಚ್ಛ! ಪ್ರತಿ ಪದರವು ಮೇಲಿನ ಪದರಕ್ಕಿಂತ ಸಣ್ಣ ಕೊಳೆಯನ್ನು ಹಿಡಿಯಿತು."
+      },
+      "water_germs_careful": {
+        "en": "Careful! Clear doesn’t always mean safe. Look through the magnifier... germs!",
+        "kn": "ಜಾಗ್ರತೆ! ತಿಳಿಯಾಗಿದೆ ಎಂದರೆ ಸುರಕ್ಷಿತ ಎಂದಲ್ಲ. ಭೂತಗನ್ನಡಿಯಲ್ಲಿ ನೋಡಿ... ಸೂಕ್ಷ್ಮಜೀವಿಗಳು!"
+      },
+      "water_germs_smart": {
+        "en": "Smart thinking! Look through the magnifier... tiny germs! A filter can’t stop them.",
+        "kn": "ಒಳ್ಳೆಯ ಯೋಚನೆ! ಭೂತಗನ್ನಡಿಯಲ್ಲಿ ನೋಡಿ... ಚಿಕ್ಕ ಸೂಕ್ಷ್ಮಜೀವಿಗಳು! ಫಿಲ್ಟರ್ ಅವುಗಳನ್ನು ತಡೆಯಲಾರದು."
+      },
+      "water_boil_intro_1": {
+        "en": "Germs can’t survive boiling water. Let’s make a fire!",
+        "kn": "ಕುದಿಯುವ ನೀರಿನಲ್ಲಿ ಸೂಕ್ಷ್ಮಜೀವಿಗಳು ಬದುಕಲಾರವು. ಬೆಂಕಿ ಹಚ್ಚೋಣ!"
+      },
+      "water_boil_intro_2": {
+        "en": "Tap the log pile to add wood, tap the flint stones to make a spark, then fan the flames.",
+        "kn": "ಕಟ್ಟಿಗೆ ರಾಶಿಯನ್ನು ಟ್ಯಾಪ್ ಮಾಡಿ ಕಟ್ಟಿಗೆ ಸೇರಿಸಿ, ಕಲ್ಲುಗಳನ್ನು ಟ್ಯಾಪ್ ಮಾಡಿ ಕಿಡಿ ಹೊಡೆಯಿರಿ, ನಂತರ ಬೆಂಕಿಗೆ ಗಾಳಿ ಹಾಕಿ."
+      },
+      "water_boil_done": {
+        "en": "Zero germs! Now the water is clean AND safe to drink.",
+        "kn": "ಶೂನ್ಯ ಸೂಕ್ಷ್ಮಜೀವಿಗಳು! ಈಗ ನೀರು ಶುದ್ಧ ಮತ್ತು ಕುಡಿಯಲು ಸುರಕ್ಷಿತ."
+      },
+      "water_victory": {
+        "en": "You did it, engineer! Let’s take it to the village.",
+        "kn": "ನೀವು ಮಾಡಿದಿರಿ, ಇಂಜಿನಿಯರ್! ಹಳ್ಳಿಗೆ ಒಯ್ಯೋಣ."
+      }
+    },
+    "tell": {
+      "water_tell_settling": {
+        "en": "Mud settling",
+        "kn": "ಮಣ್ಣು ಕುಳಿತುಕೊಳ್ಳುತ್ತಿದೆ"
+      },
+      "water_tell_allsacks": {
+        "en": "All five layers are in! Now tap the jar to pour the settled water into the drum.",
+        "kn": "ಎಲ್ಲಾ ಐದು ಪದರಗಳು ಸೇರಿವೆ! ಈಗ ಜಾಡಿಯನ್ನು ಟ್ಯಾಪ್ ಮಾಡಿ ತಿಳಿ ನೀರನ್ನು ಡ್ರಮ್‌ಗೆ ಸುರಿಯಿರಿ."
+      },
+      "water_tell_emptied": {
+        "en": "Drum emptied. Try a new order!",
+        "kn": "ಡ್ರಮ್ ಖಾಲಿಯಾಗಿದೆ. ಹೊಸ ಕ್ರಮ ಪ್ರಯತ್ನಿಸಿ!"
+      },
+      "water_tell_enoughwood": {
+        "en": "That’s enough wood. Now make it burn hot!",
+        "kn": "ಸಾಕಷ್ಟು ಕಟ್ಟಿಗೆ ಆಯಿತು. ಈಗ ಚೆನ್ನಾಗಿ ಉರಿಸಿ!"
+      },
+      "water_tell_morewood": {
+        "en": "Good! More wood makes a hotter fire. Now tap the flint stones to strike a spark.",
+        "kn": "ಒಳ್ಳೆಯದು! ಹೆಚ್ಚು ಕಟ್ಟಿಗೆ ಹೆಚ್ಚು ಬಿಸಿ ಬೆಂಕಿ. ಈಗ ಕಲ್ಲುಗಳನ್ನು ಟ್ಯಾಪ್ ಮಾಡಿ ಕಿಡಿ ಹೊಡೆಯಿರಿ."
+      },
+      "water_tell_nowood": {
+        "en": "Sparks! But there’s nothing to burn yet. Add some wood first.",
+        "kn": "ಕಿಡಿ! ಆದರೆ ಇನ್ನೂ ಸುಡಲು ಏನೂ ಇಲ್ಲ. ಮೊದಲು ಕಟ್ಟಿಗೆ ಹಾಕಿ."
+      },
+      "water_tell_holdbutton": {
+        "en": "Hold the button to let time pass.",
+        "kn": "ಸಮಯ ಕಳೆಯಲು ಬಟನ್ ಒತ್ತಿ ಹಿಡಿಯಿರಿ."
+      },
+      "water_tell_sinking": {
+        "en": "Look! The heavy bits are sinking.",
+        "kn": "ನೋಡಿ! ಭಾರವಾದ ಕಣಗಳು ಮುಳುಗುತ್ತಿವೆ."
+      },
+      "water_tell_almostthere": {
+        "en": "Almost there... the top is getting clearer.",
+        "kn": "ಸ್ವಲ್ಪವೇ ಬಾಕಿ... ಮೇಲ್ಭಾಗ ತಿಳಿಯಾಗುತ್ತಿದೆ."
+      },
+      "water_tell_germsdisappearing": {
+        "en": "The germs are disappearing! Keep it boiling.",
+        "kn": "ಸೂಕ್ಷ್ಮಜೀವಿಗಳು ಮಾಯವಾಗುತ್ತಿವೆ! ಕುದಿಸುತ್ತಲೇ ಇರಿ."
+      },
+      "water_tell_boiling100": {
+        "en": "It’s boiling at 100°C! Keep it bubbling for a bit.",
+        "kn": "100°C ನಲ್ಲಿ ಕುದಿಯುತ್ತಿದೆ! ಸ್ವಲ್ಪ ಹೊತ್ತು ಕುದಿಸುತ್ತಲೇ ಇರಿ."
+      },
+      "water_tell_gettinghotter": {
+        "en": "Getting hotter! Keep fanning.",
+        "kn": "ಬಿಸಿಯಾಗುತ್ತಿದೆ! ಗಾಳಿ ಹಾಕುತ್ತಲೇ ಇರಿ."
+      }
+    },
+    "toast": {
+      "water_toast_sedimentation": {
+        "title": { "en": "Sedimentation", "kn": "ಅವಸಾದನೆ" },
+        "body": {
+          "en": "When water stays still, heavy mud sinks to the bottom.",
+          "kn": "ನೀರು ಸುಮ್ಮನಿದ್ದಾಗ, ಭಾರವಾದ ಮಣ್ಣು ತಳಕ್ಕೆ ಕುಳಿತುಕೊಳ್ಳುತ್ತದೆ."
+        }
+      },
+      "water_toast_decantation": {
+        "title": { "en": "Decantation", "kn": "ತಿಳಿನೀರು ಸುರಿಯುವಿಕೆ" },
+        "body": {
+          "en": "Gently pouring off the clear water and leaving the mud behind.",
+          "kn": "ತಿಳಿ ನೀರನ್ನು ಮೆಲ್ಲಗೆ ಸುರಿದು ಮಣ್ಣನ್ನು ಹಿಂದೆ ಬಿಡುವುದು."
+        }
+      },
+      "water_toast_filtration": {
+        "title": { "en": "Filtration", "kn": "ಶೋಧನೆ" },
+        "body": {
+          "en": "Layers from big to small catch smaller and smaller dirt.",
+          "kn": "ದೊಡ್ಡದರಿಂದ ಸಣ್ಣದಕ್ಕೆ ಪದರಗಳು ಹೆಚ್ಚು ಸಣ್ಣ ಕೊಳೆಯನ್ನು ಹಿಡಿಯುತ್ತವೆ."
+        }
+      },
+      "water_toast_boiling": {
+        "title": { "en": "Boiling", "kn": "ಕುದಿಸುವಿಕೆ" },
+        "body": {
+          "en": "Boiling water for a few minutes kills germs too small to see.",
+          "kn": "ಕೆಲವು ನಿಮಿಷ ನೀರು ಕುದಿಸುವುದರಿಂದ ಕಣ್ಣಿಗೆ ಕಾಣದ ಸೂಕ್ಷ್ಮಜೀವಿಗಳು ಸಾಯುತ್ತವೆ."
+        }
+      }
+    },
+    "feedback": {
+      "water_feedback_clog": {
+        "en": "Oh no, it’s clogged! The big dirt got stuck on the fine sand and blocked everything. Which layer has the biggest gaps?",
+        "kn": "ಅಯ್ಯೋ, ಬ್ಲಾಕ್ ಆಗಿದೆ! ದೊಡ್ಡ ಕೊಳೆ ಸಣ್ಣ ಮರಳ ಮೇಲೆ ಸಿಕ್ಕಿಕೊಂಡು ಎಲ್ಲವನ್ನೂ ತಡೆದಿದೆ. ಯಾವ ಪದರದಲ್ಲಿ ಅತ್ಯಂತ ದೊಡ್ಡ ಸಂದುಗಳಿವೆ?"
+      },
+      "water_feedback_sandy": {
+        "en": "Sand washed right into the cup! What could hold all the sand in, at the very bottom?",
+        "kn": "ಮರಳು ನೇರವಾಗಿ ಕಪ್‌ಗೆ ಬಂದಿತು! ಅತ್ಯಂತ ಅಡಿಯಲ್ಲಿ ಮರಳನ್ನು ಹಿಡಿಯುವುದು ಯಾವುದು?"
+      },
+      "water_feedback_cloudy": {
+        "en": "Better, but still cloudy. Big dirt slipped into the sand. Try swapping two of the top layers.",
+        "kn": "ಉತ್ತಮ, ಆದರೆ ಇನ್ನೂ ಮಸುಕಾಗಿದೆ. ದೊಡ್ಡ ಕೊಳೆ ಮರಳಿನೊಳಗೆ ಜಾರಿತು. ಮೇಲಿನ ಎರಡು ಪದರಗಳನ್ನು ಬದಲಾಯಿಸಿ ನೋಡಿ."
+      },
+      "water_feedback_hint": {
+        "en": "Hint: build from the bottom up. Cotton first, pebbles last on top.",
+        "kn": "ಸುಳಿವು: ಕೆಳಗಿನಿಂದ ಮೇಲಕ್ಕೆ ಕಟ್ಟಿ. ಮೊದಲು ಹತ್ತಿ, ಕೊನೆಗೆ ಮೇಲೆ ಕಲ್ಲುಗಳು."
+      }
+    },
+    "sacks": {
+      "water_sack_pebbles": {
+        "name": { "en": "Pebbles", "kn": "ಕಲ್ಲುಗಳು" },
+        "text": {
+          "en": "Big stones with big gaps. They catch leaves, twigs and big dirt.",
+          "kn": "ದೊಡ್ಡ ಸಂದುಗಳಿರುವ ದೊಡ್ಡ ಕಲ್ಲುಗಳು. ಅವು ಎಲೆ, ಕಡ್ಡಿ ಮತ್ತು ದೊಡ್ಡ ಕೊಳೆಯನ್ನು ಹಿಡಿಯುತ್ತವೆ."
+        }
+      },
+      "water_sack_coarsesand": {
+        "name": { "en": "Coarse sand", "kn": "ದಪ್ಪ ಮರಳು" },
+        "text": {
+          "en": "Medium grains. They catch grit and small stones.",
+          "kn": "ಮಧ್ಯಮ ಕಣಗಳು. ಅವು ಗಟ್ಟಿ ಕಣ ಮತ್ತು ಸಣ್ಣ ಕಲ್ಲುಗಳನ್ನು ಹಿಡಿಯುತ್ತವೆ."
+        }
+      },
+      "water_sack_finesand": {
+        "name": { "en": "Fine sand", "kn": "ಸಣ್ಣ ಮರಳು" },
+        "text": {
+          "en": "Tiny grains with tiny gaps. They catch fine mud.",
+          "kn": "ಸಣ್ಣ ಸಂದುಗಳಿರುವ ಚಿಕ್ಕ ಕಣಗಳು. ಅವು ಸೂಕ್ಷ್ಮ ಮಣ್ಣನ್ನು ಹಿಡಿಯುತ್ತವೆ."
+        }
+      },
+      "water_sack_charcoal": {
+        "name": { "en": "Charcoal", "kn": "ಇದ್ದಿಲು" },
+        "text": {
+          "en": "Full of tiny holes. It soaks up colour and bad smells.",
+          "kn": "ಸಣ್ಣ ರಂಧ್ರಗಳಿಂದ ತುಂಬಿದೆ. ಇದು ಬಣ್ಣ ಮತ್ತು ಕೆಟ್ಟ ವಾಸನೆಯನ್ನು ಹೀರಿಕೊಳ್ಳುತ್ತದೆ."
+        }
+      },
+      "water_sack_cotton": {
+        "name": { "en": "Cotton", "kn": "ಹತ್ತಿ" },
+        "text": {
+          "en": "Soft and tightly packed. It stops sand from falling out.",
+          "kn": "ಮೃದು ಮತ್ತು ಬಿಗಿಯಾಗಿ ಪ್ಯಾಕ್ ಆಗಿದೆ. ಇದು ಮರಳು ಬೀಳದಂತೆ ತಡೆಯುತ್ತದೆ."
+        }
+      }
+    },
+    "modal": {
+      "water_modal_issafe": {
+        "title": { "en": "Is it safe to drink now?", "kn": "ಈಗ ಕುಡಿಯಲು ಸುರಕ್ಷಿತವೇ?" },
+        "body": {
+          "en": "The water in the cup looks clean and clear.",
+          "kn": "ಕಪ್‌ನಲ್ಲಿರುವ ನೀರು ಶುದ್ಧ ಮತ್ತು ತಿಳಿಯಾಗಿ ಕಾಣುತ್ತಿದೆ."
+        },
+        "options": {
+          "yes": { "en": "Yes, it’s clean!", "kn": "ಹೌದು, ಶುದ್ಧವಾಗಿದೆ!" },
+          "check": { "en": "Let’s check first", "kn": "ಮೊದಲು ಪರೀಕ್ಷಿಸೋಣ" }
+        }
+      },
+      "water_modal_germs": {
+        "title": { "en": "Germs!", "kn": "ಸೂಕ್ಷ್ಮಜೀವಿಗಳು!" },
+        "body": {
+          "en": "Tiny living things that make people sick. Too small to see, and too small for a filter to stop.",
+          "kn": "ಜನರನ್ನು ಅನಾರೋಗ್ಯಗೊಳಿಸುವ ಚಿಕ್ಕ ಜೀವಿಗಳು. ಕಣ್ಣಿಗೆ ಕಾಣದಷ್ಟು ಚಿಕ್ಕವು, ಫಿಲ್ಟರ್‌ಗೆ ತಡೆಯಲಾಗದಷ್ಟು ಚಿಕ್ಕವು."
+        }
+      }
+    }
+  },
+
+  "power": {
+    "say": {
+      "power_intro_1": {
+        "en": "Namaste! I'm Rio, the village engineer. The storm knocked out the power all over Palampur.",
+        "kn": "ನಮಸ್ತೆ! ನಾನು ರಿಯೋ, ಹಳ್ಳಿಯ ಇಂಜಿನಿಯರ್. ಬಿರುಗಾಳಿ ಪಾಲಂಪುರ ಎಲ್ಲೆಡೆ ವಿದ್ಯುತ್ ಕಡಿತ ಮಾಡಿದೆ."
+      },
+      "power_intro_2": {
+        "en": "The street lamps are dark and the solar house has stopped working. Yet the battery, wires and bulbs all look fine…",
+        "kn": "ಬೀದಿ ದೀಪಗಳು ಆರಿವೆ ಮತ್ತು ಸೋಲಾರ್ ಮನೆ ಕೆಲಸ ನಿಲ್ಲಿಸಿದೆ. ಆದರೆ ಬ್ಯಾಟರಿ, ತಂತಿಗಳು ಮತ್ತು ಬಲ್ಬ್‌ಗಳು ಚೆನ್ನಾಗಿವೆ…"
+      },
+      "power_intro_3": {
+        "en": "That's the mystery. Will you be my Village Electrical Engineer and help me bring the lights back?",
+        "kn": "ಇದೇ ನಿಗೂಢ. ನೀವು ನನ್ನ ಹಳ್ಳಿ ವಿದ್ಯುತ್ ಇಂಜಿನಿಯರ್ ಆಗಿ ದೀಪಗಳನ್ನು ಮರಳಿ ತರಲು ಸಹಾಯ ಮಾಡುತ್ತೀರಾ?"
+      },
+      "power_gloves": {
+        "en": "Rubber gloves on — see the blue gloves on my hands? Rubber is an insulator, so the current can't reach me.",
+        "kn": "ರಬ್ಬರ್ ಕೈಗವಸುಗಳು ಹಾಕಿದ್ದೇನೆ — ನನ್ನ ಕೈಗಳ ಮೇಲಿನ ನೀಲಿ ಕೈಗವಸುಗಳನ್ನು ನೋಡಿ? ರಬ್ಬರ್ ಒಂದು ನಿರೋಧಕ, ಹಾಗಾಗಿ ವಿದ್ಯುತ್ ನನ್ನನ್ನು ತಲುಪಲಾರದು."
+      },
+      "power_boots": {
+        "en": "Boots on too — now I'm fully protected! First, let's reconnect the power lines — tap each glowing junction ⚡ to join the wire.",
+        "kn": "ಬೂಟುಗಳನ್ನೂ ಹಾಕಿದ್ದೇನೆ — ಈಗ ನಾನು ಪೂರ್ಣ ರಕ್ಷಿತ! ಮೊದಲು, ವಿದ್ಯುತ್ ಲೈನ್‌ಗಳನ್ನು ಮರುಸಂಪರ್ಕಿಸೋಣ — ಪ್ರತಿ ಹೊಳೆಯುವ ಜಂಕ್ಷನ್ ⚡ ಟ್ಯಾಪ್ ಮಾಡಿ ತಂತಿ ಜೋಡಿಸಿ."
+      },
+      "power_lines_live": {
+        "en": "The lines are live again — sparks flew and the first lamps woke up! Now tap the glowing spot at the solar house to fix the circuits.",
+        "kn": "ಲೈನ್‌ಗಳು ಮತ್ತೆ ಲೈವ್ ಆಗಿವೆ — ಕಿಡಿ ಹಾರಿತು ಮತ್ತು ಮೊದಲ ದೀಪಗಳು ಹೊತ್ತಿಕೊಂಡವು! ಈಗ ಸೋಲಾರ್ ಮನೆಯ ಹೊಳೆಯುವ ಜಾಗ ಟ್ಯಾಪ್ ಮಾಡಿ ಸರ್ಕ್ಯೂಟ್‌ಗಳನ್ನು ಸರಿಮಾಡಿ."
+      },
+      "power_puzzle_done": {
+        "en": "Brilliant work! A street lamp just flickered on. Tap the next glowing spot.",
+        "kn": "ಅದ್ಭುತ ಕೆಲಸ! ಒಂದು ಬೀದಿ ದೀಪ ಹೊತ್ತಿಕೊಂಡಿತು. ಮುಂದಿನ ಹೊಳೆಯುವ ಜಾಗ ಟ್ಯಾಪ್ ಮಾಡಿ."
+      },
+      "power_all_solved": {
+        "en": "All three puzzles solved! Come outside with me — let's see what happens.",
+        "kn": "ಮೂರು ಒಗಟುಗಳೂ ಬಿಡಿಸಿದ್ದೀರಿ! ನನ್ನೊಂದಿಗೆ ಹೊರಗೆ ಬನ್ನಿ — ಏನಾಗುತ್ತೆ ನೋಡೋಣ."
+      },
+      "power_lights_back_1": {
+        "en": "Look at that! The three street lamps are glowing and the solar house has turned from grey to bright yellow.",
+        "kn": "ಅದನ್ನು ನೋಡಿ! ಮೂರು ಬೀದಿ ದೀಪಗಳು ಹೊಳೆಯುತ್ತಿವೆ ಮತ್ತು ಸೋಲಾರ್ ಮನೆ ಬೂದು ಬಣ್ಣದಿಂದ ಪ್ರಕಾಶಮಾನ ಹಳದಿಗೆ ಬದಲಾಗಿದೆ."
+      },
+      "power_lights_back_2": {
+        "en": "You brought the light back to Palampur. Let's do a quick Village Check-up.",
+        "kn": "ನೀವು ಪಾಲಂಪುರಕ್ಕೆ ಬೆಳಕನ್ನು ಮರಳಿ ತಂದಿರಿ. ತ್ವರಿತ ಹಳ್ಳಿ ಪರೀಕ್ಷೆ ಮಾಡೋಣ."
+      }
+    },
+    "tell": {
+      "power_tell_tapjunction": {
+        "en": "Tap each glowing junction ⚡ to join the power line",
+        "kn": "ಪ್ರತಿ ಹೊಳೆಯುವ ಜಂಕ್ಷನ್ ⚡ ಟ್ಯಾಪ್ ಮಾಡಿ ವಿದ್ಯುತ್ ಲೈನ್ ಜೋಡಿಸಿ"
+      },
+      "power_tell_finishearlier": {
+        "en": "Finish the earlier puzzle first!",
+        "kn": "ಮೊದಲು ಹಿಂದಿನ ಒಗಟು ಪೂರ್ಣಗೊಳಿಸಿ!"
+      },
+      "power_tell_alreadyfixed": {
+        "en": "You already fixed this one!",
+        "kn": "ನೀವು ಈಗಾಗಲೇ ಇದನ್ನು ಸರಿಮಾಡಿದ್ದೀರಿ!"
+      }
+    },
+    "toast": {
+      "power_toast_circuit": {
+        "title": { "en": "A complete circuit", "kn": "ಪೂರ್ಣ ಸರ್ಕ್ಯೂಟ್" },
+        "body": {
+          "en": "Electricity needs a complete, closed path to flow. One wire is not enough — you need a full loop.",
+          "kn": "ವಿದ್ಯುತ್ ಹರಿಯಲು ಪೂರ್ಣ, ಮುಚ್ಚಿದ ಹಾದಿ ಬೇಕು. ಒಂದೇ ತಂತಿ ಸಾಲದು — ಪೂರ್ಣ ಲೂಪ್ ಬೇಕು."
+        }
+      },
+      "power_toast_current": {
+        "title": { "en": "Current is not used up", "kn": "ವಿದ್ಯುತ್ ಪ್ರವಾಹ ಬಳಕೆಯಾಗುವುದಿಲ್ಲ" },
+        "body": {
+          "en": "The current entering the bulb equals the current leaving it. The bulb turns electrical energy into light — it does not consume the current.",
+          "kn": "ಬಲ್ಬ್‌ಗೆ ಹೋಗುವ ವಿದ್ಯುತ್ ಪ್ರವಾಹ ಹೊರಬರುವ ಪ್ರವಾಹಕ್ಕೆ ಸಮ. ಬಲ್ಬ್ ವಿದ್ಯುತ್ ಶಕ್ತಿಯನ್ನು ಬೆಳಕಾಗಿ ಬದಲಾಯಿಸುತ್ತದೆ — ಪ್ರವಾಹವನ್ನು ಬಳಸುವುದಿಲ್ಲ."
+        }
+      },
+      "power_toast_conductors": {
+        "title": { "en": "Conductors & insulators", "kn": "ವಾಹಕಗಳು ಮತ್ತು ನಿರೋಧಕಗಳು" },
+        "body": {
+          "en": "Conductors (metals) let current pass and light the bulb. Insulators like wood, plastic and rubber do not.",
+          "kn": "ವಾಹಕಗಳು (ಲೋಹಗಳು) ವಿದ್ಯುತ್ ಹಾಯಲು ಬಿಡುತ್ತವೆ ಮತ್ತು ಬಲ್ಬ್ ಹೊತ್ತಿಸುತ್ತವೆ. ಮರ, ಪ್ಲಾಸ್ಟಿಕ್ ಮತ್ತು ರಬ್ಬರ್‌ನಂತಹ ನಿರೋಧಕಗಳು ಹಾಗೆ ಮಾಡುವುದಿಲ್ಲ."
+        }
+      }
+    },
+    "quiz": {
+      "power_quiz_q1": {
+        "question": { "en": "What does electricity need to flow?", "kn": "ವಿದ್ಯುತ್ ಹರಿಯಲು ಏನು ಬೇಕು?" },
+        "options": [
+          { "en": "A single wire", "kn": "ಒಂದೇ ತಂತಿ" },
+          { "en": "A complete, closed loop", "kn": "ಪೂರ್ಣ, ಮುಚ್ಚಿದ ಲೂಪ್" },
+          { "en": "A very long wire", "kn": "ತುಂಬಾ ಉದ್ದ ತಂತಿ" }
+        ],
+        "correct": 1,
+        "explain": {
+          "en": "Electricity needs a complete, closed path — a single wire cannot carry it round.",
+          "kn": "ವಿದ್ಯುತ್‌ಗೆ ಪೂರ್ಣ, ಮುಚ್ಚಿದ ಹಾದಿ ಬೇಕು — ಒಂದೇ ತಂತಿ ಅದನ್ನು ಸುತ್ತಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ."
+        }
+      },
+      "power_quiz_q2": {
+        "question": { "en": "Is the current used up by the bulb?", "kn": "ಬಲ್ಬ್ ವಿದ್ಯುತ್ ಪ್ರವಾಹವನ್ನು ಬಳಸುತ್ತದೆಯೇ?" },
+        "options": [
+          { "en": "Yes, it disappears", "kn": "ಹೌದು, ಅದು ಕಣ್ಮರೆಯಾಗುತ್ತದೆ" },
+          { "en": "No — same in and out", "kn": "ಇಲ್ಲ — ಒಳಗೆ ಮತ್ತು ಹೊರಗೆ ಸಮ" },
+          { "en": "Only half is used", "kn": "ಅರ್ಧ ಮಾತ್ರ ಬಳಕೆಯಾಗುತ್ತದೆ" }
+        ],
+        "correct": 1,
+        "explain": {
+          "en": "The current entering the bulb equals the current leaving. The bulb turns energy into light.",
+          "kn": "ಬಲ್ಬ್‌ಗೆ ಹೋಗುವ ಪ್ರವಾಹ ಹೊರಬರುವ ಪ್ರವಾಹಕ್ಕೆ ಸಮ. ಬಲ್ಬ್ ಶಕ್ತಿಯನ್ನು ಬೆಳಕಾಗಿ ಬದಲಾಯಿಸುತ್ತದೆ."
+        }
+      },
+      "power_quiz_q3": {
+        "question": { "en": "Which lets current pass through it?", "kn": "ಯಾವುದು ವಿದ್ಯುತ್ ಹಾಯಲು ಬಿಡುತ್ತದೆ?" },
+        "options": [
+          { "en": "A plastic comb", "kn": "ಪ್ಲಾಸ್ಟಿಕ್ ಬಾಚಣಿಗೆ" },
+          { "en": "A rubber band", "kn": "ರಬ್ಬರ್ ಬ್ಯಾಂಡ್" },
+          { "en": "A metal key", "kn": "ಲೋಹದ ಕೀಲಿ" }
+        ],
+        "correct": 2,
+        "explain": {
+          "en": "Metals like a key conduct electricity; plastic and rubber are insulators.",
+          "kn": "ಕೀಲಿಯಂತಹ ಲೋಹಗಳು ವಿದ್ಯುತ್ ವಹಿಸುತ್ತವೆ; ಪ್ಲಾಸ್ಟಿಕ್ ಮತ್ತು ರಬ್ಬರ್ ನಿರೋಧಕಗಳು."
+        }
+      },
+      "power_quiz_q4": {
+        "question": { "en": "Transfer question: Will a steel spoon complete the circuit?", "kn": "ವರ್ಗಾವಣೆ ಪ್ರಶ್ನೆ: ಉಕ್ಕಿನ ಚಮಚ ಸರ್ಕ್ಯೂಟ್ ಪೂರ್ಣಗೊಳಿಸುತ್ತದೆಯೇ?" },
+        "options": [
+          { "en": "Yes — steel is a metal (conductor)", "kn": "ಹೌದು — ಉಕ್ಕು ಲೋಹ (ವಾಹಕ)" },
+          { "en": "No — spoons are insulators", "kn": "ಇಲ್ಲ — ಚಮಚಗಳು ನಿರೋಧಕಗಳು" }
+        ],
+        "correct": 0,
+        "explain": {
+          "en": "Steel is a metal, so a steel spoon is a conductor — it completes the circuit and lights the bulb.",
+          "kn": "ಉಕ್ಕು ಲೋಹ, ಹಾಗಾಗಿ ಉಕ್ಕಿನ ಚಮಚ ವಾಹಕ — ಅದು ಸರ್ಕ್ಯೂಟ್ ಪೂರ್ಣಗೊಳಿಸಿ ಬಲ್ಬ್ ಹೊತ್ತಿಸುತ್ತದೆ."
+        }
+      }
+    },
+    "hints": {
+      "power_hint_0": {
+        "en": "Puzzle 1: Electricity needs a FULL loop. Wire battery + to the bulb, the bulb to the switch, and the switch back to battery −. Then CLOSE the switch.",
+        "kn": "ಒಗಟು 1: ವಿದ್ಯುತ್‌ಗೆ ಪೂರ್ಣ ಲೂಪ್ ಬೇಕು. ಬ್ಯಾಟರಿ + ನಿಂದ ಬಲ್ಬ್‌ಗೆ, ಬಲ್ಬ್‌ನಿಂದ ಸ್ವಿಚ್‌ಗೆ, ಮತ್ತು ಸ್ವಿಚ್‌ನಿಂದ ಬ್ಯಾಟರಿ − ಗೆ ತಂತಿ ಜೋಡಿಸಿ. ನಂತರ ಸ್ವಿಚ್ ಮುಚ್ಚಿ."
+      },
+      "power_hint_1": {
+        "en": "Puzzle 2: Watch both counters. The number going IN equals the number coming OUT — the bulb changes energy to light, it does not eat the current.",
+        "kn": "ಒಗಟು 2: ಎರಡೂ ಕೌಂಟರ್‌ಗಳನ್ನು ನೋಡಿ. ಒಳಗೆ ಹೋಗುವ ಸಂಖ್ಯೆ ಹೊರಬರುವ ಸಂಖ್ಯೆಗೆ ಸಮ — ಬಲ್ಬ್ ಶಕ್ತಿಯನ್ನು ಬೆಳಕಾಗಿ ಬದಲಾಯಿಸುತ್ತದೆ, ಪ್ರವಾಹವನ್ನು ತಿನ್ನುವುದಿಲ್ಲ."
+      },
+      "power_hint_2": {
+        "en": "Puzzle 3: Metals (spoon, coin, key, foil) conduct and light the bulb. Wood, plastic, rubber and a dry leaf are insulators.",
+        "kn": "ಒಗಟು 3: ಲೋಹಗಳು (ಚಮಚ, ನಾಣ್ಯ, ಕೀಲಿ, ಫಾಯಿಲ್) ವಿದ್ಯುತ್ ವಹಿಸಿ ಬಲ್ಬ್ ಹೊತ್ತಿಸುತ್ತವೆ. ಮರ, ಪ್ಲಾಸ್ಟಿಕ್, ರಬ್ಬರ್ ಮತ್ತು ಒಣ ಎಲೆ ನಿರೋಧಕಗಳು."
+      }
+    }
+  },
+
+  "ration": {
+    "say": {
+      "ration_intro_1": {
+        "en": "Namaste! I'm Rio, the village engineer. A fierce storm has struck Palampur and washed out the road.",
+        "kn": "ನಮಸ್ತೆ! ನಾನು ರಿಯೋ, ಹಳ್ಳಿಯ ಇಂಜಿನಿಯರ್. ಭಯಂಕರ ಬಿರುಗಾಳಿ ಪಾಲಂಪುರವನ್ನು ಅಪ್ಪಳಿಸಿ ರಸ್ತೆಯನ್ನು ಕೊಚ್ಚಿಹಾಕಿದೆ."
+      },
+      "ration_intro_2": {
+        "en": "The supply truck cannot reach us for five days. Our grain store is the only food for six families now.",
+        "kn": "ಐದು ದಿನ ಸರಬರಾಜು ಟ್ರಕ್ ನಮ್ಮನ್ನು ತಲುಪಲು ಸಾಧ್ಯವಿಲ್ಲ. ನಮ್ಮ ಧಾನ್ಯ ಅಂಗಡಿ ಈಗ ಆರು ಕುಟುಂಬಗಳಿಗೆ ಏಕೈಕ ಆಹಾರ."
+      },
+      "ration_intro_3": {
+        "en": "Worse — the storm damaged our grain records. We don't know each family's share, or how long the stock will last.",
+        "kn": "ಇನ್ನೂ ಕೆಟ್ಟದೆಂದರೆ — ಬಿರುಗಾಳಿ ನಮ್ಮ ಧಾನ್ಯ ದಾಖಲೆಗಳನ್ನು ಹಾನಿಗೊಳಿಸಿದೆ. ಪ್ರತಿ ಕುಟುಂಬದ ಪಾಲು ಅಥವಾ ಸ್ಟಾಕ್ ಎಷ್ಟು ದಿನ ಬರುತ್ತದೆ ಎಂದು ನಮಗೆ ಗೊತ್ತಿಲ್ಲ."
+      },
+      "ration_intro_4": {
+        "en": "Will you be my Village Mathematics Engineer? Solve the problems to calm the storm — and tap any glowing grain-coins you spot for bonus XP.",
+        "kn": "ನೀವು ನನ್ನ ಹಳ್ಳಿ ಗಣಿತ ಇಂಜಿನಿಯರ್ ಆಗುತ್ತೀರಾ? ಬಿರುಗಾಳಿ ಶಮನಕ್ಕೆ ಸಮಸ್ಯೆಗಳನ್ನು ಬಿಡಿಸಿ — ಮತ್ತು ಹೊಳೆಯುವ ಧಾನ್ಯ-ನಾಣ್ಯಗಳನ್ನು ಟ್ಯಾಪ್ ಮಾಡಿ ಬೋನಸ್ XP ಪಡೆಯಿರಿ."
+      },
+      "ration_fraction_surprise": {
+        "en": "A lovely surprise! Many people guess 1/8 because 8 is bigger than 4. But more pieces means each one is smaller — so 1/4 wins.",
+        "kn": "ಸುಂದರ ಆಶ್ಚರ್ಯ! ಅನೇಕರು 1/8 ಎಂದು ಊಹಿಸುತ್ತಾರೆ ಏಕೆಂದರೆ 8, 4 ಕ್ಕಿಂತ ದೊಡ್ಡದು. ಆದರೆ ಹೆಚ್ಚು ತುಂಡುಗಳು ಎಂದರೆ ಪ್ರತಿಯೊಂದೂ ಸಣ್ಣದು — ಹಾಗಾಗಿ 1/4 ಗೆಲ್ಲುತ್ತದೆ."
+      },
+      "ration_puzzle_done": {
+        "en": "Wonderful work! The storm is easing and a lantern glowed to life. Tap the next glowing spot.",
+        "kn": "ಅದ್ಭುತ ಕೆಲಸ! ಬಿರುಗಾಳಿ ತಣಿಯುತ್ತಿದೆ ಮತ್ತು ಒಂದು ದೀಪ ಹೊತ್ತಿಕೊಂಡಿತು. ಮುಂದಿನ ಹೊಳೆಯುವ ಜಾಗ ಟ್ಯಾಪ್ ಮಾಡಿ."
+      },
+      "ration_all_solved": {
+        "en": "All three problems solved! Step back and watch the sky clear over the grain store.",
+        "kn": "ಮೂರು ಸಮಸ್ಯೆಗಳೂ ಬಿಡಿಸಿದ್ದೀರಿ! ಹಿಂದೆ ಸರಿದು ಧಾನ್ಯ ಅಂಗಡಿಯ ಮೇಲೆ ಆಕಾಶ ತಿಳಿಯಾಗುವುದನ್ನು ನೋಡಿ."
+      },
+      "ration_victory_1": {
+        "en": "Look — the storm has passed, the grey grain store has turned a warm orange, and the lanterns are glowing!",
+        "kn": "ನೋಡಿ — ಬಿರುಗಾಳಿ ಹೋಗಿದೆ, ಬೂದು ಧಾನ್ಯ ಅಂಗಡಿ ಬೆಚ್ಚನೆಯ ಕಿತ್ತಳೆ ಬಣ್ಣಕ್ಕೆ ಬದಲಾಗಿದೆ, ಮತ್ತು ದೀಪಗಳು ಹೊಳೆಯುತ್ತಿವೆ!"
+      },
+      "ration_victory_2": {
+        "en": "You shared food for six families with mathematics. Let's do a quick Village Check-up — three hands-on challenges.",
+        "kn": "ನೀವು ಗಣಿತದಿಂದ ಆರು ಕುಟುಂಬಗಳಿಗೆ ಆಹಾರ ಹಂಚಿದ್ದೀರಿ. ತ್ವರಿತ ಹಳ್ಳಿ ಪರೀಕ್ಷೆ ಮಾಡೋಣ — ಮೂರು ಪ್ರಾಯೋಗಿಕ ಸವಾಲುಗಳು."
+      }
+    },
+    "tell": {
+      "ration_tell_finishearlier": {
+        "en": "Finish the earlier problem first!",
+        "kn": "ಮೊದಲು ಹಿಂದಿನ ಸಮಸ್ಯೆ ಪೂರ್ಣಗೊಳಿಸಿ!"
+      },
+      "ration_tell_alreadysolved": {
+        "en": "You already solved this one!",
+        "kn": "ನೀವು ಈಗಾಗಲೇ ಇದನ್ನು ಬಿಡಿಸಿದ್ದೀರಿ!"
+      },
+      "ration_tell_puzzle1": {
+        "en": "144 kg, six families. Find each equal share, then share it out.",
+        "kn": "144 ಕೆಜಿ, ಆರು ಕುಟುಂಬಗಳು. ಪ್ರತಿ ಸಮ ಪಾಲು ಕಂಡುಹಿಡಿಯಿರಿ, ನಂತರ ಹಂಚಿ."
+      },
+      "ration_tell_puzzle3": {
+        "en": "210 kg must last five days. Slide to find the daily amount, then run the week.",
+        "kn": "210 ಕೆಜಿ ಐದು ದಿನ ಬರಬೇಕು. ದೈನಂದಿನ ಪ್ರಮಾಣ ಕಂಡುಹಿಡಿಯಲು ಸ್ಲೈಡ್ ಮಾಡಿ, ನಂತರ ವಾರ ನಡೆಸಿ."
+      }
+    },
+    "toast": {
+      "ration_toast_variable": {
+        "title": { "en": "A letter stands for a number", "kn": "ಅಕ್ಷರ ಒಂದು ಸಂಖ್ಯೆಯನ್ನು ಪ್ರತಿನಿಧಿಸುತ್ತದೆ" },
+        "body": {
+          "en": "x is an unknown number. x added six times is 6x, and 6x = 144 gives x = 24 by dividing. Each family gets 24 kg.",
+          "kn": "x ಒಂದು ಅಪರಿಚಿತ ಸಂಖ್ಯೆ. x ಅನ್ನು ಆರು ಬಾರಿ ಕೂಡಿಸಿದರೆ 6x, ಮತ್ತು 6x = 144 ಭಾಗಿಸಿದರೆ x = 24. ಪ್ರತಿ ಕುಟುಂಬಕ್ಕೆ 24 ಕೆಜಿ ಸಿಗುತ್ತದೆ."
+        }
+      },
+      "ration_toast_fractions": {
+        "title": { "en": "More pieces, smaller parts", "kn": "ಹೆಚ್ಚು ತುಂಡುಗಳು, ಸಣ್ಣ ಭಾಗಗಳು" },
+        "body": {
+          "en": "Fractions are equal parts of a whole. Splitting the same block into more pieces makes each piece smaller, so 1/4 > 1/8. And 1/2 = 2/4 = 4/8.",
+          "kn": "ಭಿನ್ನರಾಶಿಗಳು ಒಂದು ಸಂಪೂರ್ಣದ ಸಮ ಭಾಗಗಳು. ಒಂದೇ ಬ್ಲಾಕ್ ಅನ್ನು ಹೆಚ್ಚು ತುಂಡುಗಳಾಗಿ ಮಾಡಿದರೆ ಪ್ರತಿ ತುಂಡು ಸಣ್ಣದಾಗುತ್ತದೆ, ಹಾಗಾಗಿ 1/4 > 1/8. ಮತ್ತು 1/2 = 2/4 = 4/8."
+        }
+      },
+      "ration_toast_equation": {
+        "title": { "en": "An equation plans a resource", "kn": "ಸಮೀಕರಣ ಸಂಪನ್ಮೂಲ ಯೋಜಿಸುತ್ತದೆ" },
+        "body": {
+          "en": "Using x kg a day for 5 days is 5x. Since 5x = 210, dividing gives x = 42 kg/day — just enough to last the whole week.",
+          "kn": "ದಿನಕ್ಕೆ x ಕೆಜಿ 5 ದಿನ ಬಳಸಿದರೆ 5x. 5x = 210 ಆಗಿರುವುದರಿಂದ, ಭಾಗಿಸಿದರೆ x = 42 ಕೆಜಿ/ದಿನ — ಇಡೀ ವಾರಕ್ಕೆ ಸಾಕಾಗುವಷ್ಟು."
+        }
+      }
+    },
+    "hints": {
+      "ration_hint_0": {
+        "en": "Puzzle 1: There are 6 equal shares, so write 6x = 144. Find x by dividing: 144 ÷ 6 = 24. Then drag a 24 kg scoop into each basket.",
+        "kn": "ಒಗಟು 1: 6 ಸಮ ಪಾಲುಗಳಿವೆ, ಹಾಗಾಗಿ 6x = 144 ಬರೆಯಿರಿ. ಭಾಗಿಸಿ x ಕಂಡುಹಿಡಿಯಿರಿ: 144 ÷ 6 = 24. ನಂತರ ಪ್ರತಿ ಬುಟ್ಟಿಗೆ 24 ಕೆಜಿ ಸ್ಕೂಪ್ ಎಳೆಯಿರಿ."
+      },
+      "ration_hint_1": {
+        "en": "Puzzle 2: Cut both equal blocks, then drag one piece of each onto the balance. The bigger piece (1/4) tips the scale down. Also 1/2 = 2/4 = 4/8.",
+        "kn": "ಒಗಟು 2: ಎರಡೂ ಸಮ ಬ್ಲಾಕ್‌ಗಳನ್ನು ಕತ್ತರಿಸಿ, ನಂತರ ಪ್ರತಿಯೊಂದರ ಒಂದು ತುಂಡನ್ನು ತಕ್ಕಡಿ ಮೇಲೆ ಇರಿಸಿ. ದೊಡ್ಡ ತುಂಡು (1/4) ತಕ್ಕಡಿ ಕೆಳಗೆ ಒರಗಿಸುತ್ತದೆ. 1/2 = 2/4 = 4/8 ಕೂಡ."
+      },
+      "ration_hint_2": {
+        "en": "Puzzle 3: Five equal days, so 5x = 210. Divide: 210 ÷ 5 = 42 kg/day. Slide to 42 and run the week.",
+        "kn": "ಒಗಟು 3: ಐದು ಸಮ ದಿನಗಳು, ಹಾಗಾಗಿ 5x = 210. ಭಾಗಿಸಿ: 210 ÷ 5 = 42 ಕೆಜಿ/ದಿನ. 42 ಕ್ಕೆ ಸ್ಲೈಡ್ ಮಾಡಿ ವಾರ ನಡೆಸಿ."
+      }
+    }
+  }
+}

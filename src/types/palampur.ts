@@ -1,5 +1,66 @@
 export type AppRole = 'landing' | 'student' | 'teacher';
 
+/** Supported interface + voice languages. */
+export type Lang = 'en' | 'kn';
+
+/** Chapters of the 3D game, 1:1 with the static learning modules. */
+export type GameChapter = 'water' | 'power' | 'ration';
+
+/**
+ * Misconception identifiers emitted by the game modules. Each maps to a
+ * dashboard concept id consumed by buildConceptInsights():
+ *   clear_means_safe        -> concept-water-safety
+ *   current_consumed        -> concept-electricity
+ *   bigger_denominator_bigger -> concept-fractions
+ */
+export type GameMisconceptionId =
+  | 'clear_means_safe'
+  | 'current_consumed'
+  | 'bigger_denominator_bigger';
+
+export const MISCONCEPTION_TO_CONCEPT: Record<GameMisconceptionId, string> = {
+  clear_means_safe: 'concept-water-safety',
+  current_consumed: 'concept-electricity',
+  bigger_denominator_bigger: 'concept-fractions',
+};
+
+/** Confidence-tap value: 1 = Not Sure, 2 = A Bit Sure, 3 = Very Sure. */
+export type CriValue = 1 | 2 | 3;
+
+export type TelemetryEventName =
+  | 'VILLAGE_ARRIVED'
+  | 'PREDICTION_COMMITTED'
+  | 'CRI_RECORDED'
+  | 'MISCONCEPTION_RECORDED'
+  | 'CONCEPT_RESOLVED'
+  | 'NOTEBOOK_PART_UNLOCKED'
+  | 'MODULE_COMPLETED';
+
+/** A single telemetry message posted from the game iframe up to the dashboard. */
+export interface TelemetryEvent {
+  type: 'REBUILD_TELEMETRY';
+  student: { name: string; rollNo: string };
+  event: TelemetryEventName;
+  chapter?: GameChapter;
+  misconceptionId?: GameMisconceptionId;
+  /** Concept id that was just answered correctly (CONCEPT_RESOLVED / MODULE_COMPLETED). */
+  conceptId?: string;
+  /** Notebook part id, e.g. "water.sedimentation". */
+  partId?: string;
+  cri?: CriValue;
+  timestamp: number;
+}
+
+/** Portable, offline-syncable snapshot of one student's session (QR payload). */
+export interface StudentTelemetrySnapshot {
+  v: 1;
+  student: { name: string; rollNo: string };
+  lang: Lang;
+  events: TelemetryEvent[];
+  notebookParts: string[];
+  exportedAt: number;
+}
+
 export type StudentNavTab =
   | 'home'
   | 'learn'
